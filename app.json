@@ -8,31 +8,47 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#38A176"
+    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#38A176"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
       "expo-router",
       [
-        "expo-splash-screen",
+        "expo-font",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "fonts": [
+            "./assets/fonts/Roboto/Roboto-Black.ttf",
+            "./assets/fonts/Roboto/Roboto-BlackItalic.ttf",
+            "./assets/fonts/Roboto/Roboto-Bold.ttf",
+            "./assets/fonts/Roboto/Roboto-BoldItalic.ttf",
+            "./assets/fonts/Roboto/Roboto-italic.ttf",
+            "./assets/fonts/Roboto/Roboto-Light.ttf",
+            "./assets/fonts/Roboto/Roboto-LightItalic.ttf",
+            "./assets/fonts/Roboto/Roboto-Medium.ttf",
+            "./assets/fonts/Roboto/Roboto-MediumItalic.ttf",
+            "./assets/fonts/Roboto/Roboto-Regular.ttf",
+            "./assets/fonts/Roboto/Roboto-Thin.ttf",
+            "./assets/fonts/Roboto/Roboto-ThinItalic.ttf"
+          ]
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true

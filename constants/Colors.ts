@@ -1,26 +1,32 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
-export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
+const appColors = {
+  primaryColor: "#38A176",
+  onPrimaryColor: "#FFFFFF",
+  primaryContainerColor: "#D7ECE3",
+  onPrimaryContainerColor: "#16402F",
+  secondaryColor: "#447E7E",
+  onSecondaryColor: "#FFFFFF",
+  secondaryContainerColor: "#DDECEC",
+  onSecondaryContainerColor: "#192F2F",
+  tertiaryColor: "#8A835C",
+  onTetiaryColor: "#FFFFFF",
+  tertiaryContainerColor: "#EFEDE3",
+  onTertiaryContainerColor: "#343122",
+  errorColor: "#BA1A1A",
+  onErrorColor: "#FFFFFF",
+  errorContainerColor: "#FFF1EF",
+  onErrorContainerColor: "#410002",
+  surfaceDimColor: "#E6E6E6",
+  surfaceColor: "#F2F2F2",
+  surfaceBright: "#FFFFFF",
+  surfaceContainerLowest: "#FFFFFF",
+  surfaceContainerLow: "#F2F2F2",
+  surfaceContainer: "#E6E6E6",
+  surfaceContainerHight: "##D9D9D9",
+  surfaceContainerHighest: "#CCCCCC",
+  onSurface: "#1A1C18",
+  onSurfaceVariant: "#333333",
+  outline: "#999999",
+  outlineVariant: "#B3B3B3",
 };
+
+export default appColors;
