@@ -25,7 +25,11 @@ export default function Index() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View>
-        <ActivityIndicator size={48} color={appColors.onPrimaryColor} />
+        <ActivityIndicator
+          size={48}
+          color={appColors.onPrimaryColor}
+          testID="loading-indicator"
+        />
       </View>
     </SafeAreaView>
   );
