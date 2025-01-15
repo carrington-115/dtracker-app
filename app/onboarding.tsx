@@ -1,13 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
+import { OnboardingSlider } from "@/components";
 
 export default function componentName() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
-        <Image source="logo" style={styles.logoImage} />
+        <Image
+          source={require("@/assets/images/logo.svg")}
+          style={styles.logoImage}
+        />
+        <OnboardingSlider
+          title="Easily schedule trash collection with a few tap"
+          image={require("../assets/images/welcome-slider01.svg")}
+        />
       </View>
       <View style={styles.bottomContainer}></View>
     </SafeAreaView>
