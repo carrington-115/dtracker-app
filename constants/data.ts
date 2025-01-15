@@ -1,6 +1,7 @@
 import { onboardingSliderType } from "./types";
 
 // all constant important data
+
 const onboardingSliderCarouselData: onboardingSliderType[] = [
   {
     title: "Easily schedule trash collection with a few tap",
