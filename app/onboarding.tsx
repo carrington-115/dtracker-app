@@ -1,8 +1,10 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { OnboardingSlider } from "@/components";
+import PagerView from "react-native-pager-view";
+import { onboardingSliderCarouselData } from "@/constants/data";
 
 export default function componentName() {
   return (
@@ -12,10 +14,13 @@ export default function componentName() {
           source={require("@/assets/images/logo.svg")}
           style={styles.logoImage}
         />
-        <OnboardingSlider
-          title="Easily schedule trash collection with a few tap"
-          image={require("../assets/images/welcome-slider01.svg")}
-        />
+        <PagerView style={styles.pagerViewStyles}>
+          {onboardingSliderCarouselData.map((item, index) => (
+            <View key={index}>
+              <OnboardingSlider image={item.image} title={item.title} />
+            </View>
+          ))}
+        </PagerView>
       </View>
       <View style={styles.bottomContainer}></View>
     </SafeAreaView>
@@ -40,6 +45,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     gap: 20,
+  },
+  pagerViewStyles: {
+    width: 320,
+    flex: 1,
   },
   bottomContainer: {},
 });
