@@ -1,34 +1,41 @@
-import { StatusBar, Text, View, Button, StyleSheet } from "react-native";
+import { StatusBar, StyleSheet, ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { textFontStyles } from "@/constants/fonts";
-import { useState } from "react";
-import { increment, decrement } from "@/redux/features/CounterSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import appColors from "@/constants/colors";
+import { useRouter } from "expo-router";
 
 export default function Index() {
-  const value = useSelector((state: any) => state.counter);
-  const dispatch = useDispatch();
+  const [signedIn, setSignedIn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+      if (!signedIn) {
+        router.push("/onboarding");
+      }
+    }, 2000);
+
+    // clean up function
+  }, []);
+
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View>
-        <Text>Simple counter application with redux</Text>
-        <View style={[styles.counterContainer]}>
-          <Button title="Subtract" onPress={() => dispatch(decrement())} />
-          <Button title="Add" onPress={() => dispatch(increment())} />
-          <Text>{value}</Text>
-        </View>
+        <ActivityIndicator size={48} color={appColors.onPrimaryColor} />
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  counterContainer: {},
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: appColors.primaryColor,
+  },
 });

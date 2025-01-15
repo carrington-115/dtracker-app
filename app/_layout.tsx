@@ -36,8 +36,10 @@ export default function RootLayout() {
           name="index"
           options={{
             title: "Home",
+            headerShown: false,
           }}
         />
+        <Stack.Screen name="onboarding" />
       </Stack>
     </Provider>
   );
