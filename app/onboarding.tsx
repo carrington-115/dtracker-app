@@ -8,7 +8,7 @@ import { onboardingSliderCarouselData } from "@/constants/data";
 
 export default function componentName() {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} testID="onboarding-screen">
       <View style={styles.topContainer}>
         <Image
           source={require("@/assets/images/logo.svg")}
