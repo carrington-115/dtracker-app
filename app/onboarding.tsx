@@ -35,7 +35,7 @@ export default function componentName() {
           color={appColors.onPrimaryContainerColor}
         />
       ),
-      onPressAction: () => {},
+      onPressAction: () => router.push("/(register)/register-with-phone"),
       type: "outlined-auth-buttons",
     },
     {
@@ -47,7 +47,7 @@ export default function componentName() {
           color={appColors.onPrimaryContainerColor}
         />
       ),
-      onPressAction: () => {},
+      onPressAction: () => router.push("/(register)/register-with-email"),
       type: "outlined-auth-buttons",
     },
     {

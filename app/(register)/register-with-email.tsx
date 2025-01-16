@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function componentName() {
   return (
     <SafeAreaView>
-      <Text>Register with phone</Text>
+      <Text>Register with email and password</Text>
     </SafeAreaView>
   );
 }
