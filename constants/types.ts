@@ -43,10 +43,16 @@ interface buttonPropsType {
   focusedColor: string;
 }
 
+interface bottomButtonPropsType {
+  name: string;
+  onPressAction: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
   textInputElementProps,
   authCheckElementProps,
   buttonPropsType,
+  bottomButtonPropsType,
 };

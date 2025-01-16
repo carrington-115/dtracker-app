@@ -1,17 +1,13 @@
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import { bottomButtonPropsType } from "@/constants/types";
 import React from "react";
 import { Text, Pressable, StyleSheet } from "react-native";
-
-interface componentNameProps {
-  name: string;
-  onPressAction: () => void;
-}
 
 export default function componentName({
   name,
   onPressAction,
-}: componentNameProps) {
+}: bottomButtonPropsType) {
   return (
     <>
       <Pressable

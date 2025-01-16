@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -58,6 +58,11 @@ export default function componentName() {
   ];
   return (
     <SafeAreaView style={styles.container} testID="login-screen">
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={appColors.surfaceBright}
+        translucent={true}
+      />
       <View style={styles.topContainer}>
         <Image
           source={require("@/assets/images/logo.svg")}
@@ -81,6 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     gap: 0,
+    backgroundColor: appColors.surfaceBright,
   },
   logoImage: {
     width: 190,

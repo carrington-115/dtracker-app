@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { AuthButton, AuthSlider } from "@/components";
@@ -58,6 +58,11 @@ export default function componentName() {
   ];
   return (
     <SafeAreaView style={styles.container} testID="onboarding-screen">
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={appColors.surfaceBright}
+        translucent={true}
+      />
       <View style={styles.topContainer}>
         <Image
           source={require("@/assets/images/logo.svg")}
@@ -81,6 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     gap: 0,
+    backgroundColor: appColors.surfaceBright,
   },
   logoImage: {
     width: 190,
