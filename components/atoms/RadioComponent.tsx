@@ -8,13 +8,14 @@ import { textFontStyles } from "@/constants/fonts";
 export default function componentName({
   value,
   checked,
-
+  checkedAction,
   label,
 }: radioComponentPropsType) {
   return (
     <View style={styles.container}>
       <RadioButton
         value={value}
+        onPress={checkedAction}
         status={checked === value ? "checked" : "unchecked"}
         uncheckedColor={appColors.onSurfaceVariant}
         color={appColors.primaryColor}
@@ -23,6 +24,7 @@ export default function componentName({
         style={{
           ...textFontStyles.bodyLargeRegular,
           color: appColors.onSurface,
+          width: "90%",
         }}
       >
         {label}
