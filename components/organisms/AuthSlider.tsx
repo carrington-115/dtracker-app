@@ -9,7 +9,7 @@ import { OnboardingSlider } from "..";
 export default function componentName() {
   return (
     <>
-      <PagerView style={styles.pagerViewStyles}>
+      <PagerView style={styles.pagerViewStyles} testID="auth-slider">
         {onboardingSliderCarouselData.map((item, index) => (
           <View key={index}>
             <OnboardingSlider {...item} />

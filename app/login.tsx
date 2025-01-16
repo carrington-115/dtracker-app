@@ -57,7 +57,7 @@ export default function componentName() {
     },
   ];
   return (
-    <SafeAreaView style={styles.container} testID="onboarding-screen">
+    <SafeAreaView style={styles.container} testID="login-screen">
       <View style={styles.topContainer}>
         <Image
           source={require("@/assets/images/logo.svg")}
