@@ -27,6 +27,22 @@ export default function componentName({
       </Pressable>
     );
   }
+  if (type === "text-auth-buttons") {
+    return (
+      <Pressable style={styles.textButtonStyles} onPress={onPressAction}>
+        {name && (
+          <Text
+            style={[
+              textFontStyles.bodyLargeRegular,
+              { color: appColors.onPrimaryContainerColor },
+            ]}
+          >
+            {name}
+          </Text>
+        )}
+      </Pressable>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -39,5 +55,11 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 1,
     borderColor: appColors.onPrimaryContainerColor,
+  },
+  textButtonStyles: {
+    paddingVertical: 8,
+    paddingHorizontal: 40,
+    alignItems: "center",
+    gap: 12,
   },
 });

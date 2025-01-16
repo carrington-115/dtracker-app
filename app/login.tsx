@@ -1,21 +1,21 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Image } from "expo-image";
-import { AuthButton, AuthSlider } from "@/components";
-import { authButtonPropsType } from "@/constants/types";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import appColors from "@/constants/colors";
 import { useRouter } from "expo-router";
+import { authButtonPropsType } from "@/constants/types";
+import { Image } from "expo-image";
+import { AuthButton, AuthSlider } from "@/components";
 
 export default function componentName() {
   const router = useRouter();
 
   const registerButtonData: authButtonPropsType[] = [
     {
-      name: "Register with Google",
+      name: "Sign in with Google",
       icon: (
         <AntDesign
           name="google"
@@ -27,7 +27,7 @@ export default function componentName() {
       type: "outlined-auth-buttons",
     },
     {
-      name: "Register with Phone",
+      name: "Sign in with Phone",
       icon: (
         <FontAwesome
           name="phone"
@@ -39,7 +39,7 @@ export default function componentName() {
       type: "outlined-auth-buttons",
     },
     {
-      name: "Register with Email",
+      name: "Sign in with Email",
       icon: (
         <MaterialCommunityIcons
           name="email"
@@ -51,8 +51,8 @@ export default function componentName() {
       type: "outlined-auth-buttons",
     },
     {
-      name: "Sign in instead?",
-      onPressAction: () => router.navigate("./login"),
+      name: "Sign up instead?",
+      onPressAction: () => router.navigate("./onboarding"),
       type: "text-auth-buttons",
     },
   ];
