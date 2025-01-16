@@ -1,4 +1,9 @@
-import { AuthButton, AuthCheckElement, TextInputElement } from "@/components";
+import {
+  AuthButton,
+  AuthCheckElement,
+  BottomButton,
+  TextInputElement,
+} from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
@@ -59,6 +64,9 @@ export default function componentName() {
           check={termsCheck}
           checkAction={() => setTermsCheck(!termsCheck)}
         />
+        <View style={{ width: "100%", marginTop: 100 }}>
+          <BottomButton name="Register" onPressAction={() => {}} />
+        </View>
       </View>
     </SafeAreaView>
   );

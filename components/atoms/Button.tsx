@@ -1,7 +1,7 @@
 import { textFontStyles } from "@/constants/fonts";
 import { buttonPropsType } from "@/constants/types";
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { Text, Pressable, StyleSheet } from "react-native";
 
 export default function componentName({
   name,
