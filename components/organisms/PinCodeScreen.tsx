@@ -7,12 +7,19 @@ import { OtpInput } from "react-native-otp-entry";
 import { ActiveButton, BottomButton } from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function componentName() {
+export default function componentName({
+  buttonAction,
+}: {
+  buttonAction: () => void;
+}) {
   const [otp, setOtp] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
 
   const handleSubmitForm = () => {
     if (otp.length < 4 || otp === "") setError(true);
+    else {
+      buttonAction();
+    }
   };
 
   useEffect(() => {
