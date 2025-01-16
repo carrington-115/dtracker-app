@@ -1,4 +1,4 @@
-import { AuthButton, TextInputElement } from "@/components";
+import { AuthButton, AuthCheckElement, TextInputElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
@@ -11,6 +11,8 @@ export default function componentName() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [termsCheck, setTermsCheck] = useState<boolean>(false);
+
   const router = useRouter();
 
   return (
@@ -31,7 +33,7 @@ export default function componentName() {
           <TextInputElement
             value={email}
             onChangeValue={setEmail}
-            keyboardType="default"
+            keyboardType="email-address"
             placeholder="Email"
             type="auth-input"
           />
@@ -52,6 +54,11 @@ export default function componentName() {
             password
           />
         </KeyboardAvoidingView>
+        <AuthCheckElement
+          label="Agree to our terms and conditions"
+          check={termsCheck}
+          checkAction={() => setTermsCheck(!termsCheck)}
+        />
       </View>
     </SafeAreaView>
   );

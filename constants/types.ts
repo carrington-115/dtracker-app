@@ -24,8 +24,27 @@ interface textInputElementProps {
   password?: true;
   error?: boolean;
 }
+
+interface authCheckElementProps {
+  check: boolean;
+  checkAction: () => void;
+  label: string;
+}
+
+interface buttonPropsType {
+  name: string;
+  color: string;
+  bgColor: string;
+  icon?: React.ReactNode;
+  onPressAction: () => void;
+  type?: string;
+  focusedColor: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
   textInputElementProps,
+  authCheckElementProps,
+  buttonPropsType,
 };
