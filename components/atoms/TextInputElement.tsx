@@ -34,8 +34,13 @@ export default function componentName({
             style={[
               styles.passwordElementStyle,
               {
-                borderColor: press ? appColors.outline : "transparent",
-                borderWidth: press ? 1 : 0,
+                borderColor: press
+                  ? appColors.outline
+                  : error && required
+                  ? appColors.errorColor
+                  : "transparent",
+
+                borderWidth: press || (error && required) ? 1 : 0,
                 backgroundColor: press
                   ? appColors.surfaceContainer
                   : appColors.surfaceContainerLow,
