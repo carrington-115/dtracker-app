@@ -2,7 +2,13 @@ import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { textInputElementProps } from "@/constants/types";
 import React, { useState } from "react";
-import { TextInput, StyleSheet, View, TouchableOpacity } from "react-native";
+import {
+  TextInput,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function componentName({
@@ -15,6 +21,7 @@ export default function componentName({
   type,
   password,
   error,
+  required,
 }: textInputElementProps) {
   const [hide, setHide] = useState<boolean>(true);
   const [press, setPress] = useState<boolean>(false);
@@ -66,8 +73,13 @@ export default function componentName({
               styles.elementStyle,
               textFontStyles.bodyLargeRegular,
               {
-                borderColor: press ? appColors.outline : "transparent",
-                borderWidth: press ? 1 : 0,
+                borderColor: press
+                  ? appColors.outline
+                  : error && required
+                  ? appColors.errorColor
+                  : "transparent",
+
+                borderWidth: press || (error && required) ? 1 : 0,
                 backgroundColor: press
                   ? appColors.surfaceContainer
                   : appColors.surfaceContainerLow,
@@ -77,7 +89,23 @@ export default function componentName({
             onBlur={() => setPress(false)}
           />
         )}
-        {error && <View></View>}
+        {error && required && (
+          <View style={styles.errorElementStyle}>
+            <MaterialCommunityIcons
+              name="information-outline"
+              size={16}
+              color={appColors.errorColor}
+            />
+            <Text
+              style={[
+                textFontStyles.bodySmallMedium,
+                { color: appColors.errorColor },
+              ]}
+            >
+              This field is required
+            </Text>
+          </View>
+        )}
       </View>
     );
   }
@@ -106,5 +134,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     outline: appColors.outline,
+  },
+  errorElementStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2.5,
+    marginTop: 10,
   },
 });

@@ -10,32 +10,49 @@ export default function componentName({
   check,
   checkAction,
   label,
+  error,
 }: authCheckElementProps) {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: error ? "#FFF1EF66" : "rgba(215, 236, 227, 0.30)",
+        },
+      ]}
+    >
       <Checkbox.Item
         label={label}
         status={check ? "checked" : "unchecked"}
         onPress={checkAction}
         labelStyle={{ display: "none" }}
         style={{ width: "5%", borderRadius: "100%" }}
-        uncheckedColor={appColors.onSurface}
+        uncheckedColor={error ? appColors.errorColor : appColors.onSurface}
         color={appColors.primaryColor}
         rippleColor={appColors.primaryContainerColor}
       />
       <Text
         style={[
           textFontStyles.bodyLargeRegular,
-          { color: appColors.onPrimaryContainerColor, width: "45%" },
+          {
+            color: error
+              ? appColors.onErrorContainerColor
+              : appColors.onPrimaryContainerColor,
+            width: "45%",
+          },
         ]}
       >
         {label}
       </Text>
       <Button
         name="Learn more"
-        bgColor="#D7ECE380"
-        color={appColors.onPrimaryContainerColor}
-        focusedColor={appColors.primaryContainerColor}
+        bgColor={error ? appColors.errorContainerColor : "#D7ECE380"}
+        color={
+          error
+            ? appColors.onErrorContainerColor
+            : appColors.onPrimaryContainerColor
+        }
+        focusedColor={error ? "" : appColors.primaryContainerColor}
         onPressAction={() => {}}
       />
     </View>
@@ -50,6 +67,5 @@ const styles = StyleSheet.create({
     padding: 12,
     gap: 5,
     borderRadius: 10,
-    backgroundColor: "rgba(215, 236, 227, 0.30)",
   },
 });

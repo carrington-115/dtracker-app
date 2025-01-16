@@ -23,12 +23,14 @@ interface textInputElementProps {
   type: string;
   password?: true;
   error?: boolean;
+  required: boolean;
 }
 
 interface authCheckElementProps {
   check: boolean;
   checkAction: () => void;
   label: string;
+  error?: boolean;
 }
 
 interface buttonPropsType {

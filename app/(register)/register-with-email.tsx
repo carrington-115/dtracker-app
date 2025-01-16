@@ -29,6 +29,7 @@ export default function componentName() {
         </Text>
         <KeyboardAvoidingView style={styles.formContainer}>
           <TextInputElement
+            required
             value={username}
             onChangeValue={setUsername}
             keyboardType="default"
@@ -36,6 +37,7 @@ export default function componentName() {
             type="auth-input"
           />
           <TextInputElement
+            required
             value={email}
             onChangeValue={setEmail}
             keyboardType="email-address"
@@ -43,6 +45,7 @@ export default function componentName() {
             type="auth-input"
           />
           <TextInputElement
+            required
             value={password}
             onChangeValue={setPassword}
             keyboardType="default"
@@ -51,6 +54,7 @@ export default function componentName() {
             password
           />
           <TextInputElement
+            required
             value={confirmPassword}
             onChangeValue={setConfirmPassword}
             keyboardType="default"
@@ -96,3 +100,5 @@ const styles = StyleSheet.create({
     gap: 20,
   },
 });
+
+export { styles };
