@@ -1,9 +1,10 @@
-import { render } from "@testing-library/react-native";
+import { render, screen } from "@testing-library/react-native";
 import HomeScreen from "@/app/index";
 
-describe("<HomeScreen />", () => {
-  test("Text renders correctly on HomeScreen", () => {
-    const { getByText } = render(<HomeScreen />);
-    getByText("Welcome to DTRACKER");
+describe("", () => {
+  it("Render the loading indicator initially", () => {
+    render(<HomeScreen />);
+    const loader = screen.getByTestId("loading-indicator");
+    expect(loader).toBeTruthy();
   });
 });

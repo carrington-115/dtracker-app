@@ -48,7 +48,12 @@
           ]
         }
       ],
-      "expo-asset"
+      [
+        "expo-asset",
+        {
+          "assets": ["@/assets/images/logo.svg"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
