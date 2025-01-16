@@ -1,6 +1,15 @@
 import { PinCodeScreen } from "@/components";
-import React from "react";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
 
 export default function componentName() {
-  return <PinCodeScreen buttonAction={() => {}} />;
+  const [otp, setOtp] = useState<string>("");
+  const router = useRouter();
+
+  const handleSubmitForm = () => {
+    router.push("./user-category");
+  };
+  return (
+    <PinCodeScreen otp={otp} setOtp={setOtp} buttonAction={handleSubmitForm} />
+  );
 }

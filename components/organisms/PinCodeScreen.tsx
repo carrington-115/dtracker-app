@@ -9,10 +9,13 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function componentName({
   buttonAction,
+  otp,
+  setOtp,
 }: {
   buttonAction: () => void;
+  otp: string;
+  setOtp: (otp: string) => void;
 }) {
-  const [otp, setOtp] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
 
   const handleSubmitForm = () => {
@@ -105,6 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingTop: 190,
+    backgroundColor: appColors.surfaceBright,
   },
   innerContainer: {
     width: "100%",

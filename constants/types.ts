@@ -48,6 +48,13 @@ interface bottomButtonPropsType {
   onPressAction: () => void;
 }
 
+interface radioComponentPropsType {
+  value: string;
+  checked: string;
+  checkedAction: () => void;
+  label: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -55,4 +62,5 @@ export type {
   authCheckElementProps,
   buttonPropsType,
   bottomButtonPropsType,
+  radioComponentPropsType,
 };
