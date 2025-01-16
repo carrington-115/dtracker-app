@@ -39,6 +39,8 @@ export default function componentName() {
       setInputError((inputError) => {
         return { ...inputError, termsError: true };
       });
+    } else {
+      router.push("./verify-phone");
     }
   };
 
