@@ -15,7 +15,9 @@ export default function componentName() {
     if (otp.length < 4 || otp === "") setError(true);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (otp.length === 4) setError(false);
+  }, [otp]);
 
   return (
     <SafeAreaView style={styles.container}>
