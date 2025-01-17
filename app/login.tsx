@@ -35,7 +35,7 @@ export default function componentName() {
           color={appColors.onPrimaryContainerColor}
         />
       ),
-      onPressAction: () => {},
+      onPressAction: () => router.push("./(login)/login-with-phone"),
       type: "outlined-auth-buttons",
     },
     {

@@ -10,6 +10,8 @@ export default function componentName() {
       }}
     >
       <Stack.Screen name="login-with-email" options={{}} />
+      <Stack.Screen name="login-with-phone" options={{}} />
+      <Stack.Screen name="verify-phone" options={{}} />
     </Stack>
   );
 }

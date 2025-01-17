@@ -19,7 +19,7 @@ export default function componentName({
       >
         <Text
           style={[
-            textFontStyles.titleMediumRegular,
+            textFontStyles.bodyLargeRegular,
             { color: appColors.onPrimaryColor },
           ]}
         >
