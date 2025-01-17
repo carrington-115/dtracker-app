@@ -6,6 +6,8 @@ import TextInputElement from "./atoms/TextInputElement";
 import AuthCheckElement from "./atoms/AuthCheckElement";
 import BottomButton from "./atoms/BottomButton";
 import ActiveButton from "./atoms/Button";
+import PinCodeScreen from "./organisms/PinCodeScreen";
+import RadioComponent from "./atoms/RadioComponent";
 
 export {
   OnboardingSlider,
@@ -15,4 +17,6 @@ export {
   AuthCheckElement,
   BottomButton,
   ActiveButton,
+  PinCodeScreen,
+  RadioComponent,
 };

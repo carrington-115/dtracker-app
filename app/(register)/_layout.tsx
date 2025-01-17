@@ -12,6 +12,8 @@ export default function componentName() {
         <Stack.Screen name="index" />
         <Stack.Screen name="register-with-phone" />
         <Stack.Screen name="register-with-email" />
+        <Stack.Screen name="verify-phone" />
+        <Stack.Screen name="user-category" />
       </Stack>
     </>
   );
