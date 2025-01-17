@@ -40,7 +40,15 @@ export default function componentName({
         >
           Verify Phone Number
         </Text>
-        <View style={{ width: "100%" }}>
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingLeft: 20,
+          }}
+        >
           <OtpInput
             numberOfDigits={4}
             focusColor={error ? appColors.errorColor : appColors.primaryColor}
@@ -120,6 +128,8 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 16,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   otpInputFieldStyle: {},
 });
