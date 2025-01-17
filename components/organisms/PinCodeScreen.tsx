@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 16,
     flexDirection: "row",
-    backgroundColor: appColors.surfaceColor,
   },
   otpInputFieldStyle: {},
 });
