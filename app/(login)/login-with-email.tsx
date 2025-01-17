@@ -2,7 +2,7 @@ import { AuthButton, BottomButton, TextInputElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -29,14 +29,31 @@ export default function componentName() {
     }
   };
 
+  useEffect(() => {
+    const handleErrorCheck = () => {
+      if (email !== "") {
+        setError((error) => {
+          return { ...error, nameError: false };
+        });
+      }
+      if (password !== "") {
+        setError((error) => {
+          return { ...error, passwordError: false };
+        });
+      }
+    };
+
+    handleErrorCheck();
+  }, [email, password]);
+
   return (
     <SafeAreaView style={styles.container}>
       <AuthButton type="back-icon-btn" onPressAction={() => router.back()} />
       <View style={styles.innerContainer}>
         <Text style={[textFontStyles.titleLargeBold]}>Log in with Email</Text>
         <TextInputElement
-          placeholder="Phone number"
-          keyboardType="phone-pad"
+          placeholder="Email"
+          keyboardType="email-address"
           value={email}
           onChangeValue={setEmail}
           type="auth-input"
@@ -44,8 +61,8 @@ export default function componentName() {
           error={error.nameError}
         />
         <TextInputElement
-          placeholder="Email"
-          keyboardType="email-address"
+          placeholder="Password"
+          keyboardType="default"
           value={password}
           onChangeValue={setPassword}
           type="auth-input"
