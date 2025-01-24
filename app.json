@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#38A176"
       },
-      "package": "com.anonymous.dtracker"
+      "package": "com.carringtonchei.dtracker"
     },
     "web": {
       "bundler": "metro",
@@ -49,7 +49,9 @@
           ]
         }
       ],
-      ["expo-asset"]
+      [
+        "expo-asset"
+      ]
     ],
     "experiments": {
       "typedRoutes": true

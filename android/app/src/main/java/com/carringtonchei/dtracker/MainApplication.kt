@@ -1,4 +1,4 @@
-package com.anonymous.dtracker
+package com.carringtonchei.dtracker
 
 import android.app.Application
 import android.content.res.Configuration

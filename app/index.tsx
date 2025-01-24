@@ -7,8 +7,6 @@ import { useRouter } from "expo-router";
 export default function Index() {
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-
-  console.log(process.env.EXPO_PUBLIC_API_URL);
   const router = useRouter();
 
   useEffect(() => {
@@ -18,8 +16,6 @@ export default function Index() {
         router.push("/onboarding");
       }
     }, 2000);
-
-    // clean up function
   }, []);
 
   return (
