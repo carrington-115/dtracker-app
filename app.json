@@ -14,14 +14,18 @@
       "backgroundColor": "#38A176"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#38A176"
       },
-      "package": "com.carringtonchei.dtracker"
+      "package": "com.carringtonchei.dtracker",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "bundler": "metro",
@@ -55,6 +59,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "aca0ad0a-a0fd-48af-9266-8a3fa6999915"
+      }
+    },
+    "owner": "carringtonchei",
+    "updates": {
+      "url": "https://u.expo.dev/aca0ad0a-a0fd-48af-9266-8a3fa6999915"
     }
   }
 }
