@@ -8,6 +8,7 @@ export default function Index() {
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
+  console.log(process.env.EXPO_PUBLIC_API_URL);
   const router = useRouter();
 
   useEffect(() => {

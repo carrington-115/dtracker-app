@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#38A176"
-      }
+      },
+      "package": "com.anonymous.dtracker"
     },
     "web": {
       "bundler": "metro",
@@ -48,12 +49,7 @@
           ]
         }
       ],
-      [
-        "expo-asset",
-        {
-          "assets": ["@/assets/images/logo.svg"]
-        }
-      ]
+      ["expo-asset"]
     ],
     "experiments": {
       "typedRoutes": true
