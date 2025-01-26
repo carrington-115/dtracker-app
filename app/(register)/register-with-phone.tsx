@@ -7,21 +7,21 @@ import {
 import appColors from "@/constants/colors";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-} from "react-native";
+import { View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./register-with-email";
 import { textFontStyles } from "@/constants/fonts";
+import { ActivityIndicator } from "react-native-paper";
+import { signInWithPhoneNumber } from "firebase/auth";
+import { auth } from "@/firebase/config.firebase";
+import { useDispatch } from "react-redux";
+import { addNumber, addName } from "@/redux/features/PhoneSlice";
 
 export default function componentName() {
   const [username, setUsername] = useState<string>("");
   const [termsCheck, setTermsCheck] = useState<boolean>(false);
   const [phonenumber, setPhonenumber] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [inputError, setInputError] = useState({
     nameError: false,
     phoneError: false,
@@ -29,8 +29,9 @@ export default function componentName() {
   });
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const handleSubmitForm = () => {
+  const userVerification = () => {
     if (username === "") {
       setInputError((inputError) => {
         return { ...inputError, nameError: true };
@@ -45,8 +46,17 @@ export default function componentName() {
       setInputError((inputError) => {
         return { ...inputError, termsError: true };
       });
-    } else {
-      router.push("./verify-phone");
+    }
+  };
+
+  const handleRegisterWithPhone = async () => {
+    userVerification();
+    try {
+      dispatch(addNumber(phonenumber));
+      dispatch(addName(username));
+      router.push("/verify-phone");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -72,47 +82,68 @@ export default function componentName() {
   }, [username, phonenumber, termsCheck]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <AuthButton type="back-icon-btn" onPressAction={() => router.back()} />
-
-      <ScrollView style={styles.scrollViewContainer}>
-        <View style={styles.innerContainerStyles}>
-          <Text
-            style={[textFontStyles.titleLargeBold, { textAlign: "center" }]}
-          >
-            Register with Phone Number
-          </Text>
-          <KeyboardAvoidingView style={styles.formContainer}>
-            <TextInputElement
-              value={username}
-              onChangeValue={setUsername}
-              keyboardType="default"
-              placeholder="Name"
-              type="auth-input"
-              required
-              error={inputError.nameError}
-            />
-            <TextInputElement
-              value={phonenumber}
-              onChangeValue={setPhonenumber}
-              keyboardType="phone-pad"
-              placeholder="Phone Number"
-              type="auth-input"
-              required
-              error={inputError.phoneError}
-            />
-          </KeyboardAvoidingView>
-          <AuthCheckElement
-            label="Agree to our terms and conditions"
-            check={termsCheck}
-            checkAction={() => setTermsCheck(!termsCheck)}
-            error={inputError.termsError}
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          justifyContent: loading ? "center" : "flex-start",
+          alignItems: loading ? "center" : "flex-start",
+        },
+      ]}
+    >
+      {loading ? (
+        <>
+          <ActivityIndicator size={48} color={appColors.primaryColor} />
+        </>
+      ) : (
+        <>
+          <AuthButton
+            type="back-icon-btn"
+            onPressAction={() => router.back()}
           />
-          <View style={{ width: "100%", marginTop: 200 }}>
-            <BottomButton name="Register" onPressAction={handleSubmitForm} />
-          </View>
-        </View>
-      </ScrollView>
+          <ScrollView style={styles.scrollViewContainer}>
+            <View style={styles.innerContainerStyles}>
+              <Text
+                style={[textFontStyles.titleLargeBold, { textAlign: "center" }]}
+              >
+                Register with Phone Number
+              </Text>
+              <KeyboardAvoidingView style={styles.formContainer}>
+                <TextInputElement
+                  value={username}
+                  onChangeValue={setUsername}
+                  keyboardType="default"
+                  placeholder="Name"
+                  type="auth-input"
+                  required
+                  error={inputError.nameError}
+                />
+                <TextInputElement
+                  value={phonenumber}
+                  onChangeValue={setPhonenumber}
+                  keyboardType="phone-pad"
+                  placeholder="Phone Number"
+                  type="auth-input"
+                  required
+                  error={inputError.phoneError}
+                />
+              </KeyboardAvoidingView>
+              <AuthCheckElement
+                label="Agree to our terms and conditions"
+                check={termsCheck}
+                checkAction={() => setTermsCheck(!termsCheck)}
+                error={inputError.termsError}
+              />
+              <View style={{ width: "100%", marginTop: 200 }}>
+                <BottomButton
+                  name="Register"
+                  onPressAction={handleRegisterWithPhone}
+                />
+              </View>
+            </View>
+          </ScrollView>
+        </>
+      )}
     </SafeAreaView>
   );
 }
