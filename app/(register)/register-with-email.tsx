@@ -101,7 +101,19 @@ export default function componentName() {
   const handleOnSubmit = async () => {
     handleVerifications();
     try {
-    } catch (error) {}
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredentials;
+      console.log(user);
+      if (user !== null) {
+        router.push("/(register)/user-category");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
