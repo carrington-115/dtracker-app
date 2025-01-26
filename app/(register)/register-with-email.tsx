@@ -36,7 +36,7 @@ export default function componentName() {
 
   const router = useRouter();
 
-  const handleOnSubmit = () => {
+  const handleVerifications = () => {
     if (email === "") {
       setErrorCheck((errorCheck) => {
         return {
@@ -96,6 +96,12 @@ export default function componentName() {
         };
       });
     }
+  };
+
+  const handleOnSubmit = async () => {
+    handleVerifications();
+    try {
+    } catch (error) {}
   };
 
   useEffect(() => {
