@@ -23,6 +23,7 @@ interface textInputElementProps {
   type: string;
   password?: true;
   error?: boolean;
+  errorMessage?: string;
   required: boolean;
 }
 

@@ -22,6 +22,7 @@ export default function componentName({
   password,
   error,
   required,
+  errorMessage,
 }: textInputElementProps) {
   const [hide, setHide] = useState<boolean>(true);
   const [press, setPress] = useState<boolean>(false);
@@ -107,7 +108,7 @@ export default function componentName({
                 { color: appColors.errorColor },
               ]}
             >
-              This field is required
+              {errorMessage}
             </Text>
           </View>
         )}
