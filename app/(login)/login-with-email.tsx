@@ -43,8 +43,16 @@ export default function componentName() {
       );
       setLoading(true);
       const { user } = userCredentials;
-      if (user) {
+      // const userRole: any = user?.role;
+      /* 
+      if (user?.role === "user") {
+        router.navigate("../(user)");
+      } else if (user?.role === "agent") {
+        router.navigate("../(admin)");
+      } else {
+        throw new Error("User not found");
       }
+      */
     } catch (error) {}
   };
 
