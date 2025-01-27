@@ -13,7 +13,7 @@ export default function Index() {
     setTimeout(() => {
       setLoading(false);
       if (!signedIn) {
-        router.push("/onboarding");
+        router.navigate("./(user)");
       }
     }, 2000);
   }, []);
