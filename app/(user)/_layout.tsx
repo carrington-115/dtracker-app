@@ -3,24 +3,44 @@ import { Tabs } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import appColors from "@/constants/colors";
+import { textFontStyles } from "@/constants/fonts";
+import { Text } from "react-native";
 
 export default function componentName() {
   return (
     <>
       <Tabs
-        screenOptions={{
+        screenOptions={({ route }) => ({
           tabBarActiveTintColor: appColors.onSurface,
           tabBarInactiveTintColor: appColors.onSurface,
           tabBarStyle: {
-            backgroundColor: "#F8F8F8",
-            borderTopWidth: 0,
+            backgroundColor: appColors.surfaceContainerLow,
+            borderTopWidth: 1,
+            borderTopColor: appColors.onSurfaceVariant,
+            height: 62,
           },
-        }}
+          tabBarLabelStyle: {
+            ...textFontStyles.bodySmallRegular,
+          },
+        })}
       >
         <Tabs.Screen
           name="index"
           options={{
             title: "Home",
+            tabBarLabel: ({ focused }) => (
+              <>
+                <Text
+                  style={
+                    focused
+                      ? { ...textFontStyles.bodySmallBold }
+                      : { ...textFontStyles.bodySmallRegular }
+                  }
+                >
+                  Home
+                </Text>
+              </>
+            ),
             tabBarIcon: ({ color, focused }) => (
               <>
                 {focused ? (
@@ -44,6 +64,19 @@ export default function componentName() {
           name="store"
           options={{
             title: "Store",
+            tabBarLabel: ({ focused }) => (
+              <>
+                <Text
+                  style={
+                    focused
+                      ? { ...textFontStyles.bodySmallBold }
+                      : { ...textFontStyles.bodySmallRegular }
+                  }
+                >
+                  Store
+                </Text>
+              </>
+            ),
             tabBarIcon: ({ color, focused }) => (
               <>
                 {focused ? (
@@ -63,6 +96,19 @@ export default function componentName() {
           name="actions"
           options={{
             title: "Actions",
+            tabBarLabel: ({ focused }) => (
+              <>
+                <Text
+                  style={
+                    focused
+                      ? { ...textFontStyles.bodySmallBold }
+                      : { ...textFontStyles.bodySmallRegular }
+                  }
+                >
+                  Actions
+                </Text>
+              </>
+            ),
             tabBarIcon: ({ color, focused }) => (
               <>
                 {focused ? (
@@ -86,6 +132,19 @@ export default function componentName() {
           name="notifications"
           options={{
             title: "Notifications",
+            tabBarLabel: ({ focused }) => (
+              <>
+                <Text
+                  style={
+                    focused
+                      ? { ...textFontStyles.bodySmallBold }
+                      : { ...textFontStyles.bodySmallRegular }
+                  }
+                >
+                  Notifications
+                </Text>
+              </>
+            ),
             tabBarIcon: ({ color, focused }) => (
               <>
                 {focused ? (
