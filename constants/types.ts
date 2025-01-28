@@ -56,6 +56,13 @@ interface radioComponentPropsType {
   label: string;
 }
 
+interface IconButtonProps {
+  icon: React.ReactNode;
+  btnAction: () => void;
+  bgColor: string;
+  pressedColor?: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -64,4 +71,5 @@ export type {
   buttonPropsType,
   bottomButtonPropsType,
   radioComponentPropsType,
+  IconButtonProps,
 };

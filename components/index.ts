@@ -8,6 +8,7 @@ import BottomButton from "./atoms/BottomButton";
 import ActiveButton from "./atoms/Button";
 import PinCodeScreen from "./organisms/PinCodeScreen";
 import RadioComponent from "./atoms/RadioComponent";
+import IconButton from "./atoms/IconButton";
 
 export {
   OnboardingSlider,
@@ -19,4 +20,5 @@ export {
   ActiveButton,
   PinCodeScreen,
   RadioComponent,
+  IconButton,
 };
