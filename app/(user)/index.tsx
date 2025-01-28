@@ -1,7 +1,7 @@
-import { IconButton } from "@/components";
+import { IconButton, PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { IconButtonProps } from "@/constants/types";
+import { IconButtonProps, pickupButtonProps } from "@/constants/types";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -49,6 +49,31 @@ export default function componentName() {
       bgColor: "transparent",
       btnAction: () => {},
       pressedColor: "#D7ECE3",
+    },
+  ];
+
+  const pickupOptions: pickupButtonProps[] = [
+    {
+      icon: (
+        <MaterialIcons
+          name="access-time"
+          size={48}
+          color={appColors.onPrimaryContainerColor}
+        />
+      ),
+      name: "Immediate pickup",
+      onPress: () => {},
+    },
+    {
+      icon: (
+        <MaterialCommunityIcons
+          name="book-multiple-outline"
+          size={48}
+          color={appColors.onPrimaryContainerColor}
+        />
+      ),
+      name: "Reserve pickup",
+      onPress: () => {},
     },
   ];
 
@@ -111,6 +136,11 @@ export default function componentName() {
           >
             Trash Management Options
           </Text>
+          <View style={styles.actionStyles}>
+            {pickupOptions.map((option, index) => (
+              <PickupButton key={index} {...option} />
+            ))}
+          </View>
         </View>
       </SafeAreaView>
     </>
@@ -126,5 +156,12 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  actionStyles: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: 20,
   },
 });

@@ -9,6 +9,7 @@ import ActiveButton from "./atoms/Button";
 import PinCodeScreen from "./organisms/PinCodeScreen";
 import RadioComponent from "./atoms/RadioComponent";
 import IconButton from "./atoms/IconButton";
+import PickupButton from "./molecules/PickupButton";
 
 export {
   OnboardingSlider,
@@ -21,4 +22,5 @@ export {
   PinCodeScreen,
   RadioComponent,
   IconButton,
+  PickupButton,
 };
