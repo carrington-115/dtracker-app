@@ -10,6 +10,7 @@ import PinCodeScreen from "./organisms/PinCodeScreen";
 import RadioComponent from "./atoms/RadioComponent";
 import IconButton from "./atoms/IconButton";
 import PickupButton from "./molecules/PickupButton";
+import DropDownElement from "./atoms/DropDownElement";
 
 export {
   OnboardingSlider,
@@ -23,4 +24,5 @@ export {
   RadioComponent,
   IconButton,
   PickupButton,
+  DropDownElement,
 };

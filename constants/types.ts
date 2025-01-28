@@ -61,6 +61,7 @@ interface IconButtonProps {
   btnAction: () => void;
   bgColor: string;
   pressedColor?: string;
+  appStyles: any;
 }
 
 interface pickupButtonProps {
@@ -69,6 +70,11 @@ interface pickupButtonProps {
   onPress: () => void;
 }
 
+interface dropDownElementProps {
+  dropDownItems: { label: string; value: string }[];
+  dropDownValue: string;
+  onValueChange: (itemValue: string) => void;
+}
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -79,4 +85,5 @@ export type {
   radioComponentPropsType,
   IconButtonProps,
   pickupButtonProps,
+  dropDownElementProps,
 };

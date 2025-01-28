@@ -7,6 +7,7 @@ export default function componentName({
   bgColor,
   pressedColor,
   btnAction,
+  appStyles,
 }: IconButtonProps) {
   return (
     <>
@@ -16,6 +17,7 @@ export default function componentName({
           {
             backgroundColor: pressed ? pressedColor : bgColor,
           },
+          appStyles,
         ]}
         onPress={btnAction}
       >
