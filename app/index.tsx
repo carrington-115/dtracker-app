@@ -7,19 +7,15 @@ import { useRouter } from "expo-router";
 export default function Index() {
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-
-  console.log(process.env.EXPO_PUBLIC_API_URL);
   const router = useRouter();
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
       if (!signedIn) {
-        router.push("/onboarding");
+        router.navigate("./(user)");
       }
     }, 2000);
-
-    // clean up function
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-package com.anonymous.dtracker
+package com.carringtonchei.dtracker
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

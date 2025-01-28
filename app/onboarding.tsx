@@ -23,7 +23,7 @@ export default function componentName() {
           color={appColors.onPrimaryContainerColor}
         />
       ),
-      onPressAction: () => {},
+      onPressAction: () => router.push("/(register)"),
       type: "outlined-auth-buttons",
     },
     {

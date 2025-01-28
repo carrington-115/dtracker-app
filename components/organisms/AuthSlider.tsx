@@ -1,12 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import PagerView from "react-native-pager-view";
 import { onboardingSliderCarouselData } from "@/constants/data";
-import { useRouter } from "expo-router";
-import { authButtonPropsType } from "@/constants/types";
 import { OnboardingSlider } from "..";
 
 export default function componentName() {
+  if (Platform.OS === "web") {
+    return (
+      <>
+        <Text>Hello slider</Text>
+      </>
+    );
+  }
   return (
     <>
       <PagerView style={styles.pagerViewStyles} testID="auth-slider">

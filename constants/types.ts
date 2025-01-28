@@ -23,6 +23,7 @@ interface textInputElementProps {
   type: string;
   password?: true;
   error?: boolean;
+  errorMessage?: string;
   required: boolean;
 }
 
@@ -55,6 +56,19 @@ interface radioComponentPropsType {
   label: string;
 }
 
+interface IconButtonProps {
+  icon: React.ReactNode;
+  btnAction: () => void;
+  bgColor: string;
+  pressedColor?: string;
+}
+
+interface pickupButtonProps {
+  icon: React.ReactNode;
+  name: string;
+  onPress: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -63,4 +77,6 @@ export type {
   buttonPropsType,
   bottomButtonPropsType,
   radioComponentPropsType,
+  IconButtonProps,
+  pickupButtonProps,
 };

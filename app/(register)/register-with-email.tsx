@@ -8,12 +8,23 @@ import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { auth, firestore } from "@/firebase/config.firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function componentName() {
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [termsCheck, setTermsCheck] = useState<boolean>(false);
@@ -23,35 +34,101 @@ export default function componentName() {
     passwordError: false,
     confirmPasswordError: false,
     termsError: false,
+    errorMessage: "",
   });
 
   const router = useRouter();
 
-  const handleOnSubmit = () => {
+  const handleVerifications = () => {
     if (email === "") {
       setErrorCheck((errorCheck) => {
-        return { ...errorCheck, emailError: true };
+        return {
+          ...errorCheck,
+          emailError: true,
+          errorMessage: "This field is required",
+        };
       });
     }
     if (username === "") {
       setErrorCheck((errorCheck) => {
-        return { ...errorCheck, nameError: true };
+        return {
+          ...errorCheck,
+          nameError: true,
+          errorMessage: "This field is required",
+        };
       });
     }
     if (password === "") {
       setErrorCheck((errorCheck) => {
-        return { ...errorCheck, passwordError: true };
+        return {
+          ...errorCheck,
+          passwordError: true,
+          errorMessage: "This field is required",
+        };
       });
     }
     if (confirmPassword === "") {
       setErrorCheck((errorCheck) => {
-        return { ...errorCheck, confirmPasswordError: true };
+        return {
+          ...errorCheck,
+          confirmPasswordError: true,
+          errorMessage: "This field is required",
+        };
       });
     }
     if (!termsCheck) {
       setErrorCheck((errorCheck) => {
-        return { ...errorCheck, termsError: true };
+        return {
+          ...errorCheck,
+          termsError: true,
+          errorMessage: "This field is required",
+        };
       });
+    }
+    if (
+      password !== "" &&
+      confirmPassword !== "" &&
+      password !== confirmPassword
+    ) {
+      setErrorCheck((errorCheck) => {
+        return {
+          ...errorCheck,
+          passwordError: true,
+          confirmPasswordError: true,
+          errorMessage: "Passwords do not match",
+        };
+      });
+    }
+  };
+
+  const handleOnSubmit = async () => {
+    handleVerifications();
+    setLoading(true);
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredentials;
+      const usersCollection = collection(firestore, "users");
+      const userDoc = doc(usersCollection, user.uid);
+      await setDoc(userDoc, {
+        uid: user.uid,
+        username: username,
+        email: user.email,
+        phone: user.phoneNumber,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified,
+        role: null,
+        created_at: Timestamp.now(),
+        updated_at: Timestamp.now(),
+      });
+      if (user !== null) {
+        router.push("/(register)/user-category");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -88,62 +165,85 @@ export default function componentName() {
   }, [username, email, password, confirmPassword, termsCheck]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <AuthButton type="back-icon-btn" onPressAction={() => router.back()} />
-      <View style={styles.innerContainerStyles}>
-        <Text style={[textFontStyles.titleLargeBold, { textAlign: "center" }]}>
-          Register with Email
-        </Text>
-        <KeyboardAvoidingView style={styles.formContainer}>
-          <TextInputElement
-            error={errorCheck.nameError}
-            required
-            value={username}
-            onChangeValue={setUsername}
-            keyboardType="default"
-            placeholder="Name"
-            type="auth-input"
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          justifyContent: loading ? "center" : "flex-start",
+          alignItems: loading ? "center" : "flex-start",
+        },
+      ]}
+    >
+      {loading ? (
+        <ActivityIndicator size={48} color={appColors.primaryColor} />
+      ) : (
+        <>
+          <AuthButton
+            type="back-icon-btn"
+            onPressAction={() => router.back()}
           />
-          <TextInputElement
-            error={errorCheck.emailError}
-            required
-            value={email}
-            onChangeValue={setEmail}
-            keyboardType="email-address"
-            placeholder="Email"
-            type="auth-input"
-          />
-          <TextInputElement
-            error={errorCheck.passwordError}
-            required
-            value={password}
-            onChangeValue={setPassword}
-            keyboardType="default"
-            placeholder="Password"
-            type="auth-input"
-            password
-          />
-          <TextInputElement
-            error={errorCheck.confirmPasswordError}
-            required
-            value={confirmPassword}
-            onChangeValue={setConfirmPassword}
-            keyboardType="default"
-            placeholder="Confirm Password"
-            type="auth-input"
-            password
-          />
-        </KeyboardAvoidingView>
-        <AuthCheckElement
-          label="Agree to our terms and conditions"
-          check={termsCheck}
-          checkAction={() => setTermsCheck(!termsCheck)}
-          error={errorCheck.termsError}
-        />
-        <View style={{ width: "100%", marginTop: 100 }}>
-          <BottomButton name="Register" onPressAction={handleOnSubmit} />
-        </View>
-      </View>
+          <ScrollView style={styles.scrollViewContainer}>
+            <View style={styles.innerContainerStyles}>
+              <Text
+                style={[textFontStyles.titleLargeBold, { textAlign: "center" }]}
+              >
+                Register with Email
+              </Text>
+              <KeyboardAvoidingView style={styles.formContainer}>
+                <TextInputElement
+                  error={errorCheck.nameError}
+                  required
+                  value={username}
+                  onChangeValue={setUsername}
+                  keyboardType="default"
+                  placeholder="Name"
+                  type="auth-input"
+                />
+                <TextInputElement
+                  error={errorCheck.emailError}
+                  required
+                  value={email}
+                  onChangeValue={setEmail}
+                  keyboardType="email-address"
+                  placeholder="Email"
+                  type="auth-input"
+                />
+                <TextInputElement
+                  error={errorCheck.passwordError}
+                  required
+                  value={password}
+                  onChangeValue={setPassword}
+                  keyboardType="default"
+                  placeholder="Password"
+                  type="auth-input"
+                  password
+                  errorMessage={errorCheck.errorMessage}
+                />
+                <TextInputElement
+                  error={errorCheck.confirmPasswordError}
+                  required
+                  value={confirmPassword}
+                  onChangeValue={setConfirmPassword}
+                  keyboardType="default"
+                  placeholder="Confirm Password"
+                  type="auth-input"
+                  password
+                  errorMessage={errorCheck.errorMessage}
+                />
+              </KeyboardAvoidingView>
+              <AuthCheckElement
+                label="Agree to our terms and conditions"
+                check={termsCheck}
+                checkAction={() => setTermsCheck(!termsCheck)}
+                error={errorCheck.termsError}
+              />
+              <View style={{ width: "100%", marginTop: 100 }}>
+                <BottomButton name="Register" onPressAction={handleOnSubmit} />
+              </View>
+            </View>
+          </ScrollView>
+        </>
+      )}
     </SafeAreaView>
   );
 }
@@ -151,12 +251,13 @@ export default function componentName() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    gap: 20,
-    alignItems: "flex-start",
     backgroundColor: appColors.surfaceBright,
+    flexDirection: "column",
+  },
+  scrollViewContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    gap: 20,
   },
   innerContainerStyles: {
     width: "100%",

@@ -19,14 +19,14 @@ export default function componentName({
   const [error, setError] = useState<boolean>(false);
 
   const handleSubmitForm = () => {
-    if (otp.length < 4 || otp === "") setError(true);
+    if (otp.length < 6 || otp === "") setError(true);
     else {
       buttonAction();
     }
   };
 
   useEffect(() => {
-    if (otp.length === 4) setError(false);
+    if (otp.length === 6) setError(false);
   }, [otp]);
 
   return (
@@ -50,7 +50,7 @@ export default function componentName({
           }}
         >
           <OtpInput
-            numberOfDigits={4}
+            numberOfDigits={6}
             focusColor={error ? appColors.errorColor : appColors.primaryColor}
             onTextChange={(code) => setOtp(code)}
             theme={{
