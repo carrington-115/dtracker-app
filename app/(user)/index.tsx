@@ -7,7 +7,6 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
 import React from "react";
-import { Image } from "react-native";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -102,8 +101,16 @@ export default function componentName() {
           translucent={true}
           backgroundColor={appColors.surfaceContainerLowest}
         />
-        <View>
-          <Text>Index</Text>
+        <View style={styles.homeTitleStyle}>
+          <Text
+            style={{
+              ...textFontStyles.headlineSmallBold,
+              color: appColors.onPrimaryContainerColor,
+              textAlign: "center",
+            }}
+          >
+            Trash Management Options
+          </Text>
         </View>
       </SafeAreaView>
     </>
@@ -114,5 +121,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: appColors.surfaceContainerLowest,
     flex: 1,
+  },
+  homeTitleStyle: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

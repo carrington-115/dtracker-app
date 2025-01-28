@@ -63,6 +63,12 @@ interface IconButtonProps {
   pressedColor?: string;
 }
 
+interface pickupButtonProps {
+  icon: React.ReactNode;
+  name: string;
+  onPress: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -72,4 +78,5 @@ export type {
   bottomButtonPropsType,
   radioComponentPropsType,
   IconButtonProps,
+  pickupButtonProps,
 };
