@@ -101,7 +101,9 @@ export default function componentName() {
           headerStyle: {
             paddingHorizontal: 16,
             borderBottomWidth: 0.5,
-            borderColor: appColors.outlineVariant,
+            borderColor: appColors.outline,
+            boxShadow: "none",
+            elevation: 0,
           },
 
           headerRight: () => (
