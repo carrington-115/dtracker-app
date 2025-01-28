@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react-native";
-import HomeScreen from "@/app/index";
+import HomeScreen from "@/app/(user)/index";
 
 describe("", () => {
   it("Render the loading indicator initially", () => {

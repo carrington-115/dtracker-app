@@ -69,6 +69,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="(pickups)"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </Provider>
   );

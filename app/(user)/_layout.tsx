@@ -10,7 +10,7 @@ export default function componentName() {
   return (
     <>
       <Tabs
-        screenOptions={({ route }) => ({
+        screenOptions={{
           tabBarActiveTintColor: appColors.onSurface,
           tabBarInactiveTintColor: appColors.onSurface,
           tabBarStyle: {
@@ -22,7 +22,7 @@ export default function componentName() {
           tabBarLabelStyle: {
             ...textFontStyles.bodySmallRegular,
           },
-        })}
+        }}
       >
         <Tabs.Screen
           name="index"

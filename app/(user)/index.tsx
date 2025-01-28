@@ -5,12 +5,14 @@ import { IconButtonProps, pickupButtonProps } from "@/constants/types";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Tabs } from "expo-router";
+import { Stack, Tabs, useRouter } from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function componentName() {
+  const router = useRouter();
+
   const headerIconsContent: IconButtonProps[] = [
     {
       icon: (
@@ -62,7 +64,7 @@ export default function componentName() {
         />
       ),
       name: "Immediate pickup",
-      onPress: () => {},
+      onPress: () => router.navigate("../(pickups)/immediate"),
     },
     {
       icon: (
@@ -73,7 +75,7 @@ export default function componentName() {
         />
       ),
       name: "Reserve pickup",
-      onPress: () => {},
+      onPress: () => router.navigate("../(pickups)/reserve"),
     },
   ];
 
@@ -120,6 +122,7 @@ export default function componentName() {
           ),
         }}
       />
+
       <SafeAreaView style={styles.container}>
         <StatusBar
           barStyle="dark-content"
