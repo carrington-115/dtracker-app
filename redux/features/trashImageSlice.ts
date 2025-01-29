@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const immediateTrashSlice = createSlice({
-  name: "immediate",
+  name: "immediateTrash",
   initialState,
   reducers: {
     addTrashImage: (state: any, action: any) => {
