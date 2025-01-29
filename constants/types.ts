@@ -61,7 +61,7 @@ interface IconButtonProps {
   btnAction: () => void;
   bgColor: string;
   pressedColor?: string;
-  appStyles: any;
+  appStyles?: any;
 }
 
 interface pickupButtonProps {

@@ -11,6 +11,7 @@ import RadioComponent from "./atoms/RadioComponent";
 import IconButton from "./atoms/IconButton";
 import PickupButton from "./molecules/PickupButton";
 import DropDownElement from "./atoms/DropDownElement";
+import BottomSheetModal from "./molecules/BottomSheetModal";
 
 export {
   OnboardingSlider,
@@ -25,4 +26,5 @@ export {
   IconButton,
   PickupButton,
   DropDownElement,
+  BottomSheetModal,
 };

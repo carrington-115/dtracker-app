@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -8,150 +8,207 @@ import {
   Pressable,
   TextInput,
   TouchableOpacity,
+  StatusBar,
+  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, Switch } from "react-native-paper";
 import appColors from "@/constants/colors";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { textFontStyles } from "@/constants/fonts";
-import { BottomButton, DropDownElement, IconButton } from "@/components";
+import {
+  BottomButton,
+  BottomSheetModal,
+  DropDownElement,
+  IconButton,
+} from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Entypo from "@expo/vector-icons/Entypo";
+import * as ImagePicker from "expo-image-picker";
 
 export default function componentName() {
   const [trashType, setTrashType] = useState<string>("Mixed");
   const [deviceLocation, setDeviceLocation] = useState<boolean>(false);
-  // const []
-
+  const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
+  const [visible, setVisible] = useState<boolean>(false);
 
-  const handleUploadImage = () => {};
+  const handleModalSize = () => {
+    setVisible(!visible);
+  };
+
+  const handleUploadImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images", "videos"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Appbar.Header
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          left: 0,
-          backgroundColor: "transparent",
-        }}
-      >
-        <Appbar.BackAction onPress={() => router.back()} />
-        <Appbar.Content title="Immediate" />
-      </Appbar.Header>
-      <ScrollView style={styles.scrollContainer}>
-        <TouchableOpacity
-          style={styles.ImageSection}
-          onPress={handleUploadImage}
+    <>
+      <SafeAreaView style={styles.container}>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={appColors.surfaceContainerLowest}
+        />
+        <Appbar.Header
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: "transparent",
+          }}
         >
-          <View style={{ flexDirection: "column", alignItems: "center" }}>
-            <MaterialIcons
-              name="image"
-              size={120}
-              color={appColors.outlineVariant}
-            />
-            <Text style={{ ...textFontStyles.titleMediumRegular }}>
-              Upload Trash Image
-            </Text>
-          </View>
-          <IconButton
-            icon={
-              <MaterialCommunityIcons
-                name="camera"
-                size={24}
-                color={appColors.onSurface}
+          <Appbar.BackAction onPress={() => router.back()} />
+          <Appbar.Content title="Immediate" />
+        </Appbar.Header>
+        <ScrollView style={styles.scrollContainer}>
+          <TouchableOpacity
+            style={styles.ImageSection}
+            onPress={handleModalSize}
+          >
+            <View style={{ flexDirection: "column", alignItems: "center" }}>
+              <MaterialIcons
+                name="image"
+                size={120}
+                color={appColors.outlineVariant}
               />
-            }
-            bgColor={appColors.onPrimaryColor}
-            btnAction={() => {}}
-            appStyles={{
-              elevation: 5,
-              position: "absolute",
-              bottom: 21,
-              right: 16,
-            }}
-          />
-        </TouchableOpacity>
-        <View style={styles.formContainer}>
-          <TrashSizeInput />
-          <View style={styles.trashTypeStyles}>
-            <Text
-              style={{
-                ...textFontStyles.bodyLargeRegular,
-                color: appColors.onSurface,
-              }}
-            >
-              Trash type
-            </Text>
-            <DropDownElement
-              dropDownItems={[
-                { label: "Mixed", value: "mixed" },
-                { label: "Paper", value: "paper" },
-                { label: "Electronics", value: "e-waste" },
-                { label: "Plastic", value: "plastic" },
-                { label: "Glass", value: "glass" },
-                { label: "Metal", value: "metal" },
-                { label: "Organic", value: "organic" },
-              ]}
-              dropDownValue={trashType}
-              onValueChange={(value) => setTrashType(value)}
-            />
-          </View>
-          <View style={styles.locatorStyles}>
-            <Text style={{ ...textFontStyles.bodyLargeRegular }}>
-              Pickup Location
-            </Text>
-            <View
-              style={{
-                width: "100%",
-                justifyContent: "space-between",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-              >
+              <Text style={{ ...textFontStyles.titleMediumRegular }}>
+                Upload Trash Image
+              </Text>
+            </View>
+            <IconButton
+              icon={
                 <MaterialCommunityIcons
-                  name="home-map-marker"
+                  name="camera"
                   size={24}
                   color={appColors.onSurface}
                 />
-                <Text style={{ ...textFontStyles.bodyLargeRegular }}>
-                  Device locaton
-                </Text>
-              </View>
-              <Switch
-                value={deviceLocation}
-                onValueChange={() => setDeviceLocation((previous) => !previous)}
+              }
+              bgColor={appColors.onPrimaryColor}
+              btnAction={handleModalSize}
+              appStyles={{
+                elevation: 5,
+                position: "absolute",
+                bottom: 21,
+                right: 16,
+              }}
+            />
+          </TouchableOpacity>
+          <View style={styles.formContainer}>
+            <TrashSizeInput />
+            <View style={styles.trashTypeStyles}>
+              <Text
                 style={{
-                  padding: 5,
-                  borderWidth: 1,
-                  borderColor: "black",
+                  ...textFontStyles.bodyLargeRegular,
+                  color: appColors.onSurface,
                 }}
-                trackColor={{
-                  false: appColors.primaryContainerColor,
-                  true: appColors.primaryColor,
-                }}
-                thumbColor={
-                  deviceLocation
-                    ? appColors.primaryContainerColor
-                    : appColors.primaryColor
-                }
-                ios_backgroundColor={appColors.primaryContainerColor}
+              >
+                Trash type
+              </Text>
+              <DropDownElement
+                dropDownItems={[
+                  { label: "Mixed", value: "mixed" },
+                  { label: "Paper", value: "paper" },
+                  { label: "Electronics", value: "e-waste" },
+                  { label: "Plastic", value: "plastic" },
+                  { label: "Glass", value: "glass" },
+                  { label: "Metal", value: "metal" },
+                  { label: "Organic", value: "organic" },
+                ]}
+                dropDownValue={trashType}
+                onValueChange={(value) => setTrashType(value)}
               />
             </View>
+            <View style={styles.locatorStyles}>
+              <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                Pickup Location
+              </Text>
+              <View
+                style={{
+                  width: "100%",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="home-map-marker"
+                    size={24}
+                    color={appColors.onSurface}
+                  />
+                  <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                    Device locaton
+                  </Text>
+                </View>
+                <Switch
+                  value={deviceLocation}
+                  onValueChange={() =>
+                    setDeviceLocation((previous) => !previous)
+                  }
+                  style={{
+                    padding: 5,
+                    borderWidth: 1,
+                    borderColor: "black",
+                  }}
+                  trackColor={{
+                    false: appColors.primaryContainerColor,
+                    true: appColors.primaryColor,
+                  }}
+                  thumbColor={
+                    deviceLocation
+                      ? appColors.primaryContainerColor
+                      : appColors.primaryColor
+                  }
+                  ios_backgroundColor={appColors.primaryContainerColor}
+                />
+              </View>
+            </View>
           </View>
-        </View>
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <View style={{ width: "90%", marginTop: 50 }}>
-            <BottomButton name="Set pickup" onPressAction={() => {}} />
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <View style={{ width: "90%", marginTop: 50 }}>
+              <BottomButton name="Set pickup" onPressAction={() => {}} />
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+        <BottomSheetModal visible={visible} setVisible={setVisible}>
+          <Pressable style={styles.modalControllerStyles} />
+          <View style={{ width: "100%", flexDirection: "column", gap: 10 }}>
+            <Pressable style={styles.modalButtonStyles}>
+              <MaterialIcons
+                name="photo-camera"
+                size={24}
+                color={appColors.onSurface}
+              />
+              <Text style={{ ...textFontStyles.bodyLargeRegular }}>Camera</Text>
+            </Pressable>
+            <Pressable style={styles.modalButtonStyles}>
+              <MaterialCommunityIcons
+                name="folder-multiple-image"
+                size={24}
+                color={appColors.onSurface}
+              />
+              <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                Upload from device
+              </Text>
+            </Pressable>
+          </View>
+        </BottomSheetModal>
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -235,6 +292,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: appColors.surfaceContainerLowest,
     flex: 1,
+    position: "relative",
   },
   scrollContainer: {
     marginTop: 50,
@@ -274,5 +332,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     paddingVertical: 10,
+  },
+  modalButtonStyles: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 20,
+    width: "100%",
+    padding: 10,
+  },
+  modalControllerStyles: {
+    width: 50,
+    height: 5,
+    backgroundColor: appColors.outline,
+    borderRadius: 10,
   },
 });
