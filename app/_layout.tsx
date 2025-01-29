@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider } from "react-redux";
 import store from "@/redux/store";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -25,57 +27,61 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <Stack
-        screenOptions={
-          {
-            // headerShown: false,
-          }
-        }
-      >
-        <Stack.Screen
-          name="index"
-          options={{
-            title: "Home",
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="onboarding"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="login"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(register)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(login)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(user)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(pickups)"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
+      <GestureHandlerRootView>
+        <BottomSheetModalProvider>
+          <Stack
+            screenOptions={
+              {
+                // headerShown: false,
+              }
+            }
+          >
+            <Stack.Screen
+              name="index"
+              options={{
+                title: "Home",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="onboarding"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="login"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(register)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(login)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(user)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(pickups)"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </Provider>
   );
 }

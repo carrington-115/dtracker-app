@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import appColors from "@/constants/colors";
 import { useRouter } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Index() {
   const [signedIn, setSignedIn] = useState<boolean>(false);
@@ -19,16 +20,18 @@ export default function Index() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" />
-      <View>
-        <ActivityIndicator
-          size={48}
-          color={appColors.onPrimaryColor}
-          testID="loading-indicator"
-        />
-      </View>
-    </SafeAreaView>
+    <GestureHandlerRootView>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <View>
+          <ActivityIndicator
+            size={48}
+            color={appColors.onPrimaryColor}
+            testID="loading-indicator"
+          />
+        </View>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 

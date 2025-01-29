@@ -5,9 +5,9 @@ import { IconButtonProps, pickupButtonProps } from "@/constants/types";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Stack, Tabs, useRouter } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import React from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { View, Text, StyleSheet, StatusBar, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function componentName() {
@@ -101,7 +101,9 @@ export default function componentName() {
           headerStyle: {
             paddingHorizontal: 16,
             borderBottomWidth: 0.5,
-            borderColor: appColors.outlineVariant,
+            borderColor: appColors.outline,
+            boxShadow: "none",
+            elevation: 0,
           },
 
           headerRight: () => (
