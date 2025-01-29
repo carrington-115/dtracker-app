@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,13 +18,14 @@ import { textFontStyles } from "@/constants/fonts";
 import {
   BottomButton,
   BottomSheetModal,
-  Camera,
+  Camera as AppCamera,
   DropDownElement,
   IconButton,
 } from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as ImagePicker from "expo-image-picker";
+import { useSelector } from "react-redux";
 
 export default function componentName() {
   const [trashType, setTrashType] = useState<string>("Mixed");
@@ -33,6 +34,7 @@ export default function componentName() {
   const router = useRouter();
   const [visible, setVisible] = useState<boolean>(false);
   const [cameraVisible, setCameraVisible] = useState<boolean>(false);
+  const trashImage = useSelector((state: any) => state.immediate.trashImages);
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -50,10 +52,14 @@ export default function componentName() {
     }
   };
 
+  useEffect(() => {
+    //
+  }, []);
+
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Camera
+        <AppCamera
           visible={cameraVisible}
           onClose={() => setCameraVisible(false)}
         />

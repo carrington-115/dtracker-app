@@ -80,9 +80,7 @@ export default function componentName({
     onClose();
   };
 
-  useEffect(() => {
-    // side effects
-  }, []);
+  useEffect(() => {}, []);
 
   if (!hasPermission) {
     return (

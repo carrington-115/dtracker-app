@@ -1,17 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface initialStateTypes {
+  trashImages: string[];
+}
+const initialState: initialStateTypes = {
   trashImages: [],
 };
 
 const immediateTrashSlice = createSlice({
-  name: "immediateTrash",
+  name: "immediate",
   initialState,
   reducers: {
-    addTrashImage: (state: any, action: any) => {
-      state.trashImages.push(action?.payload);
+    addTrashImage: (state: initialStateTypes, action) => {
+      state.trashImages.push(action.payload);
     },
-    removeTrashImage: (state: any, action) => {
+    removeTrashImage: (state: initialStateTypes, action) => {
       state.trashImages = state.trashImages.filter(
         (image: any) => image.id !== action.payload
       );

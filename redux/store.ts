@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
     counter: counterReducer,
     phone: phoneReducer,
-    immediateTrash: immediateTrashReducer,
+    immediate: immediateTrashReducer,
   },
 });
 
