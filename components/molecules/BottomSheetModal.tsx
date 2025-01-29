@@ -1,8 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import appColors from "@/constants/colors";
-import { textFontStyles } from "@/constants/fonts";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Modal, StyleSheet, Dimensions } from "react-native";
 import Animated, {
   useSharedValue,
@@ -13,6 +10,7 @@ import {
   PanGestureHandler,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
+import { bottomSheetPropsType } from "@/constants/types";
 
 const { height } = Dimensions.get("window");
 
@@ -20,12 +18,12 @@ export default function BottomSheetModalControl({
   visible,
   setVisible,
   children,
-}: {
-  visible: boolean;
-  setVisible: (value: boolean) => void;
-  children: React.ReactNode;
-}) {
-  const modalHeight = useSharedValue(height * 0.3);
+  initialHeight,
+  minHieght,
+  maxHeight,
+  collapseHeight,
+}: bottomSheetPropsType) {
+  const modalHeight = useSharedValue(height * initialHeight);
   const animatedStyles = useAnimatedStyle(() => ({
     height: modalHeight.value,
   }));
@@ -33,14 +31,14 @@ export default function BottomSheetModalControl({
   const onGestureEvent = (event: any) => {
     const newHeight = height - event.nativeEvent.absoluteY;
     modalHeight.value = withSpring(
-      Math.max(height * 0.15, Math.min(newHeight, height * 0.35)),
+      Math.max(height * minHieght, Math.min(newHeight, height * maxHeight)),
       {
-        damping: 15,
+        damping: 25,
         stiffness: 120,
       }
     );
 
-    if (newHeight < height * 0.2) {
+    if (newHeight < height * collapseHeight) {
       setVisible(false);
     }
   };
@@ -64,7 +62,7 @@ export default function BottomSheetModalControl({
 
 const styles = StyleSheet.create({
   bottomSheetModalStyles: {
-    backgroundColor: appColors.surfaceContainerHighest,
+    backgroundColor: appColors.surfaceDimColor,
     padding: 20,
     elevation: 10,
     minHeight: "25%",

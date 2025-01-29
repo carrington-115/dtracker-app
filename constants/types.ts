@@ -75,6 +75,17 @@ interface dropDownElementProps {
   dropDownValue: string;
   onValueChange: (itemValue: string) => void;
 }
+
+interface bottomSheetPropsType {
+  visible: boolean;
+  setVisible: (value: boolean) => void;
+  children: React.ReactNode;
+  initialHeight: number;
+  minHieght: number;
+  maxHeight: number;
+  collapseHeight: number;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -86,4 +97,5 @@ export type {
   IconButtonProps,
   pickupButtonProps,
   dropDownElementProps,
+  bottomSheetPropsType,
 };

@@ -184,7 +184,14 @@ export default function componentName() {
             </View>
           </View>
         </ScrollView>
-        <BottomSheetModal visible={visible} setVisible={setVisible}>
+        <BottomSheetModal
+          visible={visible}
+          setVisible={setVisible}
+          initialHeight={0.35}
+          maxHeight={0.4}
+          minHieght={0.2}
+          collapseHeight={0.15}
+        >
           <Pressable style={styles.modalControllerStyles} />
           <View style={{ width: "100%", flexDirection: "column", gap: 10 }}>
             <Pressable style={styles.modalButtonStyles}>
@@ -195,7 +202,10 @@ export default function componentName() {
               />
               <Text style={{ ...textFontStyles.bodyLargeRegular }}>Camera</Text>
             </Pressable>
-            <Pressable style={styles.modalButtonStyles}>
+            <Pressable
+              style={styles.modalButtonStyles}
+              onPress={handleUploadImage}
+            >
               <MaterialCommunityIcons
                 name="folder-multiple-image"
                 size={24}
