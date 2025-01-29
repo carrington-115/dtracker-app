@@ -57,7 +57,15 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with pickup agents."
+          "photosPermission": "Allow dtracker to access your photos to let you share them with pickup agents."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow DTRACKER to access your camera",
+          "microphonePermission": "Allow dtracker to access your microphone",
+          "recordAudioAndroid": true
         }
       ]
     ],

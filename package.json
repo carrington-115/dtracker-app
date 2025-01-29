@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
-    "@gorhom/bottom-sheet": "^5.0.6",
     "@react-native-google-signin/google-signin": "^13.1.0",
     "@react-native-picker/picker": "2.9.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
@@ -55,7 +54,8 @@
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
-    "undefined": "expo-auth-session/providers/google"
+    "undefined": "expo-auth-session/providers/google",
+    "expo-camera": "~16.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

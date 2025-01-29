@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,6 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, Switch } from "react-native-paper";
@@ -19,6 +18,7 @@ import { textFontStyles } from "@/constants/fonts";
 import {
   BottomButton,
   BottomSheetModal,
+  Camera,
   DropDownElement,
   IconButton,
 } from "@/components";
@@ -32,6 +32,7 @@ export default function componentName() {
   const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
   const [visible, setVisible] = useState<boolean>(false);
+  const [cameraVisible, setCameraVisible] = useState<boolean>(false);
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -52,6 +53,11 @@ export default function componentName() {
   return (
     <>
       <SafeAreaView style={styles.container}>
+        <Camera
+          visible={cameraVisible}
+          onClose={() => setCameraVisible(false)}
+        />
+
         <StatusBar
           barStyle="dark-content"
           backgroundColor={appColors.surfaceContainerLowest}
@@ -194,7 +200,10 @@ export default function componentName() {
         >
           <Pressable style={styles.modalControllerStyles} />
           <View style={{ width: "100%", flexDirection: "column", gap: 10 }}>
-            <Pressable style={styles.modalButtonStyles}>
+            <Pressable
+              style={styles.modalButtonStyles}
+              onPress={() => setCameraVisible(true)}
+            >
               <MaterialIcons
                 name="photo-camera"
                 size={24}
