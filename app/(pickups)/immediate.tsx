@@ -332,7 +332,11 @@ function TrashSizeInput() {
           ]}
         >
           <Text>{trashSizeUnit}</Text>
-          <Entypo name="chevron-small-down" size={24} color="black" />
+          <Entypo
+            name={visible ? "chevron-small-up" : "chevron-small-down"}
+            size={24}
+            color="black"
+          />
         </Pressable>
       </Pressable>
       {visible && (

@@ -14,6 +14,7 @@ import DropDownElement from "./atoms/DropDownElement";
 import BottomSheetModal from "./molecules/BottomSheetModal";
 import Camera from "./organisms/Camera";
 import ImageViewer from "./organisms/ImageViewer";
+import SizeDropDown from "./atoms/TrashSizeDropDown";
 
 export {
   OnboardingSlider,
@@ -31,4 +32,5 @@ export {
   BottomSheetModal,
   Camera,
   ImageViewer,
+  SizeDropDown,
 };
