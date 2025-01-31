@@ -22,6 +22,7 @@ import {
   DropDownElement,
   IconButton,
   ImageViewer,
+  LocatorSection,
 } from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -29,12 +30,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useSelector, useDispatch } from "react-redux";
 import { addTrashImage } from "@/redux/features/trashImageSlice";
 import * as Location from "expo-location";
-
-interface locationPropsType {
-  latitude: number;
-  longitude: number;
-  accuracy: number | null;
-}
+import { locationPropsType } from "@/constants/types";
 
 export default function componentName() {
   const [trashType, setTrashType] = useState<string>("Mixed");
@@ -50,6 +46,7 @@ export default function componentName() {
 
   const [locationDetails, setLocationDetails] =
     useState<locationPropsType | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<string>("cash");
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -191,54 +188,24 @@ export default function componentName() {
                 onValueChange={(value) => setTrashType(value)}
               />
             </View>
-            <View style={styles.locatorStyles}>
-              <Text style={{ ...textFontStyles.bodyLargeRegular }}>
-                Pickup Location
-              </Text>
-              <View
+            <LocatorSection
+              switchPosition={deviceLocation}
+              handleGetDeviceLocation={handleGetDeviceLocation}
+            />
+            <View style={{ width: "90%", gap: 10 }}>
+              <Text
                 style={{
-                  width: "100%",
-                  justifyContent: "space-between",
-                  flexDirection: "row",
-                  alignItems: "center",
+                  ...textFontStyles.bodyLargeRegular,
+                  color: appColors.onSurface,
                 }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 5,
-                  }}
-                >
-                  <MaterialCommunityIcons
-                    name="home-map-marker"
-                    size={24}
-                    color={appColors.onSurface}
-                  />
-                  <Text style={{ ...textFontStyles.bodyLargeRegular }}>
-                    Device locaton
-                  </Text>
-                </View>
-                <Switch
-                  value={deviceLocation}
-                  onValueChange={handleGetDeviceLocation}
-                  style={{
-                    padding: 5,
-                    borderWidth: 1,
-                    borderColor: "black",
-                  }}
-                  trackColor={{
-                    false: appColors.primaryContainerColor,
-                    true: appColors.primaryColor,
-                  }}
-                  thumbColor={
-                    deviceLocation
-                      ? appColors.primaryContainerColor
-                      : appColors.primaryColor
-                  }
-                  ios_backgroundColor={appColors.primaryContainerColor}
-                />
-              </View>
+                Payment method
+              </Text>
+              <DropDownElement
+                dropDownItems={[{ label: "Cash payment", value: "cash" }]}
+                dropDownValue={paymentMethod}
+                onValueChange={(value) => setPaymentMethod(value)}
+              />
             </View>
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -375,7 +342,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   scrollContainer: {
-    marginTop: 50,
+    marginVertical: 50,
   },
   ImageSection: {
     height: 250,
@@ -405,7 +372,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     gap: 10,
-    paddingVertical: 20,
+    paddingTop: 20,
   },
   locatorStyles: {
     width: "90%",

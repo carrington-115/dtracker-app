@@ -15,6 +15,7 @@ import BottomSheetModal from "./molecules/BottomSheetModal";
 import Camera from "./organisms/Camera";
 import ImageViewer from "./organisms/ImageViewer";
 import SizeDropDown from "./atoms/TrashSizeDropDown";
+import LocatorSection from "./molecules/LocatorElement";
 
 export {
   OnboardingSlider,
@@ -33,4 +34,5 @@ export {
   Camera,
   ImageViewer,
   SizeDropDown,
+  LocatorSection,
 };

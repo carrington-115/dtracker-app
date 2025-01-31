@@ -86,6 +86,12 @@ interface bottomSheetPropsType {
   collapseHeight: number;
 }
 
+interface locationPropsType {
+  latitude: number;
+  longitude: number;
+  accuracy: number | null;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -98,4 +104,5 @@ export type {
   pickupButtonProps,
   dropDownElementProps,
   bottomSheetPropsType,
+  locationPropsType,
 };
