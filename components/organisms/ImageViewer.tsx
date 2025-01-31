@@ -33,19 +33,9 @@ export default function componentName({
         <>
           <Modal>
             {/* <Swiper
-              loop
-              showsPagination
-              paginationStyle={{ bottom: 10 }}
-              style={{ width: "100%", height: "100%" }}
-              showsButtons
-              activeDotColor={appColors.primaryColor}
-              index={images.indexOf(images[currentImage!])}
-              onIndexChanged={(index) => setCurrentImage(index)}
-            >
-              {images.map((image, index) => (
-                <ViewImage key={index} image={image} />
-              ))}
-            </Swiper> */}
+              - fix modal issues
+              - fix bug on the swiper and enable image swiping
+            */}
           </Modal>
         </>
       ) : (

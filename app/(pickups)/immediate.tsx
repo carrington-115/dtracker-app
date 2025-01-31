@@ -28,6 +28,13 @@ import Entypo from "@expo/vector-icons/Entypo";
 import * as ImagePicker from "expo-image-picker";
 import { useSelector, useDispatch } from "react-redux";
 import { addTrashImage } from "@/redux/features/trashImageSlice";
+import * as Location from "expo-location";
+
+interface locationPropsType {
+  latitude: number;
+  longitude: number;
+  accuracy: number | null;
+}
 
 export default function componentName() {
   const [trashType, setTrashType] = useState<string>("Mixed");
@@ -40,6 +47,9 @@ export default function componentName() {
   const dispatch = useDispatch();
   const [trashImageAvailable, setTrashImageAvailable] =
     useState<boolean>(false);
+
+  const [locationDetails, setLocationDetails] =
+    useState<locationPropsType | null>(null);
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -55,6 +65,26 @@ export default function componentName() {
     if (!result.canceled) {
       dispatch(addTrashImage(result.assets[0].uri));
       setVisible(false);
+    }
+  };
+
+  const handleGetDeviceLocation = async () => {
+    setDeviceLocation((previous) => !previous);
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.error("Permission to access location was denied");
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      setLocationDetails({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        accuracy: location.coords.accuracy,
+      });
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -191,9 +221,7 @@ export default function componentName() {
                 </View>
                 <Switch
                   value={deviceLocation}
-                  onValueChange={() =>
-                    setDeviceLocation((previous) => !previous)
-                  }
+                  onValueChange={handleGetDeviceLocation}
                   style={{
                     padding: 5,
                     borderWidth: 1,

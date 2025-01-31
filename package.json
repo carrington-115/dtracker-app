@@ -57,7 +57,8 @@
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
     "swiper": "^11.2.1",
-    "undefined": "expo-auth-session/providers/google"
+    "undefined": "expo-auth-session/providers/google",
+    "expo-location": "~18.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
