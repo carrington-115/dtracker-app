@@ -13,6 +13,7 @@ import PickupButton from "./molecules/PickupButton";
 import DropDownElement from "./atoms/DropDownElement";
 import BottomSheetModal from "./molecules/BottomSheetModal";
 import Camera from "./organisms/Camera";
+import ImageViewer from "./organisms/ImageViewer";
 
 export {
   OnboardingSlider,
@@ -29,4 +30,5 @@ export {
   DropDownElement,
   BottomSheetModal,
   Camera,
+  ImageViewer,
 };

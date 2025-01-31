@@ -21,11 +21,13 @@ import {
   Camera as AppCamera,
   DropDownElement,
   IconButton,
+  ImageViewer,
 } from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as ImagePicker from "expo-image-picker";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addTrashImage } from "@/redux/features/trashImageSlice";
 
 export default function componentName() {
   const [trashType, setTrashType] = useState<string>("Mixed");
@@ -35,6 +37,9 @@ export default function componentName() {
   const [visible, setVisible] = useState<boolean>(false);
   const [cameraVisible, setCameraVisible] = useState<boolean>(false);
   const trashImage = useSelector((state: any) => state.immediate.trashImages);
+  const dispatch = useDispatch();
+  const [trashImageAvailable, setTrashImageAvailable] =
+    useState<boolean>(false);
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -48,13 +53,16 @@ export default function componentName() {
       quality: 1,
     });
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      dispatch(addTrashImage(result.assets[0].uri));
+      setVisible(false);
     }
   };
 
   useEffect(() => {
-    //
-  }, []);
+    if (trashImage.length > 0) {
+      setTrashImageAvailable(true);
+    }
+  }, [image, trashImage]);
 
   return (
     <>
@@ -81,38 +89,53 @@ export default function componentName() {
           <Appbar.Content title="Immediate" />
         </Appbar.Header>
         <ScrollView style={styles.scrollContainer}>
-          <TouchableOpacity
-            style={styles.ImageSection}
-            onPress={handleModalSize}
-          >
-            <View style={{ flexDirection: "column", alignItems: "center" }}>
-              <MaterialIcons
-                name="image"
-                size={120}
-                color={appColors.outlineVariant}
+          <>
+            <View style={styles.ImageSection}>
+              {trashImage.length > 0 ? (
+                <ImageViewer images={trashImage} />
+              ) : (
+                <TouchableOpacity onPress={handleModalSize}>
+                  <View
+                    style={{ flexDirection: "column", alignItems: "center" }}
+                  >
+                    <MaterialIcons
+                      name="image"
+                      size={120}
+                      color={appColors.outlineVariant}
+                    />
+                    <Text style={{ ...textFontStyles.titleMediumRegular }}>
+                      Upload Trash Image
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+              <IconButton
+                icon={
+                  <MaterialCommunityIcons
+                    name={trashImageAvailable ? "plus" : "camera"}
+                    size={24}
+                    color={
+                      trashImageAvailable
+                        ? appColors.onPrimaryColor
+                        : appColors.onSurface
+                    }
+                  />
+                }
+                bgColor={
+                  trashImageAvailable
+                    ? appColors.primaryColor
+                    : appColors.onPrimaryColor
+                }
+                btnAction={handleModalSize}
+                appStyles={{
+                  elevation: 5,
+                  position: "absolute",
+                  bottom: 21,
+                  right: 16,
+                }}
               />
-              <Text style={{ ...textFontStyles.titleMediumRegular }}>
-                Upload Trash Image
-              </Text>
             </View>
-            <IconButton
-              icon={
-                <MaterialCommunityIcons
-                  name="camera"
-                  size={24}
-                  color={appColors.onSurface}
-                />
-              }
-              bgColor={appColors.onPrimaryColor}
-              btnAction={handleModalSize}
-              appStyles={{
-                elevation: 5,
-                position: "absolute",
-                bottom: 21,
-                right: 16,
-              }}
-            />
-          </TouchableOpacity>
+          </>
           <View style={styles.formContainer}>
             <TrashSizeInput />
             <View style={styles.trashTypeStyles}>

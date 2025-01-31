@@ -13,6 +13,7 @@ const immediateTrashSlice = createSlice({
   reducers: {
     addTrashImage: (state: initialStateTypes, action) => {
       state.trashImages.push(action.payload);
+      state.trashImages.reverse();
     },
     removeTrashImage: (state: initialStateTypes, action) => {
       state.trashImages = state.trashImages.filter(
