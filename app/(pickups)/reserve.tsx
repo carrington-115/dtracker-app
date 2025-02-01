@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -37,8 +37,13 @@ export default function componentName() {
     useState<boolean>(false);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedTime, setSelectedTime] = useState<Date | null>(new Date());
   const [mode, setMode] = useState<"date" | "time">("date");
+  const [addedTimeAndDate, setAddedTimeAndDate] = useState<any>({
+    time: false,
+    date: false,
+  });
 
   const handleGetDeviceLocation = () => {
     setLocationSwitchState((prevLocation) => !prevLocation);
@@ -56,10 +61,25 @@ export default function componentName() {
 
   const onChange = (event: any, selectedDate?: Date) => {
     if (selectedDate) {
-      setSelectedDate(selectedDate);
+      if (mode === "date") {
+        setSelectedDate(selectedDate);
+        setAddedTimeAndDate((prev: any) => {
+          return { ...prev, date: true };
+        });
+      } else if (mode === "time") {
+        setSelectedTime(selectedDate);
+        setAddedTimeAndDate((prev: any) => {
+          return { ...prev, time: true };
+        });
+      }
     }
     setShowDatePicker(false); // Hide picker after selection
   };
+
+  // useEffect(() => {
+  //   console.log("Selected date:", selectedDate);
+  //   console.log("Selected time:", selectedTime);
+  // }, [selectedDate, selectedTime]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -123,6 +143,20 @@ export default function componentName() {
           >
             Pickup schedule
           </Text>
+          {addedTimeAndDate.date && addedTimeAndDate.time && (
+            <>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <Text style={{ ...textFontStyles.bodyLargeMedium }}>
+                  {selectedDate?.toLocaleDateString()}
+                </Text>
+                <Text style={{ ...textFontStyles.bodyLargeMedium }}>
+                  {selectedTime?.toLocaleTimeString()}
+                </Text>
+              </View>
+            </>
+          )}
           <View
             style={{
               flexDirection: "row",
@@ -215,7 +249,7 @@ export default function componentName() {
       {showDatePicker && (
         <DateTimePicker
           // testID="dateTimePicker"
-          value={selectedDate}
+          value={selectedDate!}
           mode={mode}
           // is24Hour={true}
           display="default"
