@@ -14,6 +14,7 @@ import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import {
   ActiveButton,
+  BottomButton,
   DropDownElement,
   IconButton,
   LocatorSection,
@@ -23,6 +24,7 @@ import {
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { locationPropsType } from "@/constants/types";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function componentName() {
   const router = useRouter();
@@ -34,9 +36,29 @@ export default function componentName() {
   const [locationSwitchState, setLocationSwitchState] =
     useState<boolean>(false);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [mode, setMode] = useState<"date" | "time">("date");
 
   const handleGetDeviceLocation = () => {
     setLocationSwitchState((prevLocation) => !prevLocation);
+  };
+
+  const handleShowDatePicker = () => {
+    setMode("date");
+    setShowDatePicker(true);
+  };
+
+  const handleShowTimePicker = () => {
+    setMode("time");
+    setShowDatePicker(true);
+  };
+
+  const onChange = (event: any, selectedDate?: Date) => {
+    if (selectedDate) {
+      setSelectedDate(selectedDate);
+    }
+    setShowDatePicker(false); // Hide picker after selection
   };
 
   return (
@@ -109,7 +131,7 @@ export default function componentName() {
             }}
           >
             <ActiveButton
-              name="Select day and time"
+              name="Select date"
               icon={
                 <>
                   <MaterialIcons
@@ -119,7 +141,7 @@ export default function componentName() {
                   />
                 </>
               }
-              onPressAction={() => {}}
+              onPressAction={handleShowDatePicker}
               color={appColors.onPrimaryContainerColor}
               bgColor="rgba(215, 236, 227, 0.50)"
               focusedColor={appColors.primaryContainerColor}
@@ -134,7 +156,7 @@ export default function componentName() {
                   />
                 </>
               }
-              btnAction={() => {}}
+              btnAction={handleShowTimePicker}
               bgColor="rgba(215, 236, 227, 0.50)"
               pressedColor={appColors.primaryContainerColor}
             />
@@ -169,7 +191,7 @@ export default function componentName() {
             handleGetDeviceLocation={handleGetDeviceLocation}
           />
         </View>
-        <View style={styles.sectionOneStyle}>
+        <View style={{ ...styles.sectionOneStyle, borderBottomWidth: 0 }}>
           <Text
             style={{
               ...textFontStyles.bodyLargeRegular,
@@ -184,12 +206,27 @@ export default function componentName() {
             onValueChange={(value) => setPaymentMethod(value)}
           />
         </View>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View style={{ width: "90%", marginTop: 30 }}>
+            <BottomButton name="Set pickup" onPressAction={() => {}} />
+          </View>
+        </View>
       </ScrollView>
+      {showDatePicker && (
+        <DateTimePicker
+          // testID="dateTimePicker"
+          value={selectedDate}
+          mode={mode}
+          // is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
     </SafeAreaView>
   );
 }
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -201,6 +238,7 @@ const styles = StyleSheet.create({
     marginTop: 70,
     width: width,
     paddingHorizontal: 16,
+    flex: 1,
   },
   sectionOneStyle: {
     gap: 10,

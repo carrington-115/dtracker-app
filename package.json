@@ -58,7 +58,8 @@
     "react-redux": "^9.2.0",
     "swiper": "^11.2.1",
     "undefined": "expo-auth-session/providers/google",
-    "expo-location": "~18.0.5"
+    "expo-location": "~18.0.5",
+    "@react-native-community/datetimepicker": "8.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

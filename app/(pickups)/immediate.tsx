@@ -208,7 +208,13 @@ export default function componentName() {
               />
             </View>
           </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: 50,
+            }}
+          >
             <View style={{ width: "90%", marginTop: 50 }}>
               <BottomButton name="Set pickup" onPressAction={() => {}} />
             </View>
@@ -342,7 +348,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   scrollContainer: {
-    marginVertical: 50,
+    marginTop: 50,
   },
   ImageSection: {
     height: 250,
