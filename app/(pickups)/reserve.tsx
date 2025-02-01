@@ -25,6 +25,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { locationPropsType } from "@/constants/types";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import * as Location from "expo-location";
 
 export default function componentName() {
   const router = useRouter();
@@ -45,8 +46,19 @@ export default function componentName() {
     date: false,
   });
 
-  const handleGetDeviceLocation = () => {
-    setLocationSwitchState((prevLocation) => !prevLocation);
+  const handleGetDeviceLocation = async () => {
+    setLocationSwitchState((previous) => !previous);
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.error("Permission to access location was denied");
+      return;
+    }
+    const location = await Location.getCurrentPositionAsync({});
+    setDeviceLocation({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      accuracy: location.coords.accuracy,
+    });
   };
 
   const handleShowDatePicker = () => {
@@ -76,10 +88,11 @@ export default function componentName() {
     setShowDatePicker(false); // Hide picker after selection
   };
 
-  // useEffect(() => {
-  //   console.log("Selected date:", selectedDate);
-  //   console.log("Selected time:", selectedTime);
-  // }, [selectedDate, selectedTime]);
+  /*
+    useEffect(() => {
+      console.log("Device location:", deviceLocation);
+    }, [deviceLocation]);
+  */
 
   return (
     <SafeAreaView style={styles.container}>
@@ -241,7 +254,7 @@ export default function componentName() {
           />
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <View style={{ width: "90%", marginTop: 30 }}>
+          <View style={{ width: "90%", marginVertical: 30 }}>
             <BottomButton name="Set pickup" onPressAction={() => {}} />
           </View>
         </View>

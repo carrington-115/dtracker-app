@@ -27,9 +27,11 @@ const { height } = Dimensions.get("window");
 export default function componentName({
   visible,
   onClose,
+  closeModalAction,
 }: {
   visible: boolean;
   onClose: () => void;
+  closeModalAction: () => void;
 }) {
   const [hasPermission, requestPermission] = useCameraPermissions();
   const [type, setType] = useState<CameraType>("back");
@@ -78,6 +80,8 @@ export default function componentName({
   const handleSaveImage = () => {
     dispatch(addTrashImage(image.photo));
     onClose();
+    handleBackToCamera();
+    closeModalAction();
   };
 
   useEffect(() => {}, []);

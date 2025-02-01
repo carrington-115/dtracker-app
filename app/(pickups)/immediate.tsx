@@ -43,10 +43,10 @@ export default function componentName() {
   const dispatch = useDispatch();
   const [trashImageAvailable, setTrashImageAvailable] =
     useState<boolean>(false);
-
   const [locationDetails, setLocationDetails] =
     useState<locationPropsType | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
+  const [imageViewerState, setImageViewerState] = useState<boolean>(false);
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -97,6 +97,7 @@ export default function componentName() {
         <AppCamera
           visible={cameraVisible}
           onClose={() => setCameraVisible(false)}
+          closeModalAction={() => setVisible(false)}
         />
 
         <StatusBar

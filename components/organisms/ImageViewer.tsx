@@ -1,99 +1,35 @@
 import appColors from "@/constants/colors";
-import { current } from "@reduxjs/toolkit";
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-  Pressable,
-  Modal,
-} from "react-native";
-import Swiper from "react-native-swiper";
-
-interface imageViewerPropsType {
-  images: string[];
-  type?: string;
-  userState?: boolean;
-}
+import React, { useEffect, useState, useRef } from "react";
+import { View, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
+import PagerView from "react-native-pager-view";
 
 const { width } = Dimensions.get("window");
-
-export default function componentName({
-  images,
-  type,
-  userState,
-}: imageViewerPropsType) {
-  const [currentImage, setCurrentImage] = useState<null | number>(null);
-  const [swiperIsSelected, setSwiperIsSelected] = useState<boolean>(false);
-
+export default function componentName({ images }: { images: string[] }) {
+  const scrollViewRef = useRef<ScrollView>(null);
   return (
-    <>
-      {swiperIsSelected ? (
-        <>
-          <Modal>
-            {/* <Swiper
-              - fix modal issues
-              - fix bug on the swiper and enable image swiping
-            */}
-          </Modal>
-        </>
-      ) : (
-        <Pressable style={styles.container}>
-          <Swiper
-            loop
-            showsPagination
-            paginationStyle={{ bottom: 10 }}
-            style={{ width: "100%", height: "100%" }}
-            showsButtons
-            activeDotColor={appColors.primaryColor}
-            index={currentImage!}
-            onIndexChanged={(index) => setCurrentImage(index)}
-          >
-            {images.map((image, index) => (
-              <ViewImage
-                key={index}
-                image={image}
-                indexValue={index}
-                updateIndex={setCurrentImage}
-              />
-            ))}
-          </Swiper>
-        </Pressable>
-      )}
-    </>
+    <PagerView style={styles.container}>
+      {images.map((image, index) => (
+        <ViewImage key={index} image={image} />
+      ))}
+    </PagerView>
   );
 }
 
-const ViewImage = ({
-  image,
-  indexValue,
-  updateIndex,
-}: {
-  image: string;
-  indexValue: number;
-  updateIndex: (num: number) => void;
-}) => {
-  useEffect(() => {
-    updateIndex(indexValue);
-  }, [indexValue]);
+const ViewImage = ({ image }: { image: string }) => {
   return (
-    <>
-      <View style={styles.viewElementStyle}>
-        <Image
-          source={{ uri: image }}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </View>
-    </>
+    <View style={styles.viewElementStyle}>
+      <Image
+        source={{ uri: image }}
+        style={{ width: "100%", height: "100%" }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: 250,
-    position: "relative",
+    height: "100%",
     marginBottom: 50,
   },
   viewElementStyle: {
