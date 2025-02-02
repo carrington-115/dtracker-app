@@ -20,8 +20,12 @@ const immediateTrashSlice = createSlice({
         (image: any) => image.id !== action.payload
       );
     },
+    emptyState: (state: initialStateTypes) => {
+      state.trashImages = [];
+    },
   },
 });
 
-export const { addTrashImage, removeTrashImage } = immediateTrashSlice.actions;
+export const { addTrashImage, removeTrashImage, emptyState } =
+  immediateTrashSlice.actions;
 export default immediateTrashSlice.reducer;

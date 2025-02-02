@@ -29,7 +29,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as ImagePicker from "expo-image-picker";
 import { useSelector, useDispatch } from "react-redux";
-import { addTrashImage } from "@/redux/features/trashImageSlice";
+import { addTrashImage, emptyState } from "@/redux/features/trashImageSlice";
 import * as Location from "expo-location";
 import { locationPropsType } from "@/constants/types";
 
@@ -47,7 +47,6 @@ export default function componentName() {
   const [locationDetails, setLocationDetails] =
     useState<locationPropsType | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
-  const [imageViewerState, setImageViewerState] = useState<boolean>(false);
   const [fullImageViewer, setFullImageViewer] = useState<boolean>(false);
 
   const handleModalSize = () => {
@@ -91,6 +90,11 @@ export default function componentName() {
     setFullImageViewer(true);
   };
 
+  const handleBackBtnAction = () => {
+    dispatch(emptyState());
+    router.back();
+  };
+
   useEffect(() => {
     if (trashImage.length > 0) {
       setTrashImageAvailable(true);
@@ -119,7 +123,7 @@ export default function componentName() {
             backgroundColor: "transparent",
           }}
         >
-          <Appbar.BackAction onPress={() => router.back()} />
+          <Appbar.BackAction onPress={handleBackBtnAction} />
           <Appbar.Content title="Immediate" />
         </Appbar.Header>
         <ScrollView style={styles.scrollContainer}>
