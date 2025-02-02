@@ -23,6 +23,7 @@ import {
   IconButton,
   ImageViewer,
   LocatorSection,
+  ModalImageviewer,
 } from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -47,6 +48,7 @@ export default function componentName() {
     useState<locationPropsType | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
   const [imageViewerState, setImageViewerState] = useState<boolean>(false);
+  const [fullImageViewer, setFullImageViewer] = useState<boolean>(false);
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -83,6 +85,10 @@ export default function componentName() {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const handleOpenImageViewer = () => {
+    setFullImageViewer(true);
   };
 
   useEffect(() => {
@@ -162,6 +168,26 @@ export default function componentName() {
                   right: 16,
                 }}
               />
+
+              {trashImageAvailable && (
+                <IconButton
+                  icon={
+                    <MaterialCommunityIcons
+                      name={"arrow-expand"}
+                      size={16}
+                      color={appColors.surfaceBright}
+                    />
+                  }
+                  bgColor={appColors.onSurface}
+                  btnAction={handleOpenImageViewer}
+                  appStyles={{
+                    elevation: 5,
+                    position: "absolute",
+                    bottom: 21,
+                    left: 16,
+                  }}
+                />
+              )}
             </View>
           </>
           <View style={styles.formContainer}>
@@ -257,6 +283,11 @@ export default function componentName() {
             </Pressable>
           </View>
         </BottomSheetModal>
+        <ModalImageviewer
+          images={trashImage}
+          visible={fullImageViewer}
+          closeModal={() => setFullImageViewer(false)}
+        />
       </SafeAreaView>
     </>
   );

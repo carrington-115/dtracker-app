@@ -1,11 +1,10 @@
 import appColors from "@/constants/colors";
-import React, { useEffect, useState, useRef } from "react";
-import { View, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
+import React from "react";
+import { View, StyleSheet, Dimensions, Image } from "react-native";
 import PagerView from "react-native-pager-view";
 
 const { width } = Dimensions.get("window");
 export default function componentName({ images }: { images: string[] }) {
-  const scrollViewRef = useRef<ScrollView>(null);
   return (
     <PagerView style={styles.container}>
       {images.map((image, index) => (

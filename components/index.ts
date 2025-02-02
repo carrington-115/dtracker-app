@@ -16,6 +16,7 @@ import Camera from "./organisms/Camera";
 import ImageViewer from "./organisms/ImageViewer";
 import SizeDropDown from "./atoms/TrashSizeDropDown";
 import LocatorSection from "./molecules/LocatorElement";
+import ModalImageviewer from "./organisms/ModalImageViewer";
 
 export {
   OnboardingSlider,
@@ -35,4 +36,5 @@ export {
   ImageViewer,
   SizeDropDown,
   LocatorSection,
+  ModalImageviewer,
 };
