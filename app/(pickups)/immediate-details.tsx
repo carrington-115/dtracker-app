@@ -12,15 +12,26 @@ import appColors from "@/constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar } from "react-native-paper";
 import { useRouter } from "expo-router";
-import { ImageViewer, ViewElement } from "@/components";
+import { BottomButton, ImageViewer, ViewElement } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { textFontStyles } from "@/constants/fonts";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const [images, setImages] = useState<String[]>([]);
   const router = useRouter();
+
+  /*
+    program parameters
+    - price
+    - pickup type and amount
+    - trash category
+    - weight
+    - total
+  */
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -59,6 +70,7 @@ export default function componentName() {
             flexDirection: "column",
             alignItems: "center",
             paddingHorizontal: 16,
+            gap: 10,
           }}
         >
           <ViewElement
@@ -89,6 +101,122 @@ export default function componentName() {
               </View>
             }
           />
+          <ViewElement
+            icon={
+              <>
+                <MaterialIcons
+                  name="bike-scooter"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: 5,
+                }}
+              >
+                <Text style={{ ...textFontStyles.bodyLargeMedium }}>
+                  Immediate pickup
+                </Text>
+                <Text style={{ ...textFontStyles.bodyLargeMedium }}>
+                  2 bags/pickup
+                </Text>
+              </View>
+            }
+          />
+          <ViewElement
+            icon={
+              <>
+                <MaterialIcons
+                  name="info-outline"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+              >
+                <Text
+                  style={{
+                    ...textFontStyles.bodyLargeMedium,
+                    color: appColors.onSurface,
+                  }}
+                >
+                  Organic +
+                </Text>
+              </View>
+            }
+          />
+          <ViewElement
+            icon={
+              <>
+                <MaterialCommunityIcons
+                  name="weight"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+              >
+                <Text
+                  style={{
+                    ...textFontStyles.bodyLargeMedium,
+                    color: appColors.onSurface,
+                  }}
+                >
+                  2 bags
+                </Text>
+              </View>
+            }
+          />
+        </View>
+        <View
+          style={{
+            width: "100%",
+            paddingHorizontal: 45,
+            paddingVertical: 20,
+            marginTop: 10,
+            gap: 30,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                ...textFontStyles.bodySmallRegular,
+              }}
+            >
+              Total
+            </Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+            >
+              <Text
+                style={{
+                  ...textFontStyles.bodySmallRegular,
+                  color: appColors.onSurface,
+                }}
+              >
+                XAF
+              </Text>
+              <Text style={{ ...textFontStyles.bodyLargeBold }}>1000</Text>
+            </View>
+          </View>
+          <BottomButton name="Complete now" onPressAction={() => {}} />
         </View>
       </ScrollView>
     </SafeAreaView>
