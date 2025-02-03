@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderBottomWidth: 0.5,
     borderBottomColor: appColors.outline,
+    alignItems: "center",
   },
 });

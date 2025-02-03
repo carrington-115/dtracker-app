@@ -75,7 +75,7 @@ export default function componentName() {
         />
       ),
       name: "Reserve pickup",
-      onPress: () => router.navigate("../(pickups)/reserve"),
+      onPress: () => router.navigate("../(pickups)/reserve-details"),
     },
   ];
 
