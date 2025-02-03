@@ -64,7 +64,7 @@ export default function componentName() {
         />
       ),
       name: "Immediate pickup",
-      onPress: () => router.navigate("../(pickups)/immediate-details"),
+      onPress: () => router.navigate("../(pickups)/immediate"),
     },
     {
       icon: (

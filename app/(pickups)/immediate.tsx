@@ -11,7 +11,7 @@ import {
   StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Appbar, Switch } from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import appColors from "@/constants/colors";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { textFontStyles } from "@/constants/fonts";
@@ -32,9 +32,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { addTrashImage, emptyState } from "@/redux/features/trashImageSlice";
 import * as Location from "expo-location";
 import { locationPropsType } from "@/constants/types";
+import {
+  setPickupType,
+  setTrashType as addTrashType,
+  setTrashWeight,
+  setPrice,
+  setPickupLocation,
+} from "@/redux/features/trashDetailSlice";
 
 export default function componentName() {
   const [trashType, setTrashType] = useState<string>("Mixed");
+  const [trashSize, setTrashSize] = useState<string>("");
   const [deviceLocation, setDeviceLocation] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
@@ -48,6 +56,7 @@ export default function componentName() {
     useState<locationPropsType | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
   const [fullImageViewer, setFullImageViewer] = useState<boolean>(false);
+  const trashDetails = useSelector((state: any) => state.trashDetail);
 
   const handleModalSize = () => {
     setVisible(!visible);
@@ -95,11 +104,29 @@ export default function componentName() {
     router.back();
   };
 
+  const handleOnSubmitForm = () => {
+    if (
+      trashSize === "" ||
+      trashType === "none" ||
+      !locationDetails ||
+      trashImage.length === 0
+    ) {
+      console.error("Please fill all the fields");
+      return;
+    }
+    dispatch(setTrashWeight(trashSize));
+    dispatch(setPickupType("immediate"));
+    dispatch(addTrashType(trashType));
+    dispatch(setPickupLocation(locationDetails));
+    router.push("./immediate-details");
+  };
+
   useEffect(() => {
     if (trashImage.length > 0) {
       setTrashImageAvailable(true);
     }
-  }, [image, trashImage]);
+    console.log(trashDetails);
+  }, [image, trashImage, trashDetails]);
 
   return (
     <>
@@ -195,7 +222,7 @@ export default function componentName() {
             </View>
           </>
           <View style={styles.formContainer}>
-            <TrashSizeInput />
+            <TrashSizeInput trashSize={trashSize} setTrashSize={setTrashSize} />
             <View style={styles.trashTypeStyles}>
               <Text
                 style={{
@@ -207,6 +234,7 @@ export default function componentName() {
               </Text>
               <DropDownElement
                 dropDownItems={[
+                  { label: "Select", value: "none" },
                   { label: "Mixed", value: "mixed" },
                   { label: "Paper", value: "paper" },
                   { label: "Electronics", value: "e-waste" },
@@ -247,7 +275,10 @@ export default function componentName() {
             }}
           >
             <View style={{ width: "90%", marginTop: 50 }}>
-              <BottomButton name="Set pickup" onPressAction={() => {}} />
+              <BottomButton
+                name="Set pickup"
+                onPressAction={handleOnSubmitForm}
+              />
             </View>
           </View>
         </ScrollView>
@@ -297,8 +328,13 @@ export default function componentName() {
   );
 }
 
-function TrashSizeInput() {
-  const [trashSize, setTrashSize] = useState<string>("");
+function TrashSizeInput({
+  trashSize,
+  setTrashSize,
+}: {
+  trashSize: string;
+  setTrashSize: (text: string) => void;
+}) {
   const [visible, setVisible] = useState<boolean>(false);
   const [trashSizeUnit, setTrashSizeUnit] = useState<string>("Bags");
 

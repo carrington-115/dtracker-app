@@ -5,6 +5,7 @@ const initialState = {
   trashType: "",
   trashWeight: "",
   price: "",
+  pickupLocation: null,
 };
 
 const trashDetailSlice = createSlice({
@@ -23,9 +24,17 @@ const trashDetailSlice = createSlice({
     setPrice: (state, action) => {
       state.price = action.payload;
     },
+    setPickupLocation: (state, action) => {
+      state.pickupLocation = action.payload;
+    },
   },
 });
 
-export const { setPickupType, setTrashType, setTrashWeight, setPrice } =
-  trashDetailSlice.actions;
+export const {
+  setPickupType,
+  setTrashType,
+  setTrashWeight,
+  setPrice,
+  setPickupLocation,
+} = trashDetailSlice.actions;
 export default trashDetailSlice.reducer;
