@@ -19,6 +19,7 @@ import {
   ImageViewer,
   IconButton,
   ModalImageviewer,
+  BottomButton,
 } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { textFontStyles } from "@/constants/fonts";
@@ -34,12 +35,12 @@ export default function componentName() {
   const [visible, setVisible] = useState<boolean>(false);
   const [cameraVisible, setCameraVisible] = useState<boolean>(false);
   const trashImagesFromState = useSelector(
-    (state: any) => state.reserve.trashImages
+    (state: any) => state.immediate.trashImages
   );
-  const [trashImages, setTrashImages] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const trashDetails = useSelector((state: any) => state.trashDetail);
   const [openImageViewer, setOpenImageViewer] = useState<boolean>(false);
+  const [uploadedImage, setUploadedImage] = useState<boolean>(false);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ export default function componentName() {
     });
     if (!result.canceled) {
       dispatch(addTrashImage(result.assets[0].uri));
+      setUploadedImage(true);
       setVisible(false);
     }
   };
@@ -65,8 +67,10 @@ export default function componentName() {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    if (trashImagesFromState?.length > 0) setTrashImages(trashImagesFromState);
-  }, [loading]);
+    if (trashImagesFromState.length > 0) {
+      setUploadedImage(true);
+    }
+  }, [loading, trashImagesFromState]);
 
   if (loading) {
     return (
@@ -111,30 +115,30 @@ export default function componentName() {
         translucent
       />
       <ScrollView style={styles.scrollViewStyles}>
-        <>
-          {trashImages?.length > 0 && (
-            <View style={styles.ImageSection}>
-              <ImageViewer images={trashImages!} />
-              <IconButton
-                icon={
-                  <MaterialCommunityIcons
-                    name={"arrow-expand"}
-                    size={16}
-                    color={appColors.surfaceBright}
-                  />
-                }
-                bgColor={appColors.onSurface}
-                btnAction={handleOpenImageViewer}
-                appStyles={{
-                  elevation: 5,
-                  position: "absolute",
-                  bottom: 21,
-                  left: 16,
-                }}
-              />
-            </View>
-          )}
-        </>
+        {uploadedImage ? (
+          <View style={styles.ImageSection}>
+            <ImageViewer images={trashImagesFromState} />
+            <IconButton
+              icon={
+                <MaterialCommunityIcons
+                  name={"arrow-expand"}
+                  size={16}
+                  color={appColors.surfaceBright}
+                />
+              }
+              bgColor={appColors.onSurface}
+              btnAction={handleOpenImageViewer}
+              appStyles={{
+                elevation: 5,
+                position: "absolute",
+                bottom: 21,
+                left: 16,
+              }}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
         <View style={{ flexDirection: "column", gap: 20 }}>
           <ViewElement
             icon={
@@ -269,6 +273,16 @@ export default function componentName() {
             </View>
           }
         />
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 40,
+          }}
+        >
+          <BottomButton name="Complete" onPressAction={() => {}} />
+        </View>
       </ScrollView>
       <BottomSheetModal
         visible={visible}
@@ -312,7 +326,7 @@ export default function componentName() {
         closeModalAction={() => setVisible(false)}
       />
       <ModalImageviewer
-        images={trashImages}
+        images={trashImagesFromState}
         visible={openImageViewer}
         closeModal={() => setOpenImageViewer(false)}
       />

@@ -14,7 +14,7 @@ import {
 export default function TrashSizeInput() {
   const [trashSize, setTrashSize] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(false);
-  const [trashSizeUnit, setTrashSizeUnit] = useState<string>("Select");
+  const [trashSizeUnit, setTrashSizeUnit] = useState<string>("Bags");
 
   const handlePressUnit = (unit: string) => {
     setVisible(false);
@@ -66,9 +66,10 @@ export default function TrashSizeInput() {
             position: "absolute",
             top: 45,
             right: 16,
+            zIndex: 100,
           }}
         >
-          {["Select", "Bags", "Buckets"].map((unit, index) => (
+          {["Bags", "Buckets"].map((unit, index) => (
             <TouchableOpacity key={index} onPress={() => handlePressUnit(unit)}>
               <Text style={{ ...textFontStyles.bodyMediumRegular }}>
                 {unit}

@@ -26,25 +26,31 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { locationPropsType } from "@/constants/types";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as Location from "expo-location";
+import { useDispatch } from "react-redux";
+import {
+  setTrashType as addTrashType,
+  setTrashWeight,
+  setPickupTime,
+  setPickupDate,
+  setPickupLocation,
+} from "@/redux/features/trashDetailSlice";
 
 export default function componentName() {
   const router = useRouter();
   const [trashSize, setTrashSize] = useState<string>("");
   const [trashType, setTrashType] = useState<string>("");
-  const [pickupDetails, setPickupDetails] = useState<any>({});
   const [deviceLocation, setDeviceLocation] =
     useState<locationPropsType | null>(null);
   const [locationSwitchState, setLocationSwitchState] =
     useState<boolean>(false);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedTime, setSelectedTime] = useState<Date | null>(new Date());
+  const [selectedSchedule, setSelectedSchedule] = useState<Date | null>(
+    new Date()
+  );
   const [mode, setMode] = useState<"date" | "time">("date");
-  const [addedTimeAndDate, setAddedTimeAndDate] = useState<any>({
-    time: false,
-    date: false,
-  });
+  const [datePickerSelected, setDatePickerSelected] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleGetDeviceLocation = async () => {
     setLocationSwitchState((previous) => !previous);
@@ -72,20 +78,31 @@ export default function componentName() {
   };
 
   const onChange = (event: any, selectedDate?: Date) => {
-    if (selectedDate) {
-      if (mode === "date") {
-        setSelectedDate(selectedDate);
-        setAddedTimeAndDate((prev: any) => {
-          return { ...prev, date: true };
-        });
-      } else if (mode === "time") {
-        setSelectedTime(selectedDate);
-        setAddedTimeAndDate((prev: any) => {
-          return { ...prev, time: true };
-        });
+    if (mode === "date" || mode === "time") {
+      if (selectedDate) {
+        setSelectedSchedule(selectedDate);
       }
     }
+    setDatePickerSelected(true);
     setShowDatePicker(false); // Hide picker after selection
+  };
+
+  const handleSubmitForm = () => {
+    if (trashSize === "" || trashType === "none") {
+      console.error("Please fill all required fields");
+      return;
+    }
+    // add data to state
+    dispatch(setTrashWeight(trashSize));
+    dispatch(addTrashType(trashType));
+    dispatch(
+      setPickupTime(datePickerSelected && selectedSchedule!.toTimeString())
+    );
+    dispatch(
+      setPickupDate(datePickerSelected && selectedSchedule!.toDateString())
+    );
+    dispatch(setPickupLocation(deviceLocation));
+    router.push("./reserve-details");
   };
 
   /*
@@ -156,16 +173,16 @@ export default function componentName() {
           >
             Pickup schedule
           </Text>
-          {addedTimeAndDate.date && addedTimeAndDate.time && (
+          {datePickerSelected && (
             <>
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
               >
                 <Text style={{ ...textFontStyles.bodyLargeMedium }}>
-                  {selectedDate?.toLocaleDateString()}
+                  {selectedSchedule?.toLocaleDateString()}
                 </Text>
                 <Text style={{ ...textFontStyles.bodyLargeMedium }}>
-                  {selectedTime?.toLocaleTimeString()}
+                  {selectedSchedule?.toLocaleTimeString()}
                 </Text>
               </View>
             </>
@@ -220,6 +237,7 @@ export default function componentName() {
           </Text>
           <DropDownElement
             dropDownItems={[
+              { label: "Selected", value: "none" },
               { label: "Mixed", value: "mixed" },
               { label: "Paper", value: "paper" },
               { label: "Electronics", value: "e-waste" },
@@ -255,16 +273,14 @@ export default function componentName() {
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <View style={{ width: "90%", marginVertical: 30 }}>
-            <BottomButton name="Set pickup" onPressAction={() => {}} />
+            <BottomButton name="Set pickup" onPressAction={handleSubmitForm} />
           </View>
         </View>
       </ScrollView>
       {showDatePicker && (
         <DateTimePicker
-          // testID="dateTimePicker"
-          value={selectedDate!}
+          value={selectedSchedule!}
           mode={mode}
-          // is24Hour={true}
           display="default"
           onChange={onChange}
         />
