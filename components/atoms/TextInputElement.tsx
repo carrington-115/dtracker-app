@@ -27,7 +27,7 @@ export default function componentName({
   const [hide, setHide] = useState<boolean>(true);
   const [press, setPress] = useState<boolean>(false);
 
-  if (type === "auth-input") {
+  if (type === "auth-input" || type === "single-line") {
     return (
       <View style={styles.container}>
         {password ? (

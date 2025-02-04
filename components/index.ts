@@ -12,6 +12,12 @@ import IconButton from "./atoms/IconButton";
 import PickupButton from "./molecules/PickupButton";
 import DropDownElement from "./atoms/DropDownElement";
 import BottomSheetModal from "./molecules/BottomSheetModal";
+import Camera from "./organisms/Camera";
+import ImageViewer from "./organisms/ImageViewer";
+import SizeDropDown from "./atoms/TrashSizeDropDown";
+import LocatorSection from "./molecules/LocatorElement";
+import ModalImageviewer from "./organisms/ModalImageViewer";
+import ViewElement from "./atoms/ViewDetailElement";
 
 export {
   OnboardingSlider,
@@ -27,4 +33,10 @@ export {
   PickupButton,
   DropDownElement,
   BottomSheetModal,
+  Camera,
+  ImageViewer,
+  SizeDropDown,
+  LocatorSection,
+  ModalImageviewer,
+  ViewElement,
 };

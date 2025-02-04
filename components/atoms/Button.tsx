@@ -10,6 +10,7 @@ export default function componentName({
   onPressAction,
   type,
   focusedColor,
+  icon,
 }: buttonPropsType) {
   return (
     <Pressable
@@ -19,6 +20,7 @@ export default function componentName({
       ]}
       onPress={onPressAction}
     >
+      {icon && <>{icon}</>}
       <Text style={[textFontStyles.bodyLargeRegular, { color: color }]}>
         {name}
       </Text>
