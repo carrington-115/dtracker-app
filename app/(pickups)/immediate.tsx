@@ -125,8 +125,7 @@ export default function componentName() {
     if (trashImage.length > 0) {
       setTrashImageAvailable(true);
     }
-    console.log(trashDetails);
-  }, [image, trashImage, trashDetails]);
+  }, [image, trashImage]);
 
   return (
     <>
