@@ -49,7 +49,7 @@ export default function componentName() {
         </>
       ),
       bgColor: "transparent",
-      btnAction: () => {},
+      btnAction: () => router.push("../settings"),
       pressedColor: "#D7ECE3",
     },
   ];

@@ -4,6 +4,7 @@ import phoneReducer from "./features/PhoneSlice";
 import immediateTrashReducer from "./features/trashImageSlice";
 import trashDetailReducer from "./features/trashDetailSlice";
 import reserveImageReducer from "./features/reserveImageSlice";
+import profileReducer from "./features/profileSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     immediate: immediateTrashReducer,
     trashDetail: trashDetailReducer,
     reserve: reserveImageReducer,
+    profile: profileReducer,
   },
 });
 
