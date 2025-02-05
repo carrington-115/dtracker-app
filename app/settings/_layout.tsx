@@ -13,6 +13,12 @@ export default function componentName() {
           title: "Settings",
         }}
       />
+      <Stack.Screen
+        name="account"
+        options={{
+          title: "Settings",
+        }}
+      />
     </Stack>
   );
 }

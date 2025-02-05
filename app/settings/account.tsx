@@ -1,28 +1,29 @@
-import { BottomSheetModal, IconButton } from "@/components";
+import {
+  BottomSheetModal,
+  IconButton,
+  Camera as AppCamera,
+  ActiveButton,
+} from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import Entypo from "@expo/vector-icons/Entypo";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable } from "react-native";
 import {
   View,
   Text,
   StyleSheet,
-  StatusBar,
-  ScrollView,
-  Dimensions,
+  Pressable,
+  Image,
   TouchableOpacity,
+  Dimensions,
+  ScrollView,
+  StatusBar,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import * as ImagePicker from "expo-image-picker";
-import { Camera as AppCamera } from "@/components";
-import { setProfilePhotoUrl } from "@/redux/features/profileSlice";
-import { ActivityIndicator } from "react-native-paper";
 
 const { width } = Dimensions.get("window");
 
@@ -30,6 +31,7 @@ export default function componentName() {
   const [userEmail, setUserEmail] = useState<string>("example@email.com");
   const [username, setUsername] = useState<string>("John Doe Nde");
   const [profilePhoto, setProfilePhoto] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("Phone number");
   const [loading, setLoading] = useState<boolean>(true);
   const [photoFromDevice, setPhotoFromDevice] = useState<boolean>(false);
 
@@ -41,47 +43,21 @@ export default function componentName() {
   const [visible, setVisible] = useState<boolean>(false);
   const [cameraVisible, setCameraVisible] = useState<boolean>(false);
 
-  // routing
-  const router = useRouter();
-
-  // upload image function
-  const handleUploadImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images", "videos"],
-      allowsEditing: true,
-      aspect: [2, 2],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      dispatch(setProfilePhotoUrl(result.assets[0].uri));
-      setVisible(false);
-    }
-  };
-
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    if (profile.profilePhotoUrl) {
-      setProfilePhoto(profile.profilePhotoUrl.photo);
-    }
-  }, [profile]);
+  }, [loading]);
 
   if (loading) {
     return (
-      <SafeAreaView
-        style={{
-          ...styles.container,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <StatusBar barStyle="dark-content" backgroundColor="transparent" />
+      <SafeAreaView style={styles.container}>
         <Stack.Screen
           options={{
             headerShown: false,
           }}
         />
+        <StatusBar barStyle="dark-content" backgroundColor="transparent" />
         <ActivityIndicator size={48} color={appColors.primaryColor} />
       </SafeAreaView>
     );
@@ -89,12 +65,10 @@ export default function componentName() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" />
       <Stack.Screen
         options={{
           headerShown: true,
-          headerStyle: {
-            backgroundColor: "#F2F2F2",
-          },
         }}
       />
       <AppCamera
@@ -103,7 +77,6 @@ export default function componentName() {
         closeModalAction={() => setVisible(false)}
         imageType={"profile"}
       />
-      <StatusBar barStyle="dark-content" backgroundColor="transparent" />
       <ScrollView style={styles.scrollViewStyles}>
         <View
           style={{
@@ -186,30 +159,118 @@ export default function componentName() {
               {userEmail}
             </Text>
           </View>
-        </View>
-        <View style={styles.bottomLinkContainerStyles}>
-          {[
-            { name: "Account", link: "/settings/account" },
-            { name: "Language", link: "/settings/language" },
-            { name: "help", link: "/settings/help", goTo: true },
-            { name: "About", link: "/settings/about", goTo: true },
-          ].map((item: any, index) => (
-            <Pressable
-              style={styles.bottomLinkStyles}
-              key={index}
-              onPress={() => router.push(item.link)}
+          <Pressable
+            style={({ pressed }) => [
+              {
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingVertical: 20,
+                backgroundColor: pressed
+                  ? appColors.primaryContainerColor
+                  : "transparent",
+                borderBottomWidth: 0.5,
+                borderBottomColor: appColors.surfaceContainerHighest,
+              },
+            ]}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 50,
+              }}
             >
+              <MaterialIcons
+                name="edit"
+                size={24}
+                color={appColors.onPrimaryContainerColor}
+              />
               <Text
                 style={{
-                  ...textFontStyles.bodyLargeRegular,
-                  color: appColors.onSurface,
-                  textDecorationLine: item?.goTo ? "underline" : "none",
+                  ...textFontStyles.titleLargeRegular,
+                  color: appColors.onPrimaryContainerColor,
                 }}
               >
-                {item.name}
+                Edit Account
+              </Text>
+            </View>
+          </Pressable>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "column",
+            gap: 30,
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "column",
+              gap: 10,
+              alignItems: "center",
+            }}
+          >
+            <Pressable
+              style={{
+                width: "100%",
+                paddingHorizontal: 20,
+                paddingVertical: 12,
+                borderBottomWidth: 1,
+                borderBottomColor: appColors.surfaceContainerHighest,
+              }}
+            >
+              <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                {username}
               </Text>
             </Pressable>
-          ))}
+            <Pressable
+              style={{
+                width: "100%",
+                paddingHorizontal: 20,
+                paddingVertical: 12,
+                borderBottomWidth: 1,
+                borderBottomColor: appColors.surfaceContainerHighest,
+              }}
+            >
+              <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                {userEmail}
+              </Text>
+            </Pressable>
+            <Pressable
+              style={{
+                width: "100%",
+                paddingHorizontal: 20,
+                paddingVertical: 12,
+                borderBottomWidth: 1,
+                borderBottomColor: appColors.surfaceContainerHighest,
+              }}
+            >
+              <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                {phoneNumber}
+              </Text>
+            </Pressable>
+          </View>
+          <ActiveButton
+            name="Log out"
+            icon={
+              <>
+                <MaterialIcons
+                  name="logout"
+                  size={24}
+                  color={appColors.onErrorContainerColor}
+                />
+              </>
+            }
+            onPressAction={() => {}}
+            bgColor={"#fff1efad"}
+            color={appColors.onErrorContainerColor}
+            focusedColor={appColors.errorContainerColor}
+          />
         </View>
       </ScrollView>
       <BottomSheetModal
@@ -269,22 +330,5 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: appColors.outline,
     borderRadius: 10,
-  },
-  bottomLinkContainerStyles: {
-    width: "100%",
-    flexDirection: "column",
-    marginTop: 50,
-    backgroundColor: appColors.surfaceContainerLow,
-    alignItems: "flex-start",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: appColors.surfaceContainerHighest,
-  },
-  bottomLinkStyles: {
-    width: "100%",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: appColors.surfaceContainerHighest,
   },
 });
