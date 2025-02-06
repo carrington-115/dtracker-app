@@ -59,6 +59,22 @@ export default function componentName() {
     }
   };
 
+  const _handleOpenWithWebBrowser = async (url: string) => {
+    await WebBrowser.openBrowserAsync(url);
+  };
+
+  const handlePressElement = (item: {
+    name: string;
+    link: any;
+    goTo?: boolean;
+  }) => {
+    if (item.goTo) {
+      _handleOpenWithWebBrowser(item.link);
+      return;
+    }
+    router.push(item.link);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -192,13 +208,21 @@ export default function componentName() {
           {[
             { name: "Account", link: "/settings/account" },
             { name: "Language", link: "/settings/lang" },
-            { name: "help", link: "/settings/help", goTo: true },
-            { name: "About", link: "/settings/about", goTo: true },
+            {
+              name: "help",
+              link: "https://dtracker.swimssolutions.com",
+              goTo: true,
+            },
+            {
+              name: "About",
+              link: "https://dtracker.swimssolutions.com",
+              goTo: true,
+            },
           ].map((item: any, index) => (
             <Pressable
               style={styles.bottomLinkStyles}
               key={index}
-              onPress={() => router.push(item.link)}
+              onPress={() => handlePressElement(item)}
             >
               <Text
                 style={{
