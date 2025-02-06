@@ -8,18 +8,14 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import {
-  CameraType,
-  CameraView,
-  useCameraPermissions,
-  Camera,
-} from "expo-camera";
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import appColors from "@/constants/colors";
 import { Image } from "react-native";
 import { useDispatch } from "react-redux";
 import { addTrashImage } from "@/redux/features/trashImageSlice";
+import { setProfilePhotoUrl } from "@/redux/features/profileSlice";
 
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
@@ -28,10 +24,12 @@ export default function componentName({
   visible,
   onClose,
   closeModalAction,
+  imageType,
 }: {
   visible: boolean;
   onClose: () => void;
   closeModalAction: () => void;
+  imageType?: string;
 }) {
   const [hasPermission, requestPermission] = useCameraPermissions();
   const [type, setType] = useState<CameraType>("back");
@@ -78,10 +76,17 @@ export default function componentName({
   };
 
   const handleSaveImage = () => {
-    dispatch(addTrashImage(image.photo));
-    onClose();
-    handleBackToCamera();
-    closeModalAction();
+    if (imageType === "profile") {
+      dispatch(setProfilePhotoUrl(image));
+      onClose();
+      handleBackToCamera();
+      closeModalAction();
+    } else {
+      dispatch(addTrashImage(image.photo));
+      onClose();
+      handleBackToCamera();
+      closeModalAction();
+    }
   };
 
   useEffect(() => {}, []);
