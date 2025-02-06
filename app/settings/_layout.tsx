@@ -25,6 +25,12 @@ export default function componentName() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="lang"
+        options={{
+          title: "Change Language",
+        }}
+      />
     </Stack>
   );
 }

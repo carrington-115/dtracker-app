@@ -23,6 +23,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera as AppCamera } from "@/components";
 import { setProfilePhotoUrl } from "@/redux/features/profileSlice";
 import { ActivityIndicator } from "react-native-paper";
+import * as WebBrowser from "expo-web-browser";
 
 const { width } = Dimensions.get("window");
 
@@ -190,7 +191,7 @@ export default function componentName() {
         <View style={styles.bottomLinkContainerStyles}>
           {[
             { name: "Account", link: "/settings/account" },
-            { name: "Language", link: "/settings/language" },
+            { name: "Language", link: "/settings/lang" },
             { name: "help", link: "/settings/help", goTo: true },
             { name: "About", link: "/settings/about", goTo: true },
           ].map((item: any, index) => (
