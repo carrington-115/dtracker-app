@@ -8,7 +8,7 @@ import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -25,7 +25,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default function componentName() {
   const [userEmail, setUserEmail] = useState<string>("example@email.com");
@@ -43,6 +43,9 @@ export default function componentName() {
   const [visible, setVisible] = useState<boolean>(false);
   const [cameraVisible, setCameraVisible] = useState<boolean>(false);
 
+  // routing
+  const router = useRouter();
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -51,7 +54,14 @@ export default function componentName() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={{
+          width: width,
+          height: height,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Stack.Screen
           options={{
             headerShown: false,
@@ -160,6 +170,7 @@ export default function componentName() {
             </Text>
           </View>
           <Pressable
+            onPress={() => router.navigate("/settings/edit-account")}
             style={({ pressed }) => [
               {
                 width: "100%",

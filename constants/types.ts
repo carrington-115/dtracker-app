@@ -92,6 +92,12 @@ interface locationPropsType {
   accuracy: number | null;
 }
 
+interface editElementTypes {
+  title: string;
+  value: string;
+  action: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -105,4 +111,5 @@ export type {
   dropDownElementProps,
   bottomSheetPropsType,
   locationPropsType,
+  editElementTypes,
 };
