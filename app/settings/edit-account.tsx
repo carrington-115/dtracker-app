@@ -42,9 +42,21 @@ export default function componentName() {
   const router = useRouter();
 
   const editContent: editElementTypes[] = [
-    { title: "Username", value: username, action: () => {} },
-    { title: "Email", value: userEmail, action: () => {} },
-    { title: "Phone number", value: phoneNumber, action: () => {} },
+    {
+      title: "Username",
+      value: username,
+      action: () => router.push("/settings/(account-details)/edit-username"),
+    },
+    {
+      title: "Email",
+      value: userEmail,
+      action: () => router.push("/settings/(account-details)/edit-email"),
+    },
+    {
+      title: "Phone number",
+      value: phoneNumber,
+      action: () => router.push("/settings/(account-details)/edit-phone"),
+    },
   ];
 
   return (
