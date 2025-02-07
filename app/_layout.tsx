@@ -81,6 +81,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="(indirect)"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </Provider>
   );
