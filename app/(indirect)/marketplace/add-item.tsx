@@ -7,20 +7,18 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar } from "react-native-paper";
-import { Image } from "expo-image";
 import {
   BottomButton,
   BottomSheetModal,
   DropDownElement,
-  IconButton,
   TextInputElement,
   Camera as AppCamera,
+  StoreImageComponent,
 } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { textFontStyles } from "@/constants/fonts";
@@ -28,7 +26,6 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrashImage as addImage } from "@/redux/features/trashImageSlice";
-import PagerView from "react-native-pager-view";
 
 const { width } = Dimensions.get("window");
 
@@ -97,11 +94,14 @@ export default function componentName() {
       <Appbar.Header style={{ backgroundColor: "transparent", height: 58 }}>
         <Appbar.BackAction onPress={() => router.back()} />
         <Appbar.Content title="" />
-        <Appbar.Action icon="dots-vertical" onPress={() => {}} />
+        <Appbar.Action
+          icon="dots-vertical"
+          onPress={() => setBottomSheetVisible(true)}
+        />
       </Appbar.Header>
       <ScrollView style={styles.ScrollViewStyles}>
         <View style={{ width: "100%", alignItems: "center" }}>
-          <ImageUploadElement
+          <StoreImageComponent
             uploadAction={() => setBottomSheetVisible(true)}
             type={images.length > 0 ? "image" : "default"}
             images={images}
@@ -215,113 +215,6 @@ export default function componentName() {
     </SafeAreaView>
   );
 }
-
-const ImageUploadElement = ({
-  uploadAction,
-  type,
-  images,
-}: {
-  type: "image" | "default";
-  images?: string[];
-  uploadAction: () => void;
-}) => {
-  if (type === "image") {
-    return (
-      <View
-        style={[
-          styles.uploadElementContainer,
-          {
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: appColors.secondaryContainerColor,
-          },
-        ]}
-      >
-        <PagerView
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          {images?.map((image: string, index: number) => (
-            <View
-              key={index}
-              style={{
-                width: "100%",
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={{ uri: image }}
-                contentFit="contain"
-                style={{
-                  width: "90%",
-                  height: "90%",
-                  borderRadius: 20,
-                }}
-              />
-            </View>
-          ))}
-        </PagerView>
-        <View
-          style={{
-            position: "absolute",
-            bottom: 10,
-            right: 10,
-          }}
-        >
-          <IconButton
-            icon={
-              <MaterialIcons name="add" size={24} color={appColors.onSurface} />
-            }
-            btnAction={uploadAction}
-            bgColor={appColors.surfaceContainerHighest}
-          />
-        </View>
-      </View>
-    );
-  }
-  if (type === "default") {
-    return (
-      <TouchableOpacity
-        style={[
-          styles.uploadElementContainer,
-          {
-            backgroundColor: appColors.surfaceContainer,
-          },
-        ]}
-        onPress={uploadAction}
-      >
-        <Image
-          source={require("../../../assets/images/marketplace-Image.png")}
-          style={{
-            width: 120,
-            height: 120,
-          }}
-        />
-        <View
-          style={{
-            position: "absolute",
-            bottom: 10,
-            right: 10,
-          }}
-        >
-          <IconButton
-            icon={
-              <MaterialIcons name="add" size={24} color={appColors.onSurface} />
-            }
-            btnAction={uploadAction}
-            bgColor={appColors.surfaceContainerHighest}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
-  return <></>;
-};
 
 const PriceElement = ({
   type,
