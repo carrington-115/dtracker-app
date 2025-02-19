@@ -35,7 +35,7 @@ export default function componentName() {
         </>
       ),
       bgColor: "transparent",
-      btnAction: () => router.push("../(indirect)/marketplace/add-item"),
+      btnAction: () => router.push("../(indirect)/marketplace/view-item"),
       pressedColor: "#D7ECE3",
     },
     {

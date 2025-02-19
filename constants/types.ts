@@ -98,6 +98,12 @@ interface editElementTypes {
   action: () => void;
 }
 
+interface storeImageComponentProps {
+  action: () => void;
+  type: "image" | "default" | "image-view";
+  images?: string[];
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -112,4 +118,5 @@ export type {
   bottomSheetPropsType,
   locationPropsType,
   editElementTypes,
+  storeImageComponentProps,
 };

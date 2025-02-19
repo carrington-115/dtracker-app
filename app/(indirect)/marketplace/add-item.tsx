@@ -62,6 +62,8 @@ export default function componentName() {
     }
   };
 
+  const handleSubmitForm = () => {};
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -102,7 +104,7 @@ export default function componentName() {
       <ScrollView style={styles.ScrollViewStyles}>
         <View style={{ width: "100%", alignItems: "center" }}>
           <StoreImageComponent
-            uploadAction={() => setBottomSheetVisible(true)}
+            action={() => setBottomSheetVisible(true)}
             type={images.length > 0 ? "image" : "default"}
             images={images}
           />
@@ -148,7 +150,6 @@ export default function componentName() {
                 { label: "Plastic", value: "plastic" },
                 { label: "Glass", value: "glass" },
                 { label: "Metal", value: "metal" },
-                { label: "Organic", value: "organic" },
               ]}
               dropDownValue={trashType}
               onValueChange={(value) => setTrashType(value)}
@@ -172,7 +173,10 @@ export default function componentName() {
             />
           </View>
           <View style={{ width: "100%" }}>
-            <BottomButton name="Add to store" onPressAction={() => {}} />
+            <BottomButton
+              name="Add to store"
+              onPressAction={handleSubmitForm}
+            />
           </View>
         </View>
       </ScrollView>

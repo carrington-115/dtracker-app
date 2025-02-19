@@ -1,22 +1,25 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import PagerView from "react-native-pager-view";
 import appColors from "@/constants/colors";
 import IconButton from "@/components/atoms/IconButton";
 import { Image } from "expo-image";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { storeImageComponentProps } from "@/constants/types";
 
 const { width } = Dimensions.get("window");
 
 const ImageUploadElement = ({
-  uploadAction,
+  action,
   type,
   images,
-}: {
-  type: "image" | "default";
-  images?: string[];
-  uploadAction: () => void;
-}) => {
+}: storeImageComponentProps) => {
   if (type === "image") {
     return (
       <View
@@ -68,10 +71,54 @@ const ImageUploadElement = ({
             icon={
               <MaterialIcons name="add" size={24} color={appColors.onSurface} />
             }
-            btnAction={uploadAction}
+            btnAction={action}
             bgColor={appColors.surfaceContainerHighest}
           />
         </View>
+      </View>
+    );
+  }
+  if (type === "image-view") {
+    return (
+      <View
+        style={[
+          styles.uploadElementContainer,
+          {
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: appColors.secondaryContainerColor,
+          },
+        ]}
+      >
+        <PagerView
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          {images?.map((image: string, index: number) => (
+            <Pressable
+              key={index}
+              style={{
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={action}
+            >
+              <Image
+                source={{ uri: image }}
+                contentFit="contain"
+                style={{
+                  width: "90%",
+                  height: "90%",
+                  borderRadius: 20,
+                }}
+              />
+            </Pressable>
+          ))}
+        </PagerView>
       </View>
     );
   }
@@ -84,7 +131,7 @@ const ImageUploadElement = ({
             backgroundColor: appColors.surfaceContainer,
           },
         ]}
-        onPress={uploadAction}
+        onPress={action}
       >
         <Image
           source={require("@/assets/images/marketplace-Image.png")}
@@ -104,7 +151,7 @@ const ImageUploadElement = ({
             icon={
               <MaterialIcons name="add" size={24} color={appColors.onSurface} />
             }
-            btnAction={uploadAction}
+            btnAction={action}
             bgColor={appColors.surfaceContainerHighest}
           />
         </View>
