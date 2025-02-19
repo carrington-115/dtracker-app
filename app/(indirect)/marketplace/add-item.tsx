@@ -25,13 +25,17 @@ import { textFontStyles } from "@/constants/fonts";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch, useSelector } from "react-redux";
-import { addTrashImage as addImage } from "@/redux/features/trashImageSlice";
+import {
+  addTrashImage as addImage,
+  emptyState,
+} from "@/redux/features/trashImageSlice";
 import {
   setItemName as addItemName,
   setPriceAmount as addPriceAmount,
   setTrashType as addTrashType,
   setPriceControl as addPricecontrol,
   setItemSize as addItemWeight,
+  resetState,
 } from "@/redux/features/storeSlice";
 
 const { width } = Dimensions.get("window");
@@ -98,6 +102,12 @@ export default function componentName() {
     }
   };
 
+  const handleNavigateBack = () => {
+    dispatch(resetState());
+    dispatch(emptyState());
+    router.back();
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -128,7 +138,7 @@ export default function componentName() {
         closeModalAction={() => setBottomSheetVisible(false)}
       />
       <Appbar.Header style={{ backgroundColor: "transparent", height: 58 }}>
-        <Appbar.BackAction onPress={() => router.back()} />
+        <Appbar.BackAction onPress={handleNavigateBack} />
         <Appbar.Content title="" />
         <Appbar.Action
           icon="dots-vertical"

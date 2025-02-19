@@ -27,6 +27,9 @@ const storeSlice = createSlice({
     setPriceAmount: (state, action) => {
       state.priceAmount = action.payload;
     },
+    resetState: (state) => {
+      return { ...state, ...initialState };
+    },
   },
 });
 
@@ -36,5 +39,6 @@ export const {
   setTrashType,
   setPriceAmount,
   setPriceControl,
+  resetState,
 } = storeSlice.actions;
 export default storeSlice.reducer;
