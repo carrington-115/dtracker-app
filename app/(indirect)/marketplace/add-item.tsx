@@ -26,12 +26,18 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrashImage as addImage } from "@/redux/features/trashImageSlice";
+import {
+  setItemName as addItemName,
+  setPriceAmount as addPriceAmount,
+  setTrashType as addTrashType,
+  setPriceControl as addPricecontrol,
+  setItemSize as addItemWeight,
+} from "@/redux/features/storeSlice";
 
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [imagePresent, setImagePresent] = useState<boolean>(false);
   const [bottomSheetVisible, setBottomSheetVisible] = useState<boolean>(false);
   const [cameraVisible, setCameraVisible] = useState<boolean>(false);
 
@@ -62,7 +68,35 @@ export default function componentName() {
     }
   };
 
-  const handleSubmitForm = () => {};
+  const handleSubmitForm = () => {
+    try {
+      if (
+        itemName === "" ||
+        itemSize === "" ||
+        trashType === "none" ||
+        images.length < 1
+      ) {
+        alert("Please fill all required fields");
+        return;
+      }
+      dispatch(addItemName(itemName));
+      dispatch(addItemWeight(itemSize));
+      dispatch(addTrashType(trashType));
+      dispatch(addPricecontrol(priceControl));
+      if (priceControl === "default") {
+        if (priceAmount === 0) {
+          alert("Please set a price amount");
+          return;
+        }
+        dispatch(addPriceAmount(priceAmount));
+      } else {
+        dispatch(addPriceAmount(0));
+      }
+      router.navigate("./view-item");
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {

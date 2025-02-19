@@ -1,10 +1,13 @@
 import {
+  BottomButton,
   BottomSheetModal,
   ModalImageviewer,
   StoreImageComponent,
+  ViewElement,
 } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -26,6 +29,17 @@ export default function componentName() {
   const [bottomSheetVisible, setBottomSheetVisible] = useState<boolean>(false);
   const [imageViewerModal, setImageViewerModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+
+  // item details
+  const itemName: string = useSelector((state: any) => state.store.itemName);
+  const category: string = useSelector((state: any) => state.store.trashType);
+  const itemWeight: string = useSelector((state: any) => state.store.itemSize);
+  const priceControl: "default" | "negotiate" | "free" = useSelector(
+    (state: any) => state.store.priceControl
+  );
+  const priceAmount: number = useSelector(
+    (state: any) => state.store.priceAmount
+  );
 
   const router = useRouter();
   const images = useSelector((state: any) => state.immediate.trashImages);
@@ -73,7 +87,93 @@ export default function componentName() {
             images={images}
           />
         </View>
-        <Text>Hello world</Text>
+        <View style={styles.detailsContainerStyles}>
+          <View style={{ width: "100%" }}>
+            <Text style={{ ...textFontStyles.titleLargeBold }}>{itemName}</Text>
+          </View>
+          <ViewElement
+            icon={
+              <>
+                <MaterialIcons
+                  name="info-outline"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+              >
+                <Text
+                  style={{
+                    ...textFontStyles.bodyLargeMedium,
+                    color: appColors.onSurface,
+                  }}
+                >
+                  {category}
+                </Text>
+              </View>
+            }
+          />
+          <ViewElement
+            icon={
+              <>
+                <MaterialCommunityIcons
+                  name="weight"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+              >
+                <Text
+                  style={{
+                    ...textFontStyles.bodyLargeMedium,
+                    color: appColors.onSurface,
+                  }}
+                >
+                  {itemWeight}
+                </Text>
+              </View>
+            }
+          />
+          <ViewElement
+            icon={
+              <>
+                <MaterialIcons
+                  name="sell"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: 2,
+                }}
+              >
+                <Text style={{ ...textFontStyles.bodyMediumRegular }}>
+                  {priceControl === "default" ? "Fixed price" : priceControl}
+                </Text>
+                {priceControl === "default" && (
+                  <Text style={{ ...textFontStyles.bodyLargeMedium }}>
+                    {priceAmount} XAF
+                  </Text>
+                )}
+              </View>
+            }
+          />
+          <View style={{ width: "100%", marginVertical: 20 }}>
+            <BottomButton name="Add to Store" onPressAction={() => {}} />
+          </View>
+        </View>
       </ScrollView>
       <BottomSheetModal
         visible={bottomSheetVisible}
@@ -127,5 +227,12 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: appColors.outline,
     borderRadius: 10,
+  },
+  detailsContainerStyles: {
+    width: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 20,
   },
 });
