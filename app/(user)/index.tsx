@@ -154,7 +154,7 @@ export default function componentName() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: appColors.surfaceContainerLowest,
+    backgroundColor: appColors.surfaceBright,
     flex: 1,
   },
   homeTitleStyle: {

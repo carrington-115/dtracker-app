@@ -104,6 +104,15 @@ interface storeImageComponentProps {
   images?: string[];
 }
 
+interface storeItemProps {
+  pressAction: () => void;
+  image: any;
+  name: string;
+  labels: { type: string; size: string };
+  price: number;
+  addButtonAction: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -119,4 +128,5 @@ export type {
   locationPropsType,
   editElementTypes,
   storeImageComponentProps,
+  storeItemProps,
 };

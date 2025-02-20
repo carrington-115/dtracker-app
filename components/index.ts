@@ -20,6 +20,8 @@ import ModalImageviewer from "./organisms/ModalImageViewer";
 import ViewElement from "./atoms/ViewDetailElement";
 import AccountEditComponent from "./molecules/EditComponent";
 import StoreImageComponent from "./organisms/StoreImageComponent";
+import ElementLabel from "./atoms/ElementLabel";
+import StoreItemComponent from "./molecules/StoreItemComponent";
 
 export {
   OnboardingSlider,
@@ -43,4 +45,6 @@ export {
   ViewElement,
   AccountEditComponent,
   StoreImageComponent,
+  ElementLabel,
+  StoreItemComponent,
 };
