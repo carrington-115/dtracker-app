@@ -1,10 +1,17 @@
-import { Stack } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import React from "react";
 
 export default function componentName() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-    </Stack>
+    <>
+      <Tabs.Screen
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+      </Stack>
+    </>
   );
 }

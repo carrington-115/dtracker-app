@@ -10,7 +10,6 @@ export default function componentName() {
   const router = useRouter();
   const segments = useSegments();
   const pathname = usePathname();
-  console.log("Array of segments: ", segments, "Pathname: ", pathname);
 
   return (
     <>
@@ -19,12 +18,7 @@ export default function componentName() {
           title: "Greenstore",
           headerShadowVisible: false,
           headerTransparent: true,
-          headerStyle: {
-            marginBottom: 0,
-            paddingBottom: 0,
-            borderBottomWidth: 0.5,
-            height: 100,
-          },
+
           tabBarStyle: {
             display:
               segments[segments.length - 1] === "[id]" &&
@@ -37,11 +31,7 @@ export default function componentName() {
                 ? 0
                 : 62,
           },
-          headerShown:
-            segments[segments.length - 1] === "[id]" &&
-            pathname !== "/store/undefined"
-              ? false
-              : true,
+          headerShown: false,
           headerRight: () => (
             <>
               <View style={styles.headerIconStyles}>

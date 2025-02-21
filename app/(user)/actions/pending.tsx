@@ -1,13 +1,14 @@
-import { TabsButton } from "@/components";
-import appColors from "@/constants/colors";
 import { tabsButtonProps } from "@/constants/types";
+import React from "react";
+import { View, Text, Dimensions, ScrollView } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { usePathname, useRouter } from "expo-router";
-import React from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { Appbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
+import appColors from "@/constants/colors";
+import { Appbar } from "react-native-paper";
+import { useRouter } from "expo-router";
+import { TabsButton } from "@/components";
 
 const { width } = Dimensions.get("window");
 
@@ -21,7 +22,7 @@ export default function componentName() {
       name: "Active",
     },
     {
-      link: "/(user)/actions/pending",
+      link: "/actions/pending",
       icon: (
         <MaterialCommunityIcons
           name="progress-upload"
@@ -32,7 +33,6 @@ export default function componentName() {
       name: "Pending",
     },
   ];
-
   return (
     <SafeAreaView style={styles.container}>
       <Appbar.Header
@@ -55,7 +55,7 @@ export default function componentName() {
         ))}
       </View>
       <ScrollView>
-        <Text>Hello actions</Text>
+        <Text>Hello pending</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -64,8 +64,8 @@ export default function componentName() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: width,
     backgroundColor: appColors.surfaceBright,
+    width: width,
   },
   topBarStyles: {
     width: width,

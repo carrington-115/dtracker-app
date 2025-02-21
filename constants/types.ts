@@ -115,6 +115,12 @@ interface storeItemProps {
   link?: any;
 }
 
+interface tabsButtonProps {
+  link: any;
+  icon: React.ReactNode;
+  name: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -131,4 +137,5 @@ export type {
   editElementTypes,
   storeImageComponentProps,
   storeItemProps,
+  tabsButtonProps,
 };

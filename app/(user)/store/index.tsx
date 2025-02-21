@@ -11,7 +11,7 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Appbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
@@ -60,7 +60,21 @@ export default function componentName() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" translucent />
+      <StatusBar barStyle="dark-content" backgroundColor={"transparent"} />
+      <Appbar.Header
+        statusBarHeight={10}
+        style={{ backgroundColor: "#F2F2F266" }}
+      >
+        <Appbar.Content title="Green Store" />
+        <Appbar.Action
+          icon={"store-plus-outline"}
+          onPress={() => router.navigate("/(indirect)/marketplace/add-item")}
+        />
+        <Appbar.Action
+          icon={"cog-outline"}
+          onPress={() => router.navigate("/settings")}
+        />
+      </Appbar.Header>
       <ScrollView style={styles.scrollViewStyles}>
         <View style={styles.innerGridViewStyles}>
           <StoreItemComponent {...itemTestProps} />
@@ -82,7 +96,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: appColors.surfaceBright,
     width: width,
-    paddingTop: 55,
   },
   scrollViewStyles: {
     width: width,

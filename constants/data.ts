@@ -1,5 +1,4 @@
 import { onboardingSliderType } from "./types";
-
 // all constant important data
 
 const onboardingSliderCarouselData: onboardingSliderType[] = [
