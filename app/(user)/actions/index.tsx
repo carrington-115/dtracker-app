@@ -5,7 +5,14 @@ import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { usePathname, useRouter } from "expo-router";
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 import { Appbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -35,9 +42,15 @@ export default function componentName() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={"rgb(242, 242, 242)"}
+      />
       <Appbar.Header
         statusBarHeight={10}
-        style={{ backgroundColor: "#F2F2F266" }}
+        style={{
+          backgroundColor: "rgb(242, 242, 242)",
+        }}
       >
         <Appbar.Content title="Actions" />
         <Appbar.Action
@@ -72,5 +85,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: "rgb(242, 242, 242)",
+    borderBottomWidth: 0.2,
+    borderColor: appColors.outlineVariant,
   },
 });
+
+export { styles };

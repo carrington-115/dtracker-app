@@ -1,6 +1,6 @@
 import { tabsButtonProps } from "@/constants/types";
 import React from "react";
-import { View, Text, Dimensions, ScrollView } from "react-native";
+import { View, Text, Dimensions, ScrollView, StatusBar } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,8 +9,7 @@ import appColors from "@/constants/colors";
 import { Appbar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { TabsButton } from "@/components";
-
-const { width } = Dimensions.get("window");
+import { styles } from ".";
 
 export default function componentName() {
   const router = useRouter();
@@ -35,9 +34,13 @@ export default function componentName() {
   ];
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={"rgb(242, 242, 242)"}
+      />
       <Appbar.Header
         statusBarHeight={10}
-        style={{ backgroundColor: "#F2F2F266" }}
+        style={{ backgroundColor: "rgb(242, 242, 242)" }}
       >
         <Appbar.Content title="Actions" />
         <Appbar.Action
@@ -60,17 +63,3 @@ export default function componentName() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: appColors.surfaceBright,
-    width: width,
-  },
-  topBarStyles: {
-    width: width,
-    paddingHorizontal: 16,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-});
