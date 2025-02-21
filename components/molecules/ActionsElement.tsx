@@ -68,7 +68,7 @@ export default function componentName({
             </Text>
             <View>
               <View>
-                <MaterialCommunityIcons name="weight" size={24} color="black" />
+                <MaterialCommunityIcons name="weight" size={16} color="black" />
                 <Text style={{ ...textFontStyles.bodyMediumMedium }}>
                   {size} {units}
                 </Text>
@@ -80,9 +80,27 @@ export default function componentName({
                   backgroundColor: appColors.onSurface,
                 }}
               />
-              <Text style={{ ...textFontStyles.bodyMediumMedium }}>
-                XAF {price}
-              </Text>
+              {userType ? (
+                <Text style={{ ...textFontStyles.bodyMediumMedium }}>
+                  XAF {price}
+                </Text>
+              ) : (
+                userType === "user" &&
+                status !== "active" && (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 5,
+                      alignItems: "center",
+                    }}
+                  >
+                    <MaterialIcons name="alt-route" size={16} color="black" />
+                    <Text style={{ ...textFontStyles.bodyMediumMedium }}>
+                      {distance}
+                    </Text>
+                  </View>
+                )
+              )}
             </View>
           </View>
         </View>
@@ -101,7 +119,7 @@ export default function componentName({
                     alignItems: "flex-end",
                   }}
                 >
-                  {status !== "available" && (
+                  {userType !== "user" && status !== "available" && (
                     <View
                       style={{
                         padding: 2.5,
@@ -122,18 +140,41 @@ export default function componentName({
                       )}
                     </View>
                   )}
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 5,
-                      alignItems: "center",
-                    }}
-                  >
-                    <MaterialIcons name="alt-route" size={24} color="black" />
-                    <Text style={{ ...textFontStyles.bodyMediumMedium }}>
-                      {distance}
-                    </Text>
-                  </View>
+                  {userType !== "agent" && status !== "pending" && (
+                    <View
+                      style={{
+                        padding: 2.5,
+                        backgroundColor: appColors.tertiaryContainerColor,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: "100%",
+                      }}
+                    >
+                      {status === "active" ? (
+                        <Entypo name="cycle" size={24} color="black" />
+                      ) : (
+                        <MaterialCommunityIcons
+                          name="progress-upload"
+                          size={24}
+                          color="black"
+                        />
+                      )}
+                    </View>
+                  )}
+                  {userType === "agent" && (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        gap: 5,
+                        alignItems: "center",
+                      }}
+                    >
+                      <MaterialIcons name="alt-route" size={24} color="black" />
+                      <Text style={{ ...textFontStyles.bodyMediumMedium }}>
+                        {distance}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               </>
             ) : (

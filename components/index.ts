@@ -23,6 +23,7 @@ import StoreImageComponent from "./organisms/StoreImageComponent";
 import ElementLabel from "./atoms/ElementLabel";
 import StoreItemComponent from "./molecules/StoreItemComponent";
 import TabsButton from "./atoms/TabsButton";
+import ActionsElement from "./molecules/ActionsElement";
 
 export {
   OnboardingSlider,
@@ -49,4 +50,5 @@ export {
   ElementLabel,
   StoreItemComponent,
   TabsButton,
+  ActionsElement,
 };
