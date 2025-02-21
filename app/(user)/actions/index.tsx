@@ -110,6 +110,12 @@ export default function componentName() {
           size={2}
           units="bags"
           actionType="marketplace"
+          pressAction={() =>
+            router.navigate({
+              pathname: "/(user)/actions/[storeId]",
+              params: { storeId: 1 },
+            })
+          }
         />
       </ScrollView>
     </SafeAreaView>

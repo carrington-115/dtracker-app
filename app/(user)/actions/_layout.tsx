@@ -15,13 +15,15 @@ export default function componentName() {
 
           tabBarStyle: {
             display:
-              segments[segments.length - 1] === "[pickupId]" &&
-              pathname !== "/actions/undefined"
+              segments[segments.length - 1] === "[pickupId]" ||
+              (segments[segments.length - 1] === "[storeId]" &&
+                pathname !== "/actions/undefined")
                 ? "none"
                 : "flex",
             height:
-              segments[segments.length - 1] === "[pickupId]" &&
-              pathname !== "/actions/undefined"
+              segments[segments.length - 1] === "[pickupId]" ||
+              (segments[segments.length - 1] === "[storeId]" &&
+                pathname !== "/actions/undefined")
                 ? 0
                 : 62,
           },
