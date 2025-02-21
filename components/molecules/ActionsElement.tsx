@@ -12,13 +12,13 @@ interface actionsElementProps {
   actionType: "pickup" | "pickup-request" | "marketplace";
   size: number;
   units: string;
-  distance: string;
-  price: number;
+  distance?: string;
+  price?: number;
   userType: "user" | "agent";
   status: "active" | "pending" | "available";
-  date: string;
-  username: string;
-  time: string;
+  date?: string;
+  username?: string;
+  time?: string;
   pickupType?: "immediate" | "scheduled";
 }
 
@@ -55,7 +55,7 @@ export default function componentName({
             gap: 12,
           }}
         >
-          <Image source={userProfileImage} />
+          <Image source={userProfileImage} style={styles.imageStyle} />
           <View
             style={{
               flexDirection: "column",
@@ -64,10 +64,17 @@ export default function componentName({
             }}
           >
             <Text style={{ ...textFontStyles.titleMediumMedium }}>
-              {userType ? "Trash Pickup" : userType === "user" && username}
+              {userType === "agent" ||
+              (userType === "user" && status !== "active")
+                ? "Trash Pickup"
+                : username}
             </Text>
-            <View>
-              <View>
+            <View
+              style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+            >
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
                 <MaterialCommunityIcons name="weight" size={16} color="black" />
                 <Text style={{ ...textFontStyles.bodyMediumMedium }}>
                   {size} {units}
@@ -77,16 +84,19 @@ export default function componentName({
                 style={{
                   width: 5,
                   height: 5,
+                  borderRadius: 20,
                   backgroundColor: appColors.onSurface,
                 }}
               />
-              {userType ? (
+              {userType === "agent" ||
+              (userType === "user" && pickupType !== "immediate") ? (
                 <Text style={{ ...textFontStyles.bodyMediumMedium }}>
                   XAF {price}
                 </Text>
               ) : (
                 userType === "user" &&
-                status !== "active" && (
+                status === "active" &&
+                pickupType === "immediate" && (
                   <View
                     style={{
                       flexDirection: "row",
@@ -140,7 +150,7 @@ export default function componentName({
                       )}
                     </View>
                   )}
-                  {userType !== "agent" && status !== "pending" && (
+                  {userType !== "agent" && status !== "available" && (
                     <View
                       style={{
                         padding: 2.5,
@@ -188,23 +198,35 @@ export default function componentName({
                     }}
                   >
                     <View style={{ flexDirection: "column", gap: 5 }}>
-                      <View style={{ flexDirection: "row", gap: 5 }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          gap: 5,
+                          alignItems: "center",
+                        }}
+                      >
                         <MaterialCommunityIcons
                           name="calendar-month-outline"
                           size={24}
                           color="black"
                         />
-                        <Text style={{ ...textFontStyles.bodySmallMedium }}>
+                        <Text style={{ ...textFontStyles.bodyMediumMedium }}>
                           {date}
                         </Text>
                       </View>
-                      <View style={{ flexDirection: "row", gap: 5 }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          gap: 5,
+                          alignItems: "center",
+                        }}
+                      >
                         <MaterialIcons
                           name="timelapse"
                           size={24}
                           color="black"
                         />
-                        <Text style={{ ...textFontStyles.bodySmallMedium }}>
+                        <Text style={{ ...textFontStyles.bodyMediumMedium }}>
                           {time}
                         </Text>
                       </View>
@@ -270,6 +292,6 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: 48,
     height: 48,
-    borderRadius: "100%",
+    borderRadius: 100,
   },
 });

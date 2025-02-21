@@ -1,4 +1,4 @@
-import { TabsButton } from "@/components";
+import { ActionsElement, TabsButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { tabsButtonProps } from "@/constants/types";
@@ -69,7 +69,77 @@ export default function componentName() {
       <Header tabButtonLinks={tabButtonLinks} />
 
       <ScrollView>
-        <Text>Hello actions</Text>
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="user"
+          status="pending"
+          pickupType="scheduled"
+          date="01 March"
+          time="10:00"
+        />
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="user"
+          status="active"
+          pickupType="scheduled"
+          username="John Doe"
+          date="01 March"
+          time="10:00"
+        />
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="agent"
+          status="available"
+          pickupType="immediate"
+          distance="1.2 km"
+        />
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="agent"
+          status="pending"
+          pickupType="immediate"
+          distance="1.2 km"
+        />
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="agent"
+          status="active"
+          pickupType="scheduled"
+          date="01 March"
+          time="10:00"
+        />
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="agent"
+          status="pending"
+          pickupType="scheduled"
+          date="01 March"
+          time="10:00"
+        />
       </ScrollView>
     </SafeAreaView>
   );
