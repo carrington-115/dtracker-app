@@ -32,7 +32,14 @@ export default function componentName() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" translucent />
       <ScrollView style={styles.scrollViewStyles}>
-        <StoreItemComponent {...itemTestProps} />
+        <View style={styles.innerGridViewStyles}>
+          <StoreItemComponent {...itemTestProps} />
+          <StoreItemComponent {...itemTestProps} />
+          <StoreItemComponent {...itemTestProps} />
+          <StoreItemComponent {...itemTestProps} />
+          <StoreItemComponent {...itemTestProps} />
+          <StoreItemComponent {...itemTestProps} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -48,5 +55,11 @@ const styles = StyleSheet.create({
   scrollViewStyles: {
     width: width,
     paddingHorizontal: 16,
+  },
+  innerGridViewStyles: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "space-between",
   },
 });

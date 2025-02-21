@@ -39,6 +39,16 @@ export default function componentName({
             paddingVertical: 16,
           }}
         >
+          <Image
+            source={require("@/assets/images/recycle-symbol.png")}
+            style={{
+              width: 15,
+              height: 15,
+              position: "absolute",
+              top: 5,
+              left: 5,
+            }}
+          />
           <Image source={image} style={{ width: 100, height: 100 }} />
           <View style={{ position: "absolute", bottom: 0, right: 0 }}>
             <IconButton
