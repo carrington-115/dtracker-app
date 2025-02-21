@@ -1,5 +1,6 @@
 import { TabsButton } from "@/components";
 import appColors from "@/constants/colors";
+import { textFontStyles } from "@/constants/fonts";
 import { tabsButtonProps } from "@/constants/types";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -47,12 +48,15 @@ export default function componentName() {
         backgroundColor={"rgb(242, 242, 242)"}
       />
       <Appbar.Header
-        statusBarHeight={10}
+        statusBarHeight={0}
         style={{
           backgroundColor: "rgb(242, 242, 242)",
         }}
       >
-        <Appbar.Content title="Actions" />
+        <Appbar.Content
+          title="Actions"
+          titleStyle={{ ...textFontStyles.titleLargeMedium }}
+        />
         <Appbar.Action
           icon={"store-plus-outline"}
           onPress={() => router.navigate("/(indirect)/marketplace/add-item")}

@@ -10,6 +10,7 @@ import { Appbar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { TabsButton } from "@/components";
 import { styles } from ".";
+import { textFontStyles } from "@/constants/fonts";
 
 export default function componentName() {
   const router = useRouter();
@@ -39,10 +40,13 @@ export default function componentName() {
         backgroundColor={"rgb(242, 242, 242)"}
       />
       <Appbar.Header
-        statusBarHeight={10}
+        statusBarHeight={0}
         style={{ backgroundColor: "rgb(242, 242, 242)" }}
       >
-        <Appbar.Content title="Actions" />
+        <Appbar.Content
+          title="Actions"
+          titleStyle={{ ...textFontStyles.titleLargeMedium }}
+        />
         <Appbar.Action
           icon={"store-plus-outline"}
           onPress={() => router.navigate("/(indirect)/marketplace/add-item")}

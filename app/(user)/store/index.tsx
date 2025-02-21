@@ -1,5 +1,6 @@
 import { StoreItemComponent } from "@/components";
 import appColors from "@/constants/colors";
+import { textFontStyles } from "@/constants/fonts";
 import { storeItemProps } from "@/constants/types";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -60,12 +61,23 @@ export default function componentName() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={"transparent"} />
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={"F2F2F266"}
+        translucent
+      />
       <Appbar.Header
-        statusBarHeight={10}
-        style={{ backgroundColor: "#F2F2F266" }}
+        statusBarHeight={0}
+        style={{
+          backgroundColor: "rgb(242, 242, 242)",
+          borderBottomWidth: 0.2,
+          borderColor: appColors.outlineVariant,
+        }}
       >
-        <Appbar.Content title="Green Store" />
+        <Appbar.Content
+          title="Green Store"
+          titleStyle={{ ...textFontStyles.titleLargeMedium }}
+        />
         <Appbar.Action
           icon={"store-plus-outline"}
           onPress={() => router.navigate("/(indirect)/marketplace/add-item")}
