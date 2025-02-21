@@ -1,9 +1,33 @@
-import { Stack, Tabs } from "expo-router";
+import { Stack, Tabs, usePathname, useSegments } from "expo-router";
 import React from "react";
 
 export default function componentName() {
+  const segments = useSegments();
+  const pathname = usePathname();
+
   return (
     <>
+      <Tabs.Screen
+        options={{
+          title: "Greenstore",
+          headerShadowVisible: false,
+          headerTransparent: true,
+
+          tabBarStyle: {
+            display:
+              segments[segments.length - 1] === "[pickupId]" &&
+              pathname !== "/actions/undefined"
+                ? "none"
+                : "flex",
+            height:
+              segments[segments.length - 1] === "[pickupId]" &&
+              pathname !== "/actions/undefined"
+                ? 0
+                : 62,
+          },
+          headerShown: false,
+        }}
+      />
       <Tabs.Screen
         options={{
           headerShown: false,

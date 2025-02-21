@@ -24,6 +24,7 @@ import ElementLabel from "./atoms/ElementLabel";
 import StoreItemComponent from "./molecules/StoreItemComponent";
 import TabsButton from "./atoms/TabsButton";
 import ActionsElement from "./molecules/ActionsElement";
+import NotificationLabel from "./molecules/NotificationLabel";
 
 export {
   OnboardingSlider,
@@ -51,4 +52,5 @@ export {
   StoreItemComponent,
   TabsButton,
   ActionsElement,
+  NotificationLabel,
 };

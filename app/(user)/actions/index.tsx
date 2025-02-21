@@ -4,7 +4,7 @@ import { textFontStyles } from "@/constants/fonts";
 import { tabsButtonProps } from "@/constants/types";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { usePathname, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -36,6 +36,7 @@ const tabButtonLinks: tabsButtonProps[] = [
 
 export default function componentName() {
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   useEffect(() => {
     setTimeout(() => {
@@ -80,6 +81,12 @@ export default function componentName() {
           pickupType="scheduled"
           date="01 March"
           time="10:00"
+          pressAction={() =>
+            router.navigate({
+              pathname: "/(user)/actions/[pickupId]",
+              params: { pickupId: 1 },
+            })
+          }
         />
         <ActionsElement
           userProfileImage={require("@/assets/images/user-image.png")}
