@@ -1,6 +1,14 @@
-import { ModalImageviewer, StoreImageComponent } from "@/components";
+import {
+  BottomButton,
+  ModalImageviewer,
+  StoreImageComponent,
+  ViewElement,
+} from "@/components";
 import appColors from "@/constants/colors";
+import { textFontStyles } from "@/constants/fonts";
 import { storeItemProps } from "@/constants/types";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
@@ -40,8 +48,16 @@ export default function componentName() {
 
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useLocalSearchParams();
-  const [itemData, setItemData] = useState<storeItemProps | null>(null);
   const [imageViewerModal, setImageViewerModal] = useState<boolean>(false);
+
+  // item details
+  const [itemName, setItemName] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [itemWeight, setItemWeight] = useState<string>("");
+  const [priceControl, setPriceControl] = useState<
+    "default" | "negotiate" | "free"
+  >("default");
+  const [priceAmount, setPriceAmount] = useState<number>(0);
 
   const router = useRouter();
   let images: any;
@@ -55,9 +71,13 @@ export default function componentName() {
       const item: storeItemProps | any = storeData.find(
         (item) => item.id === id
       );
-      setItemData(item);
+      setItemName(item.name);
+      setCategory(item.labels.type);
+      setItemWeight(item.labels.size);
+      setPriceAmount(item.price);
+      setPriceControl("default");
     }
-  }, [loading]);
+  }, [loading, id]);
 
   if (loading) {
     return (
@@ -79,12 +99,99 @@ export default function componentName() {
         <Appbar.BackAction onPress={() => router.back()} />
       </Appbar.Header>
       <ScrollView style={styles.scrollViewStyles}>
-        <View style={{ width: "100%", alignItems: "center" }}>
+        <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
           <StoreImageComponent
             action={() => setImageViewerModal(true)}
             type="image-view"
             images={images}
           />
+        </View>
+        <View style={styles.detailsContainerStyles}>
+          <View style={{ width: "100%" }}>
+            <Text style={{ ...textFontStyles.titleLargeBold }}>{itemName}</Text>
+          </View>
+          <ViewElement
+            icon={
+              <>
+                <MaterialIcons
+                  name="info-outline"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+              >
+                <Text
+                  style={{
+                    ...textFontStyles.bodyLargeMedium,
+                    color: appColors.onSurface,
+                  }}
+                >
+                  {category}
+                </Text>
+              </View>
+            }
+          />
+          <ViewElement
+            icon={
+              <>
+                <MaterialCommunityIcons
+                  name="weight"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+              >
+                <Text
+                  style={{
+                    ...textFontStyles.bodyLargeMedium,
+                    color: appColors.onSurface,
+                  }}
+                >
+                  {itemWeight}
+                </Text>
+              </View>
+            }
+          />
+          <ViewElement
+            icon={
+              <>
+                <MaterialIcons
+                  name="sell"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: 2,
+                }}
+              >
+                <Text style={{ ...textFontStyles.bodyMediumRegular }}>
+                  {priceControl === "default" ? "Fixed price" : priceControl}
+                </Text>
+                {priceControl === "default" && (
+                  <Text style={{ ...textFontStyles.bodyLargeMedium }}>
+                    {priceAmount} XAF
+                  </Text>
+                )}
+              </View>
+            }
+          />
+          <View style={{ width: "100%", marginVertical: 20, marginBottom: 40 }}>
+            <BottomButton name="Add to Cart" onPressAction={() => {}} />
+          </View>
         </View>
       </ScrollView>
       {/* <ModalImageviewer
@@ -104,5 +211,12 @@ const styles = StyleSheet.create({
   scrollViewStyles: {
     padding: 16,
     width: width,
+  },
+  detailsContainerStyles: {
+    width: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 20,
   },
 });
