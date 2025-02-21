@@ -1,8 +1,8 @@
 import { StoreItemComponent } from "@/components";
 import appColors from "@/constants/colors";
 import { storeItemProps } from "@/constants/types";
-import { Stack } from "expo-router";
-import React from "react";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,28 +11,60 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
 
-const itemTestProps: storeItemProps = {
-  name: "Metal can bottle",
-  image: require("@/assets/images/can-bottle.png"),
-  labels: {
-    type: "Can",
-    size: "500ml",
-  },
-  price: 2000,
-  pressAction: () => {},
-  addButtonAction: () => {},
-};
-
 export default function componentName() {
+  // use tanstack query when loading the data
+  const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
+
+  const itemTestProps: storeItemProps = {
+    name: "Metal can bottle",
+    image: require("@/assets/images/can-bottle.png"),
+    labels: {
+      type: "Can",
+      size: "500ml",
+    },
+    price: 2000,
+    id: "1",
+    pressAction: () =>
+      router.navigate({
+        pathname: "/(user)/store/[id]",
+        params: { id: Number(itemTestProps.id) },
+      }),
+    addButtonAction: () => {},
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [loading]);
+
+  if (loading) {
+    return (
+      <SafeAreaView
+        style={{
+          ...styles.container,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color={appColors.primaryColor} />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" translucent />
       <ScrollView style={styles.scrollViewStyles}>
         <View style={styles.innerGridViewStyles}>
+          <StoreItemComponent {...itemTestProps} />
+          <StoreItemComponent {...itemTestProps} />
           <StoreItemComponent {...itemTestProps} />
           <StoreItemComponent {...itemTestProps} />
           <StoreItemComponent {...itemTestProps} />
@@ -50,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: appColors.surfaceBright,
     width: width,
-    paddingTop: 75,
+    paddingTop: 55,
   },
   scrollViewStyles: {
     width: width,

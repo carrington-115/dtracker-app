@@ -2,12 +2,16 @@ import { IconButton } from "@/components";
 import appColors from "@/constants/colors";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Stack, Tabs, useRouter } from "expo-router";
+import { Stack, Tabs, usePathname, useRouter, useSegments } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function componentName() {
   const router = useRouter();
+  const segments = useSegments();
+  const pathname = usePathname();
+  console.log("Array of segments: ", segments, "Pathname: ", pathname);
+
   return (
     <>
       <Tabs.Screen
@@ -21,6 +25,23 @@ export default function componentName() {
             borderBottomWidth: 0.5,
             height: 100,
           },
+          tabBarStyle: {
+            display:
+              segments[segments.length - 1] === "[id]" &&
+              pathname !== "/store/undefined"
+                ? "none"
+                : "flex",
+            height:
+              segments[segments.length - 1] === "[id]" &&
+              pathname !== "/store/undefined"
+                ? 0
+                : 62,
+          },
+          headerShown:
+            segments[segments.length - 1] === "[id]" &&
+            pathname !== "/store/undefined"
+              ? false
+              : true,
           headerRight: () => (
             <>
               <View style={styles.headerIconStyles}>
@@ -58,6 +79,12 @@ export default function componentName() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="index"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="[id]"
           options={{
             headerShadowVisible: false,
           }}

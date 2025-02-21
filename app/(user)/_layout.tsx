@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useSegments } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import appColors from "@/constants/colors";
@@ -7,6 +7,10 @@ import { textFontStyles } from "@/constants/fonts";
 import { Text } from "react-native";
 
 export default function componentName() {
+  const segments = useSegments();
+
+  console.log("Array of segments: ", segments);
+
   return (
     <>
       <Tabs

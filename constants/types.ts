@@ -105,12 +105,14 @@ interface storeImageComponentProps {
 }
 
 interface storeItemProps {
-  pressAction: () => void;
+  pressAction?: () => void;
   image: any;
   name: string;
   labels: { type: string; size: string };
   price: number;
   addButtonAction: () => void;
+  id?: string;
+  link?: any;
 }
 
 export type {
