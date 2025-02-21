@@ -11,6 +11,9 @@ export default function componentName() {
       />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="pending" />
+        <Stack.Screen name="[storeId]" />
+        <Stack.Screen name="[pickupId]" />
       </Stack>
     </>
   );

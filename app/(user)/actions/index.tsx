@@ -95,50 +95,14 @@ export default function componentName() {
           time="10:00"
         />
         <ActionsElement
+          itemName="Plastic Bottles"
           userProfileImage={require("@/assets/images/user-image.png")}
-          actionType="pickup"
-          size={2}
-          units="bags"
-          price={500}
-          userType="agent"
           status="available"
-          pickupType="immediate"
-          distance="1.2 km"
-        />
-        <ActionsElement
-          userProfileImage={require("@/assets/images/user-image.png")}
-          actionType="pickup"
+          paymentMethod="fixed"
+          price={500}
           size={2}
           units="bags"
-          price={500}
-          userType="agent"
-          status="pending"
-          pickupType="immediate"
-          distance="1.2 km"
-        />
-        <ActionsElement
-          userProfileImage={require("@/assets/images/user-image.png")}
-          actionType="pickup"
-          size={2}
-          units="bags"
-          price={500}
-          userType="agent"
-          status="active"
-          pickupType="scheduled"
-          date="01 March"
-          time="10:00"
-        />
-        <ActionsElement
-          userProfileImage={require("@/assets/images/user-image.png")}
-          actionType="pickup"
-          size={2}
-          units="bags"
-          price={500}
-          userType="agent"
-          status="pending"
-          pickupType="scheduled"
-          date="01 March"
-          time="10:00"
+          actionType="marketplace"
         />
       </ScrollView>
     </SafeAreaView>
