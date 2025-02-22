@@ -9,7 +9,7 @@ export default function componentName() {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="indentification" />
+      <Stack.Screen name="identification" />
       <Stack.Screen name="momo-payment" />
       <Stack.Screen name="pincode-verification" />
       <Stack.Screen name="photo-verification" />

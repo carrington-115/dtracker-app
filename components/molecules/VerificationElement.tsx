@@ -15,7 +15,7 @@ export default function componentName({
 }: verificationElementProps) {
   return (
     <Link
-      href={link}
+      href={{ pathname: link }}
       style={{
         width: "100%",
         paddingHorizontal: 17,

@@ -8,7 +8,7 @@ const { width } = Dimensions.get("window");
 export default function componentName() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text></Text>
+      <Text>Hello world</Text>
     </SafeAreaView>
   );
 }

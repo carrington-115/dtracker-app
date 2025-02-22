@@ -26,21 +26,21 @@ export default function componentName() {
       body: "Please upload you ID, passport, or driving license",
       step: 1,
       completed: verificationStepStatus[0],
-      link: "/identification",
+      link: "/agent-verification/identification",
     },
     {
       title: "Mobile money payment",
       body: "Enter your mobile money number",
       step: 2,
       completed: verificationStepStatus[1],
-      link: "/momo-payment",
+      link: "/agent-verification/momo-payment",
     },
     {
       title: "Photo verification",
       body: "Take a selfie or upload a clear and recent photo of yourself",
       step: 3,
       completed: verificationStepStatus[2],
-      link: "/photo-verification",
+      link: "/agent-verification/photo-verification",
     },
   ];
 
