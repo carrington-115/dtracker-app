@@ -14,7 +14,7 @@ export default function Index() {
     setTimeout(() => {
       setLoading(false);
       if (!signedIn) {
-        router.navigate("./(user)");
+        router.navigate("./agent-verification");
       }
     }, 2000);
   }, []);
