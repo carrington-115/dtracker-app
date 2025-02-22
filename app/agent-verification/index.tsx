@@ -2,6 +2,7 @@ import { BottomButton, VerificationElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { verificationElementProps } from "@/constants/types";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   View,
@@ -20,6 +21,10 @@ export default function componentName() {
   const [verificationStepStatus, setVerificationStepStatus] = React.useState<
     boolean[]
   >([false, false, false]);
+  const router = useRouter();
+  const [buttonName, setButtonName] =
+    React.useState<string>("Start Verification");
+
   const verificationData: verificationElementProps[] = [
     {
       title: "Identification",
@@ -43,6 +48,18 @@ export default function componentName() {
       link: "/agent-verification/photo-verification",
     },
   ];
+
+  const handleVerificationButton = () => {
+    if (verificationStepStatus[0]) {
+      router.push("/agent-verification/momo-payment");
+    } else if (verificationStepStatus[1]) {
+      router.push("/agent-verification/photo-verification");
+    } else if (verificationStepStatus[2]) {
+      setButtonName("Start earning");
+    } else {
+      router.push("/agent-verification/identification");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,7 +94,10 @@ export default function componentName() {
           ))}
         </View>
         <View style={{ width: "100%", marginTop: 200 }}>
-          <BottomButton name="Start Verification" onPressAction={() => {}} />
+          <BottomButton
+            name={buttonName}
+            onPressAction={handleVerificationButton}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

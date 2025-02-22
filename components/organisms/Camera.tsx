@@ -16,6 +16,7 @@ import { Image } from "react-native";
 import { useDispatch } from "react-redux";
 import { addTrashImage } from "@/redux/features/trashImageSlice";
 import { setProfilePhotoUrl } from "@/redux/features/profileSlice";
+import { uploadIDImage } from "@/redux/features/agentSlice";
 
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
@@ -78,6 +79,11 @@ export default function componentName({
   const handleSaveImage = () => {
     if (imageType === "profile") {
       dispatch(setProfilePhotoUrl(image));
+      onClose();
+      handleBackToCamera();
+      closeModalAction();
+    } else if (imageType === "agentID") {
+      dispatch(uploadIDImage(image.photo));
       onClose();
       handleBackToCamera();
       closeModalAction();

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { uploadIDImage } from "./agentSlice";
 
 interface initialStateTypes {
   trashImages: string[];

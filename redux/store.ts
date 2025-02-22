@@ -6,6 +6,7 @@ import trashDetailReducer from "./features/trashDetailSlice";
 import reserveImageReducer from "./features/reserveImageSlice";
 import profileReducer from "./features/profileSlice";
 import storeReducer from "./features/storeSlice";
+import agentReducer from "./features/agentSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     reserve: reserveImageReducer,
     profile: profileReducer,
     store: storeReducer,
+    agent: agentReducer,
   },
 });
 
