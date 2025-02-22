@@ -18,9 +18,16 @@ const agentSlice = createSlice({
     cancelIDImage: (state) => {
       state.agentIDLink = "";
     },
+    cancelAgentVerifyPhoto: (state) => {
+      state.agentVerifyPhoto = "";
+    },
   },
 });
 
-export const { uploadIDImage, cancelIDImage, uploadAgentVerifyPhoto } =
-  agentSlice.actions;
+export const {
+  uploadIDImage,
+  cancelIDImage,
+  uploadAgentVerifyPhoto,
+  cancelAgentVerifyPhoto,
+} = agentSlice.actions;
 export default agentSlice.reducer;

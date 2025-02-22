@@ -1,4 +1,4 @@
-import { ActiveButton } from "@/components";
+import { ActiveButton, ViewProfileImage } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
@@ -8,6 +8,7 @@ import { Appbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { Camera as AppCamera } from "@/components";
+import { cancelAgentVerifyPhoto } from "@/redux/features/agentSlice";
 
 const { width } = Dimensions.get("window");
 
@@ -58,6 +59,11 @@ export default function componentName() {
             Take a selfie or upload a clear and recent photo of yourself
           </Text>
         </View>
+        <ViewProfileImage
+          idImage={agentProfileUrl}
+          setBottomSheetVisible={() => {}}
+          cancelIDImage={cancelAgentVerifyPhoto}
+        />
         <View
           style={{
             flexDirection: "column",

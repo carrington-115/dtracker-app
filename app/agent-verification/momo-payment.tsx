@@ -20,7 +20,7 @@ export default function componentName() {
         style={{ backgroundColor: appColors.surfaceBright }}
         statusBarHeight={0}
       >
-        <Appbar.BackAction onPress={() => {}} />
+        <Appbar.BackAction onPress={() => router.back()} />
       </Appbar.Header>
       <View
         style={{
