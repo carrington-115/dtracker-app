@@ -1,6 +1,6 @@
 import appColors from "@/constants/colors";
 import React from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");

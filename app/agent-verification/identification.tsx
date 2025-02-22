@@ -168,7 +168,7 @@ export default function componentName() {
             <ActiveButton
               name={idImage !== "" ? "Continue" : "Upload"}
               onPressAction={() =>
-                router.push("/agent-verification/photo-verification")
+                router.push("/agent-verification/momo-payment")
               }
               bgColor={appColors.primaryColor}
               color={appColors.surfaceBright}

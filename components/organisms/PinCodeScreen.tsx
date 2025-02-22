@@ -11,10 +11,12 @@ export default function componentName({
   buttonAction,
   otp,
   setOtp,
+  resendCodeAction,
 }: {
   buttonAction: () => void;
   otp: string;
   setOtp: (otp: string) => void;
+  resendCodeAction: () => void;
 }) {
   const [error, setError] = useState<boolean>(false);
 
@@ -100,7 +102,7 @@ export default function componentName({
           bgColor="transparent"
           focusedColor={appColors.primaryContainerColor}
           color={appColors.onPrimaryContainerColor}
-          onPressAction={() => {}}
+          onPressAction={resendCodeAction}
         />
         <View style={{ width: "100%", marginTop: 270 }}>
           <BottomButton name="Verify" onPressAction={handleSubmitForm} />
