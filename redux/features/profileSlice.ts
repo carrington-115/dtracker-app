@@ -4,6 +4,7 @@ const initialState = {
   name: "",
   age: undefined,
   profilePhotoUrl: "",
+  agentPhotoUrl: "",
 };
 
 const profileSlice = createSlice({
@@ -19,8 +20,12 @@ const profileSlice = createSlice({
     setProfilePhotoUrl: (state, action) => {
       state.profilePhotoUrl = action.payload;
     },
+    setAgentPhotoUrl: (state, action) => {
+      state.agentPhotoUrl = action.payload;
+    },
   },
 });
 
-export const { setName, setAge, setProfilePhotoUrl } = profileSlice.actions;
+export const { setName, setAge, setProfilePhotoUrl, setAgentPhotoUrl } =
+  profileSlice.actions;
 export default profileSlice.reducer;

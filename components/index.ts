@@ -26,6 +26,7 @@ import TabsButton from "./atoms/TabsButton";
 import ActionsElement from "./molecules/ActionsElement";
 import NotificationLabel from "./molecules/NotificationLabel";
 import VerificationElement from "./molecules/VerificationElement";
+import ViewProfileImage from "./molecules/ViewProfileImage";
 
 export {
   OnboardingSlider,
@@ -55,4 +56,5 @@ export {
   ActionsElement,
   NotificationLabel,
   VerificationElement,
+  ViewProfileImage,
 };

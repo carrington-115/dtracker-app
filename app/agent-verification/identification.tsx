@@ -1,4 +1,9 @@
-import { ActiveButton, AuthButton, BottomSheetModal } from "@/components";
+import {
+  ActiveButton,
+  AuthButton,
+  BottomSheetModal,
+  ViewProfileImage,
+} from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -31,7 +36,6 @@ export default function componentName() {
 
   // id state image
   const idImage = useSelector((state: any) => state.agent.agentIDLink);
-  const cameraIdImage = useSelector((state: any) => state.agent.agentIDLink);
 
   // upload image
   const handleUploadImage = async () => {
@@ -47,10 +51,15 @@ export default function componentName() {
     }
   };
 
-  const router = useRouter();
+  const handlePressButton = () => {
+    if (idImage !== "") {
+      router.push("/agent-verification/momo-payment");
+    } else {
+      setBottomSheetVisible(true);
+    }
+  };
 
-  // useEffect(() => {
-  // }, [idImage]);
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,81 +89,11 @@ export default function componentName() {
           <Text style={{ ...textFontStyles.bodyLargeRegular }}>
             Please upload an image of your ID, Passport, or Driving licence
           </Text>
-          {idImage !== "" && (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                width: "100%",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderWidth: 1,
-                borderColor: appColors.outline,
-                borderRadius: 10,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 20,
-                }}
-              >
-                <View
-                  style={{
-                    width: 50,
-                    height: 50,
-                    position: "relative",
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: idImage,
-                    }}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: 10,
-                    }}
-                  />
-                  <Pressable
-                    style={{
-                      padding: 4,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 50,
-                      backgroundColor: appColors.surfaceBright,
-                      position: "absolute",
-                      top: -5,
-                      right: -5,
-                      borderWidth: 1,
-                      borderColor: appColors.outline,
-                    }}
-                    onPress={() => dispatch(cancelIDImage())}
-                  >
-                    <MaterialIcons name="close" color={"black"} size={12} />
-                  </Pressable>
-                </View>
-                <Text>Agent ID photo</Text>
-              </View>
-              <Pressable
-                style={{
-                  padding: 10,
-                  backgroundColor: appColors.surfaceContainer,
-                  borderRadius: 50,
-                }}
-                onPress={() => setBottomSheetVisible(true)}
-              >
-                <MaterialCommunityIcons
-                  name="pencil-outline"
-                  size={24}
-                  color={appColors.onSurface}
-                />
-              </Pressable>
-            </View>
-          )}
-
+          <ViewProfileImage
+            idImage={idImage}
+            cancelIDImage={cancelIDImage}
+            setBottomSheetVisible={setBottomSheetVisible}
+          />
           <View
             style={{
               flexDirection: "row",
@@ -166,10 +105,8 @@ export default function componentName() {
             }}
           >
             <ActiveButton
-              name={idImage !== "" ? "Continue" : "Upload"}
-              onPressAction={() =>
-                router.push("/agent-verification/momo-payment")
-              }
+              name={idImage !== "" ? "Continue" : "Upload Image"}
+              onPressAction={handlePressButton}
               bgColor={appColors.primaryColor}
               color={appColors.surfaceBright}
               focusedColor={appColors.primaryColor}

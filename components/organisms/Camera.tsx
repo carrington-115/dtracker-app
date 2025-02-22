@@ -15,8 +15,14 @@ import appColors from "@/constants/colors";
 import { Image } from "react-native";
 import { useDispatch } from "react-redux";
 import { addTrashImage } from "@/redux/features/trashImageSlice";
-import { setProfilePhotoUrl } from "@/redux/features/profileSlice";
-import { uploadIDImage } from "@/redux/features/agentSlice";
+import {
+  setProfilePhotoUrl,
+  setAgentPhotoUrl,
+} from "@/redux/features/profileSlice";
+import {
+  uploadAgentVerifyPhoto,
+  uploadIDImage,
+} from "@/redux/features/agentSlice";
 
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
@@ -82,6 +88,10 @@ export default function componentName({
       onClose();
       handleBackToCamera();
       closeModalAction();
+    } else if (imageType === "agent-profile") {
+      dispatch(uploadAgentVerifyPhoto(image.photo));
+      onClose();
+      handleBackToCamera();
     } else if (imageType === "agentID") {
       dispatch(uploadIDImage(image.photo));
       onClose();
