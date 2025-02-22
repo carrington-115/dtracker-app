@@ -121,6 +121,14 @@ interface tabsButtonProps {
   name: string;
 }
 
+interface verificationElementProps {
+  link: any;
+  title: string;
+  body: string;
+  completed: boolean;
+  step: number;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -138,4 +146,5 @@ export type {
   storeImageComponentProps,
   storeItemProps,
   tabsButtonProps,
+  verificationElementProps,
 };
