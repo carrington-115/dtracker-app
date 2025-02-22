@@ -5,6 +5,9 @@ export default function componentName() {
   const segments = useSegments();
   const pathname = usePathname();
 
+  console.log("segments", segments);
+  console.log("pathname", pathname);
+
   return (
     <>
       <Tabs.Screen
@@ -15,15 +18,17 @@ export default function componentName() {
 
           tabBarStyle: {
             display:
-              segments[segments.length - 1] === "[pickupId]" ||
-              (segments[segments.length - 1] === "[storeId]" &&
-                pathname !== "/actions/undefined")
+              ((segments[segments.length - 1] === "[pickupId]" ||
+                segments[segments.length - 1] === "[storeId]") &&
+                pathname !== "/actions/undefined") ||
+              pathname === "/actions/pickup/edit-pickup-item" ||
+              pathname === "/actions/store/edit-store-item"
                 ? "none"
                 : "flex",
             height:
-              segments[segments.length - 1] === "[pickupId]" ||
-              (segments[segments.length - 1] === "[storeId]" &&
-                pathname !== "/actions/undefined")
+              (segments[segments.length - 1] === "[pickupId]" ||
+                segments[segments.length - 1] === "[storeId]") &&
+              pathname !== "/actions/undefined"
                 ? 0
                 : 62,
           },
@@ -38,8 +43,8 @@ export default function componentName() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="pending" />
-        <Stack.Screen name="[storeId]" />
-        <Stack.Screen name="[pickupId]" />
+        <Stack.Screen name="store" />
+        <Stack.Screen name="pickup" />
       </Stack>
     </>
   );

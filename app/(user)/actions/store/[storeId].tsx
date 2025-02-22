@@ -20,22 +20,23 @@ export default function componentName() {
   const [loading, setLoading] = useState<boolean>(true);
   const [images, setImages] = useState<string[]>([]);
   const [imageViewerModal, setImageViewerModal] = useState<boolean>(false);
-  const { actionId } = useLocalSearchParams();
+  const { storeId } = useLocalSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
   // item details
-  const price: number = 5000;
-  const trashDetails = {
-    pickupType: "Immediate",
-    trashType: "Plastic",
-    trashWeight: 5,
-  };
+  const itemName: string = "Plastic bottle";
+  const category: string = "Plastic";
+  const itemWeight: number = 5;
+  const priceControl: string = "default";
+  const priceAmount: number = 5000;
   const [notificationTitle, setNotificationTitle] =
     useState<string>("Just wait a moment");
   const [notificationBody, setNotificationBody] = useState<string>(
     "We’re finding the best available agent for you. This won’t take long! Sit back and relax while we establish a connection. 🚀"
   );
+
+  console.log("store id", storeId);
 
   useEffect(() => {
     setTimeout(() => {
@@ -84,61 +85,9 @@ export default function componentName() {
             gap: 10,
           }}
         >
-          <ViewElement
-            icon={
-              <>
-                <MaterialIcons
-                  name="sell"
-                  size={24}
-                  color={appColors.onSurface}
-                />
-              </>
-            }
-            details={
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-              >
-                <Text
-                  style={{
-                    ...textFontStyles.titleMediumRegular,
-                    color: appColors.onSurface,
-                  }}
-                >
-                  XAF
-                </Text>
-                <Text style={{ ...textFontStyles.headlineMediumMedium }}>
-                  {price}
-                </Text>
-              </View>
-            }
-          />
-          <ViewElement
-            icon={
-              <>
-                <MaterialIcons
-                  name="bike-scooter"
-                  size={24}
-                  color={appColors.onSurface}
-                />
-              </>
-            }
-            details={
-              <View
-                style={{
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: 5,
-                }}
-              >
-                <Text style={{ ...textFontStyles.bodyLargeMedium }}>
-                  {trashDetails?.pickupType}
-                </Text>
-                <Text style={{ ...textFontStyles.bodyLargeMedium }}>
-                  <>{trashDetails.trashWeight}</> bags/pickup
-                </Text>
-              </View>
-            }
-          />
+          <View style={{ width: "100%" }}>
+            <Text style={{ ...textFontStyles.titleLargeBold }}>{itemName}</Text>
+          </View>
           <ViewElement
             icon={
               <>
@@ -159,7 +108,7 @@ export default function componentName() {
                     color: appColors.onSurface,
                   }}
                 >
-                  {trashDetails.trashType}
+                  {category}
                 </Text>
               </View>
             }
@@ -184,8 +133,37 @@ export default function componentName() {
                     color: appColors.onSurface,
                   }}
                 >
-                  <>{trashDetails.trashWeight}</> bags
+                  {itemWeight}
                 </Text>
+              </View>
+            }
+          />
+          <ViewElement
+            icon={
+              <>
+                <MaterialIcons
+                  name="sell"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              </>
+            }
+            details={
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: 2,
+                }}
+              >
+                <Text style={{ ...textFontStyles.bodyMediumRegular }}>
+                  {priceControl === "default" ? "Fixed price" : priceControl}
+                </Text>
+                {priceControl === "default" && (
+                  <Text style={{ ...textFontStyles.bodyLargeMedium }}>
+                    {priceAmount} XAF
+                  </Text>
+                )}
               </View>
             }
           />
@@ -193,10 +171,10 @@ export default function componentName() {
             <NotificationLabel
               content={{ title: notificationTitle, body: notificationBody }}
               icon={
-                <MaterialCommunityIcons
-                  name="information-outline"
+                <MaterialIcons
+                  name="verified"
                   size={24}
-                  color={appColors.onSurface}
+                  color={appColors.onPrimaryContainerColor}
                 />
               }
               color={appColors.onPrimaryContainerColor}

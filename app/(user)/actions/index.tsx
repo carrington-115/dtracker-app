@@ -83,7 +83,7 @@ export default function componentName() {
           time="10:00"
           pressAction={() =>
             router.navigate({
-              pathname: "/(user)/actions/[pickupId]",
+              pathname: "/(user)/actions/pickup/[pickupId]",
               params: { pickupId: 1 },
             })
           }
@@ -112,8 +112,8 @@ export default function componentName() {
           actionType="marketplace"
           pressAction={() =>
             router.navigate({
-              pathname: "/(user)/actions/[storeId]",
-              params: { storeId: 1 },
+              pathname: "/(user)/actions/store/[storeId]",
+              params: { storeId: 2 },
             })
           }
         />

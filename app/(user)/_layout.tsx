@@ -7,10 +7,6 @@ import { textFontStyles } from "@/constants/fonts";
 import { Text } from "react-native";
 
 export default function componentName() {
-  const segments = useSegments();
-
-  console.log("Array of segments: ", segments);
-
   return (
     <>
       <Tabs
