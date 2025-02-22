@@ -1,4 +1,6 @@
 import {
+  ActiveButton,
+  BottomSheetModal,
   NotificationLabel,
   StoreImageComponent,
   ViewElement,
@@ -24,6 +26,12 @@ export default function componentName() {
   const pathname = usePathname();
   const router = useRouter();
 
+  // modal details
+  const [bottomSheetModalView, setBottomSheetModalView] =
+    useState<boolean>(false);
+  const [modalTitle, setModalTitle] = useState<string>("");
+  const [modalMessage, setModalMessage] = useState<string>("");
+
   // item details
   const itemName: string = "Plastic bottle";
   const category: string = "Plastic";
@@ -36,7 +44,17 @@ export default function componentName() {
     "We’re finding the best available agent for you. This won’t take long! Sit back and relax while we establish a connection. 🚀"
   );
 
-  console.log("store id", storeId);
+  const handleHeaderEditAction = () => {
+    setModalTitle("Edit Pickup");
+    setModalMessage("Are you sure you want to edit this pickup?");
+    setBottomSheetModalView(true);
+  };
+
+  const handleHeaderDeleteAction = () => {
+    setModalTitle("Delete Pickup");
+    setModalMessage("Are you sure you want to delete this pickup?");
+    setBottomSheetModalView(true);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -47,7 +65,10 @@ export default function componentName() {
   if (loading) {
     return (
       <SafeAreaView style={[styles.container]}>
-        <Header />
+        <Header
+          handleDeletePickupAction={() => {}}
+          handleEditPickupAction={() => {}}
+        />
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
@@ -68,7 +89,10 @@ export default function componentName() {
         backgroundColor={appColors.surfaceBright}
         translucent={true}
       />
-      <Header />
+      <Header
+        handleDeletePickupAction={handleHeaderDeleteAction}
+        handleEditPickupAction={handleHeaderEditAction}
+      />
       <ScrollView style={styles.scrollViewcontainerStyles}>
         <View style={{ width: "100%", alignItems: "center" }}>
           <StoreImageComponent
@@ -183,18 +207,74 @@ export default function componentName() {
           </View>
         </View>
       </ScrollView>
+      <BottomSheetModal
+        visible={bottomSheetModalView}
+        setVisible={setBottomSheetModalView}
+        initialHeight={0.2}
+        minHieght={0.2}
+        maxHeight={1}
+        collapseHeight={0.5}
+      >
+        <View style={{ width: "100%", flexDirection: "column", gap: 10 }}>
+          <View
+            style={{
+              width: 60,
+              height: 5,
+              backgroundColor: appColors.surfaceContainerHighest,
+              borderRadius: 20,
+              alignSelf: "center",
+              marginBottom: 20,
+            }}
+          />
+          <Text style={{ ...textFontStyles.titleLargeMedium }}>
+            {modalTitle}
+          </Text>
+          <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+            {modalMessage}
+          </Text>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: 50,
+            }}
+          >
+            <ActiveButton
+              name="Continue"
+              onPressAction={() => router.dismissTo("./edit-store-item")}
+              bgColor={appColors.onSurface}
+              color={appColors.surfaceBright}
+              focusedColor={appColors.surfaceContainer}
+            />
+            <ActiveButton
+              name="Cancel"
+              onPressAction={() => setBottomSheetModalView(false)}
+              bgColor={appColors.surfaceContainerLow}
+              color={appColors.onSurface}
+              focusedColor={appColors.surfaceContainer}
+            />
+          </View>
+        </View>
+      </BottomSheetModal>
     </SafeAreaView>
   );
 }
 
-const Header = () => {
+const Header = ({
+  handleEditPickupAction,
+  handleDeletePickupAction,
+}: {
+  handleEditPickupAction: () => void;
+  handleDeletePickupAction: () => void;
+}) => {
   const router = useRouter();
   return (
     <Appbar.Header statusBarHeight={0}>
       <Appbar.BackAction onPress={() => router.back()} />
       <Appbar.Content title="" />
-      <Appbar.Action icon="pencil-outline" onPress={() => {}} />
-      <Appbar.Action icon="delete-outline" onPress={() => {}} />
+      <Appbar.Action icon="pencil-outline" onPress={handleEditPickupAction} />
+      <Appbar.Action icon="delete-outline" onPress={handleDeletePickupAction} />
     </Appbar.Header>
   );
 };

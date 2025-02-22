@@ -275,7 +275,7 @@ export default function componentName() {
           >
             <View style={{ width: "90%", marginTop: 50 }}>
               <BottomButton
-                name="Set pickup"
+                name="Update pickup"
                 onPressAction={handleOnSubmitForm}
               />
             </View>

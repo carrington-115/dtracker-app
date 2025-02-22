@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   Pressable,
+  StatusBar,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -137,7 +138,14 @@ export default function componentName() {
         onClose={() => setCameraVisible(false)}
         closeModalAction={() => setBottomSheetVisible(false)}
       />
-      <Appbar.Header style={{ backgroundColor: "transparent", height: 58 }}>
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={appColors.surfaceBright}
+      />
+      <Appbar.Header
+        style={{ backgroundColor: "transparent" }}
+        statusBarHeight={0}
+      >
         <Appbar.BackAction onPress={handleNavigateBack} />
         <Appbar.Content title="" />
         <Appbar.Action
@@ -218,7 +226,7 @@ export default function componentName() {
           </View>
           <View style={{ width: "100%" }}>
             <BottomButton
-              name="Add to store"
+              name="Update store"
               onPressAction={handleSubmitForm}
             />
           </View>
