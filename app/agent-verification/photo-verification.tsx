@@ -27,15 +27,13 @@ export default function componentName() {
     }
   };
 
-  console.log("Photo: ", agentProfileUrl);
-
   return (
     <SafeAreaView style={styles.container}>
       <Appbar.Header
         style={{ backgroundColor: appColors.surfaceBright }}
         statusBarHeight={0}
       >
-        <Appbar.BackAction onPress={() => {}} />
+        <Appbar.BackAction onPress={() => router.back()} />
       </Appbar.Header>
       <AppCamera
         visible={cameraVisible}
