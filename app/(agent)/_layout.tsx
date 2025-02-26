@@ -1,4 +1,6 @@
+import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
@@ -6,8 +8,26 @@ import React from "react";
 import { Text } from "react-native";
 
 export default function componentName() {
+  return <TabRoutes />;
+}
+
+const TabRoutes = () => {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: appColors.onSurface,
+        tabBarInactiveTintColor: appColors.onSurface,
+        tabBarStyle: {
+          backgroundColor: appColors.surfaceContainerLow,
+          borderTopWidth: 1,
+          borderTopColor: appColors.onSurfaceVariant,
+          height: 62,
+        },
+        tabBarLabelStyle: {
+          ...textFontStyles.bodySmallRegular,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -45,9 +65,9 @@ export default function componentName() {
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="store"
         options={{
-          title: "Home",
+          title: "Store",
           tabBarLabel: ({ focused }) => (
             <>
               <Text
@@ -57,21 +77,17 @@ export default function componentName() {
                     : { ...textFontStyles.bodySmallRegular }
                 }
               >
-                Home
+                Store
               </Text>
             </>
           ),
           tabBarIcon: ({ color, focused }) => (
             <>
               {focused ? (
-                <MaterialIcons
-                  name={focused ? "home-filled" : "home"}
-                  size={24}
-                  color={color}
-                />
+                <MaterialIcons name={"store"} size={24} color={color} />
               ) : (
                 <MaterialCommunityIcons
-                  name="home-variant-outline"
+                  name="store-outline"
                   size={24}
                   color={color}
                 />
@@ -81,9 +97,9 @@ export default function componentName() {
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="actions"
         options={{
-          title: "Home",
+          title: "Actions",
           tabBarLabel: ({ focused }) => (
             <>
               <Text
@@ -93,21 +109,21 @@ export default function componentName() {
                     : { ...textFontStyles.bodySmallRegular }
                 }
               >
-                Home
+                Actions
               </Text>
             </>
           ),
           tabBarIcon: ({ color, focused }) => (
             <>
               {focused ? (
-                <MaterialIcons
-                  name={focused ? "home-filled" : "home"}
+                <MaterialCommunityIcons
+                  name="view-grid"
                   size={24}
                   color={color}
                 />
               ) : (
                 <MaterialCommunityIcons
-                  name="home-variant-outline"
+                  name="view-grid-outline"
                   size={24}
                   color={color}
                 />
@@ -117,9 +133,9 @@ export default function componentName() {
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="earnings"
         options={{
-          title: "Home",
+          title: "Earnings",
           tabBarLabel: ({ focused }) => (
             <>
               <Text
@@ -129,29 +145,23 @@ export default function componentName() {
                     : { ...textFontStyles.bodySmallRegular }
                 }
               >
-                Home
+                Earnings
               </Text>
             </>
           ),
           tabBarIcon: ({ color, focused }) => (
             <>
-              {focused ? (
-                <MaterialIcons
-                  name={focused ? "home-filled" : "home"}
+              {
+                <Ionicons
+                  name={focused ? "stats-chart-sharp" : "stats-chart-outline"}
                   size={24}
                   color={color}
                 />
-              ) : (
-                <MaterialCommunityIcons
-                  name="home-variant-outline"
-                  size={24}
-                  color={color}
-                />
-              )}
+              }
             </>
           ),
         }}
       />
     </Tabs>
   );
-}
+};
