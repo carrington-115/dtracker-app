@@ -1,5 +1,10 @@
+import { PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import { pickupButtonProps } from "@/constants/types";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   View,
@@ -15,6 +20,32 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
+  const router = useRouter();
+  const pickupOptions: pickupButtonProps[] = [
+    {
+      icon: (
+        <MaterialIcons
+          name="access-time"
+          size={48}
+          color={appColors.onPrimaryContainerColor}
+        />
+      ),
+      name: "Immediate pickups",
+      onPress: () => router.navigate("../(pickups)/immediate"),
+    },
+    {
+      icon: (
+        <MaterialCommunityIcons
+          name="calendar-range-outline"
+          size={48}
+          color={appColors.onPrimaryContainerColor}
+        />
+      ),
+      name: "Scheduled pickups",
+      onPress: () => router.navigate("../(pickups)/reserve"),
+    },
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -22,8 +53,32 @@ export default function componentName() {
         backgroundColor={appColors.surfaceContainerLow}
       />
       <Header />
-      <ScrollView>
-        <Text>Hello world</Text>
+      <ScrollView style={{ width: "100%" }}>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 20,
+            width: "100%",
+            paddingHorizontal: 16,
+            marginTop: 20,
+          }}
+        >
+          <Text style={{ ...textFontStyles.headlineMediumMedium }}>
+            Pickup options
+          </Text>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            {pickupOptions.map((option, index) => (
+              <PickupButton key={index} {...option} />
+            ))}
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -42,7 +97,7 @@ const Header = () => {
       >
         <Appbar.Content
           title="DTRACKER"
-          titleStyle={{ ...textFontStyles.headlineMediumBold }}
+          titleStyle={{ ...textFontStyles.headlineSmallBold }}
         />
         <Appbar.Action icon="magnify" onPress={() => {}} />
         <Appbar.Action icon="bell-outline" onPress={() => {}} />
