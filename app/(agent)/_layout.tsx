@@ -26,6 +26,7 @@ const TabRoutes = () => {
         tabBarLabelStyle: {
           ...textFontStyles.bodySmallRegular,
         },
+        headerShown: false,
       }}
     >
       <Tabs.Screen

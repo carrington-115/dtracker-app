@@ -70,6 +70,12 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="(agent)"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="(pickups)"
           options={{
             headerShown: false,
