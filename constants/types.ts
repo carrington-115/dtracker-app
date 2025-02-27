@@ -129,6 +129,17 @@ interface verificationElementProps {
   step: number;
 }
 
+interface goalCardProps {
+  month: string;
+  year: string;
+  monthlyEarning?: number;
+  currentGoalTotal?: number;
+  goalAmountCompleted?: number;
+  goalDeadline?: string;
+  type: "active" | "inactive" | "goal";
+  link?: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -147,4 +158,5 @@ export type {
   storeItemProps,
   tabsButtonProps,
   verificationElementProps,
+  goalCardProps,
 };

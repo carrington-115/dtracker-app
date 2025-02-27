@@ -27,6 +27,7 @@ import ActionsElement from "./molecules/ActionsElement";
 import NotificationLabel from "./molecules/NotificationLabel";
 import VerificationElement from "./molecules/VerificationElement";
 import ViewProfileImage from "./molecules/ViewProfileImage";
+import GoalCard from "./organisms/GoalCard";
 
 export {
   OnboardingSlider,
@@ -57,4 +58,5 @@ export {
   NotificationLabel,
   VerificationElement,
   ViewProfileImage,
+  GoalCard,
 };

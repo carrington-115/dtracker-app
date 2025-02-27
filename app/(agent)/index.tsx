@@ -1,7 +1,7 @@
-import { PickupButton } from "@/components";
+import { GoalCard, PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { pickupButtonProps } from "@/constants/types";
+import { goalCardProps, pickupButtonProps } from "@/constants/types";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
@@ -46,6 +46,16 @@ export default function componentName() {
     },
   ];
 
+  const goalData: goalCardProps = {
+    month: "Jan",
+    year: "2025",
+    monthlyEarning: 10000,
+    currentGoalTotal: 100000,
+    goalAmountCompleted: 50000,
+    goalDeadline: "28/02/25",
+    type: "active",
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -78,6 +88,8 @@ export default function componentName() {
               <PickupButton key={index} {...option} />
             ))}
           </View>
+          <GoalCard {...goalData} />
+          <GoalCard month="Feb" year="2025" type="inactive" />
         </View>
       </ScrollView>
     </SafeAreaView>
