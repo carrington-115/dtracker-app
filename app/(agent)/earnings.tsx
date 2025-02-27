@@ -1,4 +1,9 @@
-import { ActiveButton, GoalCard } from "@/components";
+import {
+  ActiveButton,
+  EarningsComponent,
+  GoalCard,
+  GoalPageCard,
+} from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -45,78 +50,133 @@ export default function componentName() {
       />
       <Header />
       <ScrollView style={{ paddingHorizontal: 16 }}>
+        {/* <InitialPageContent cardCalendar={cardCalendar} /> */}
         <View
           style={{
-            width: "100%",
-            flexDirection: "column",
+            marginTop: 40,
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <View
-            style={{
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 20,
-              marginTop: 40,
-            }}
-          >
-            <Text style={{ ...textFontStyles.titleLargeMedium }}>
-              Start Earning
-            </Text>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <ActiveButton
-                name="Pickup options"
-                icon={
-                  <>
-                    <MaterialIcons
-                      name="description"
-                      size={24}
-                      color={appColors.onPrimaryContainerColor}
-                    />
-                  </>
-                }
-                onPressAction={() => {}}
-                bgColor="transparent"
-                color={appColors.onPrimaryContainerColor}
-                outlined
-                focusedColor={appColors.primaryContainerColor}
-              />
-              <ActiveButton
-                name="Sell on store"
-                icon={
-                  <>
-                    <MaterialCommunityIcons
-                      name="store-plus-outline"
-                      size={24}
-                      color={appColors.onPrimaryContainerColor}
-                    />
-                  </>
-                }
-                onPressAction={() => {}}
-                bgColor={appColors.primaryContainerColor}
-                color={appColors.onPrimaryContainerColor}
-                focusedColor={appColors.primaryContainerColor}
-              />
-            </View>
-          </View>
+          <EarningsPageContent
+            month="June"
+            year="2021"
+            currentGoalAmount={30000}
+          />
         </View>
-        <View style={{ width: "100%", marginTop: 30 }}>
-          <GoalCard
-            type="inactive"
-            month={cardCalendar.month}
-            year={cardCalendar.year}
+        <View style={{ width: "100%", marginTop: 20 }}>
+          <GoalPageCard
+            goalAmount={30000}
+            goalCompletedPercentage={50}
+            goalCompletedAmount={15000}
+            goalDeadline={"12/03/2025"}
           />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+const EarningsPageContent = ({
+  month,
+  year,
+  currentGoalAmount,
+}: {
+  month: string;
+  year: string;
+  currentGoalAmount: number;
+}) => {
+  return (
+    <>
+      <View style={{ flexDirection: "column", gap: 5 }}>
+        <EarningsComponent
+          month={month}
+          year={year}
+          amount={currentGoalAmount}
+        />
+      </View>
+    </>
+  );
+};
+
+const InitialPageContent = ({
+  cardCalendar,
+}: {
+  cardCalendar: { month: string; year: string };
+}) => {
+  return (
+    <>
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 20,
+            marginTop: 40,
+          }}
+        >
+          <Text style={{ ...textFontStyles.titleLargeMedium }}>
+            Start Earning
+          </Text>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <ActiveButton
+              name="Pickup options"
+              icon={
+                <>
+                  <MaterialIcons
+                    name="description"
+                    size={24}
+                    color={appColors.onPrimaryContainerColor}
+                  />
+                </>
+              }
+              onPressAction={() => {}}
+              bgColor="transparent"
+              color={appColors.onPrimaryContainerColor}
+              outlined
+              focusedColor={appColors.primaryContainerColor}
+            />
+            <ActiveButton
+              name="Sell on store"
+              icon={
+                <>
+                  <MaterialCommunityIcons
+                    name="store-plus-outline"
+                    size={24}
+                    color={appColors.onPrimaryContainerColor}
+                  />
+                </>
+              }
+              onPressAction={() => {}}
+              bgColor={appColors.primaryContainerColor}
+              color={appColors.onPrimaryContainerColor}
+              focusedColor={appColors.primaryContainerColor}
+            />
+          </View>
+        </View>
+      </View>
+      <View style={{ width: "100%", marginTop: 30 }}>
+        <GoalCard
+          type="inactive"
+          month={cardCalendar.month}
+          year={cardCalendar.year}
+        />
+      </View>
+    </>
+  );
+};
 
 const Header = () => {
   return (

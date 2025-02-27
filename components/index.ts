@@ -28,6 +28,8 @@ import NotificationLabel from "./molecules/NotificationLabel";
 import VerificationElement from "./molecules/VerificationElement";
 import ViewProfileImage from "./molecules/ViewProfileImage";
 import GoalCard from "./organisms/GoalCard";
+import EarningsComponent from "./molecules/EarningsComponent";
+import GoalPageCard from "./organisms/GoalPageCard";
 
 export {
   OnboardingSlider,
@@ -59,4 +61,6 @@ export {
   VerificationElement,
   ViewProfileImage,
   GoalCard,
+  EarningsComponent,
+  GoalPageCard,
 };

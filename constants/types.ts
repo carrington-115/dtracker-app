@@ -141,6 +141,13 @@ interface goalCardProps {
   link?: string;
 }
 
+interface goalPageComponentProps {
+  goalAmount: number;
+  goalCompletedPercentage: number;
+  goalCompletedAmount: number;
+  goalDeadline: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -160,4 +167,5 @@ export type {
   tabsButtonProps,
   verificationElementProps,
   goalCardProps,
+  goalPageComponentProps,
 };
