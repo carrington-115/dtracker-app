@@ -30,6 +30,7 @@ import ViewProfileImage from "./molecules/ViewProfileImage";
 import GoalCard from "./organisms/GoalCard";
 import EarningsComponent from "./molecules/EarningsComponent";
 import GoalPageCard from "./organisms/GoalPageCard";
+import OutlineButton from "./atoms/OutlineButton";
 
 export {
   OnboardingSlider,
@@ -63,4 +64,5 @@ export {
   GoalCard,
   EarningsComponent,
   GoalPageCard,
+  OutlineButton,
 };
