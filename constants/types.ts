@@ -154,7 +154,7 @@ interface goalElementProps {
   goalAmount: number;
   trashType?: "Plastics" | "Metals" | "Paper" | "Glass" | "Mixed" | "Organic";
   trashSize?: number;
-  trashUnit?: "Kg" | "Bag" | "Buckets";
+  trashUnit?: "Kg" | "Bags" | "Buckets";
   pickup: boolean;
   onPressAction: () => void;
 }

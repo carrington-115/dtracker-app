@@ -27,6 +27,7 @@ export default function componentName({
           justifyContent: "space-between",
           paddingHorizontal: 16,
           paddingVertical: 10,
+          alignItems: "center",
           backgroundColor: pressed
             ? appColors.tertiaryContainerColor
             : "transparent",
@@ -83,8 +84,7 @@ export default function componentName({
                       color: appColors.onSurface,
                     }}
                   >
-                    {trashSize}
-                    {trashUnit}
+                    {trashSize} {trashUnit}
                   </Text>
                 </View>
                 <View
@@ -126,11 +126,19 @@ export default function componentName({
           </View>
         </View>
       </View>
-      <View>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 5,
+          borderRadius: 20,
+          backgroundColor: pickup ? "transparent" : appColors.tertiaryColor,
+        }}
+      >
         <MaterialIcons
           name={pickup ? "arrow-forward" : "check"}
-          size={24}
-          color={pickup ? appColors.onSurfaceVariant : appColors.tertiaryColor}
+          size={pickup ? 24 : 16}
+          color={pickup ? appColors.onSurfaceVariant : appColors.onTetiaryColor}
         />
       </View>
     </Pressable>

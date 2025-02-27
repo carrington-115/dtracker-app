@@ -2,6 +2,7 @@ import {
   ActiveButton,
   EarningsComponent,
   GoalCard,
+  GoalListComponent,
   GoalPageCard,
   OutlineButton,
 } from "@/components";
@@ -50,31 +51,9 @@ export default function componentName() {
         backgroundColor={appColors.surfaceContainerLow}
       />
       <Header />
-      <ScrollView style={{ paddingHorizontal: 16 }}>
-        {/* <InitialPageContent cardCalendar={cardCalendar} /> */}
-        <View
-          style={{
-            marginTop: 40,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <EarningsPageContent
-            month="June"
-            year="2021"
-            currentGoalAmount={30000}
-          />
-        </View>
-        <View style={{ width: "100%", marginTop: 20 }}>
-          <GoalPageCard
-            goalAmount={30000}
-            goalCompletedPercentage={50}
-            goalCompletedAmount={15000}
-            goalDeadline={"12/03/2025"}
-          />
-        </View>
-        <View style={{ width: "100%", marginTop: 20 }}>
-          <OutlineButton link={"/"} />
+      <ScrollView style={{}}>
+        <View style={{ width: "100%", paddingHorizontal: 16 }}>
+          <InitialPageContent cardCalendar={cardCalendar} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -176,6 +155,61 @@ const InitialPageContent = ({
           type="inactive"
           month={cardCalendar.month}
           year={cardCalendar.year}
+        />
+      </View>
+    </>
+  );
+};
+
+const FinalPageContent = () => {
+  return (
+    <>
+      <View style={{ paddingHorizontal: 16, width: "100%" }}>
+        <View
+          style={{
+            marginTop: 40,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <EarningsPageContent
+            month="June"
+            year="2021"
+            currentGoalAmount={30000}
+          />
+        </View>
+        <View style={{ width: "100%", marginTop: 20 }}>
+          <GoalPageCard
+            goalAmount={30000}
+            goalCompletedPercentage={50}
+            goalCompletedAmount={15000}
+            goalDeadline={"12/03/2025"}
+          />
+        </View>
+        <View style={{ width: "100%", marginTop: 20 }}>
+          <OutlineButton link={"/"} />
+        </View>
+      </View>
+      <View style={{ width: "100%", marginTop: 28 }}>
+        <GoalListComponent
+          type="goals"
+          goalList={[
+            {
+              goalAmount: 30000,
+              goalEnd: "12/03",
+              goalStart: "12/02",
+              pickup: false,
+              onPressAction: () => {},
+            },
+            {
+              goalAmount: 2000,
+              pickup: true,
+              trashSize: 5,
+              trashUnit: "Bags",
+              trashType: "Plastics",
+              onPressAction: () => {},
+            },
+          ]}
         />
       </View>
     </>
