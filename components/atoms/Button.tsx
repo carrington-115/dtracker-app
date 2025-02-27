@@ -11,12 +11,17 @@ export default function componentName({
   type,
   focusedColor,
   icon,
+  outlined,
 }: buttonPropsType) {
   return (
     <Pressable
       style={({ pressed }) => [
         styles.btnStyle,
-        { backgroundColor: pressed ? focusedColor : bgColor },
+        {
+          backgroundColor: pressed ? focusedColor : bgColor,
+          borderWidth: outlined ? 1 : 0,
+          borderColor: outlined ? color : "transparent",
+        },
       ]}
       onPress={onPressAction}
     >

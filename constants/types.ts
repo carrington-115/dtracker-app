@@ -42,6 +42,7 @@ interface buttonPropsType {
   onPressAction: () => void;
   type?: string;
   focusedColor: string;
+  outlined?: boolean;
 }
 
 interface bottomButtonPropsType {

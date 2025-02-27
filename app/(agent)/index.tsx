@@ -1,11 +1,11 @@
-import { GoalCard, PickupButton } from "@/components";
+import { ActiveButton, GoalCard, PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { goalCardProps, pickupButtonProps } from "@/constants/types";
+import { pickupButtonProps } from "@/constants/types";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,14 @@ const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
+  const [cardCalendar, setCardCalendar] = useState<{
+    month: string;
+    year: string;
+  }>({
+    month: "",
+    year: "",
+  });
+
   const pickupOptions: pickupButtonProps[] = [
     {
       icon: (
@@ -46,15 +54,16 @@ export default function componentName() {
     },
   ];
 
-  const goalData: goalCardProps = {
-    month: "Jan",
-    year: "2025",
-    monthlyEarning: 10000,
-    currentGoalTotal: 100000,
-    goalAmountCompleted: 50000,
-    goalDeadline: "28/02/25",
-    type: "active",
-  };
+  useEffect(() => {
+    let date = new Date();
+    setCardCalendar((prev) => {
+      return {
+        ...prev,
+        year: date.getFullYear().toString(),
+        month: date.toLocaleDateString("default", { month: "short" }),
+      };
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,8 +97,54 @@ export default function componentName() {
               <PickupButton key={index} {...option} />
             ))}
           </View>
-          <GoalCard {...goalData} />
-          <GoalCard month="Feb" year="2025" type="inactive" />
+          <GoalCard
+            month={cardCalendar.month}
+            year={cardCalendar.year}
+            type="inactive"
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            paddingHorizontal: 30,
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: 20,
+          }}
+        >
+          <ActiveButton
+            icon={
+              <>
+                <MaterialIcons
+                  name="add"
+                  color={appColors.onSecondaryContainerColor}
+                  size={24}
+                />
+              </>
+            }
+            name="New goal"
+            focusedColor=""
+            onPressAction={() => {}}
+            bgColor={appColors.secondaryContainerColor}
+            color={appColors.onSecondaryContainerColor}
+          />
+          <ActiveButton
+            icon={
+              <>
+                <MaterialIcons
+                  name="description"
+                  color={appColors.secondaryColor}
+                  size={24}
+                />
+              </>
+            }
+            name="All goals"
+            focusedColor={appColors.secondaryContainerColor}
+            onPressAction={() => {}}
+            bgColor={"transparent"}
+            color={appColors.secondaryColor}
+            outlined
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
