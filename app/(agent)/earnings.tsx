@@ -3,6 +3,7 @@ import {
   EarningsComponent,
   GoalCard,
   GoalPageCard,
+  OutlineButton,
 } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
@@ -71,6 +72,9 @@ export default function componentName() {
             goalCompletedAmount={15000}
             goalDeadline={"12/03/2025"}
           />
+        </View>
+        <View style={{ width: "100%", marginTop: 20 }}>
+          <OutlineButton link={"/"} />
         </View>
       </ScrollView>
     </SafeAreaView>

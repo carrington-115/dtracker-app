@@ -148,6 +148,17 @@ interface goalPageComponentProps {
   goalDeadline: string;
 }
 
+interface goalElementProps {
+  goalStart?: string;
+  goalEnd?: string;
+  goalAmount: number;
+  trashType?: "Plastics" | "Metals" | "Paper" | "Glass" | "Mixed" | "Organic";
+  trashSize?: number;
+  trashUnit?: "Kg" | "Bag" | "Buckets";
+  pickup: boolean;
+  onPressAction: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -168,4 +179,5 @@ export type {
   verificationElementProps,
   goalCardProps,
   goalPageComponentProps,
+  goalElementProps,
 };
