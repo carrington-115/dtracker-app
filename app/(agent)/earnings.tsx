@@ -1,6 +1,9 @@
+import { ActiveButton, GoalCard } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import React from "react";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +18,25 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
+  const [cardCalendar, setCardCalendar] = useState<{
+    month: string;
+    year: string;
+  }>({
+    month: "",
+    year: "",
+  });
+
+  useEffect(() => {
+    let date = new Date();
+    setCardCalendar((prev) => {
+      return {
+        ...prev,
+        year: date.getFullYear().toString(),
+        month: date.toLocaleDateString("default", { month: "short" }),
+      };
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -22,8 +44,75 @@ export default function componentName() {
         backgroundColor={appColors.surfaceContainerLow}
       />
       <Header />
-      <ScrollView>
-        <Text>Hello world</Text>
+      <ScrollView style={{ paddingHorizontal: 16 }}>
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 20,
+              marginTop: 40,
+            }}
+          >
+            <Text style={{ ...textFontStyles.titleLargeMedium }}>
+              Start Earning
+            </Text>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <ActiveButton
+                name="Pickup options"
+                icon={
+                  <>
+                    <MaterialIcons
+                      name="description"
+                      size={24}
+                      color={appColors.onPrimaryContainerColor}
+                    />
+                  </>
+                }
+                onPressAction={() => {}}
+                bgColor="transparent"
+                color={appColors.onPrimaryContainerColor}
+                outlined
+                focusedColor={appColors.primaryContainerColor}
+              />
+              <ActiveButton
+                name="Sell on store"
+                icon={
+                  <>
+                    <MaterialCommunityIcons
+                      name="store-plus-outline"
+                      size={24}
+                      color={appColors.onPrimaryContainerColor}
+                    />
+                  </>
+                }
+                onPressAction={() => {}}
+                bgColor={appColors.primaryContainerColor}
+                color={appColors.onPrimaryContainerColor}
+                focusedColor={appColors.primaryContainerColor}
+              />
+            </View>
+          </View>
+        </View>
+        <View style={{ width: "100%", marginTop: 30 }}>
+          <GoalCard
+            type="inactive"
+            month={cardCalendar.month}
+            year={cardCalendar.year}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
