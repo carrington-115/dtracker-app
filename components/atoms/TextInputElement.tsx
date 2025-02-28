@@ -115,6 +115,58 @@ export default function componentName({
       </View>
     );
   }
+  if (type === "multiline") {
+    return (
+      <View style={{ width: "100%" }}>
+        <TextInput
+          value={value}
+          onChangeText={onChangeValue}
+          placeholder={placeholder}
+          keyboardType={keyboardType}
+          verticalAlign="top"
+          style={[
+            styles.elementStyle,
+            textFontStyles.bodyLargeRegular,
+            {
+              borderColor: press
+                ? appColors.outline
+                : error && required
+                ? appColors.errorColor
+                : "transparent",
+
+              backgroundColor: press
+                ? appColors.surfaceContainer
+                : appColors.surfaceContainerLow,
+              width: "100%",
+              height: 200,
+              textAlignVertical: "top",
+            },
+          ]}
+          onFocus={() => setPress(true)}
+          onBlur={() => setPress(false)}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+        />
+        {error && required && (
+          <View style={styles.errorElementStyle}>
+            <MaterialCommunityIcons
+              name="information-outline"
+              size={16}
+              color={appColors.errorColor}
+            />
+            <Text
+              style={[
+                textFontStyles.bodySmallMedium,
+                { color: appColors.errorColor },
+              ]}
+            >
+              {errorMessage}
+            </Text>
+          </View>
+        )}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
