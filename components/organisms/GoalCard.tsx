@@ -17,7 +17,7 @@ export default function componentName({
   goalAmountCompleted,
   goalDeadline,
   type,
-  link,
+  inactiveCardAction,
 }: goalCardProps) {
   if (type === "active") {
     return (
@@ -219,7 +219,7 @@ export default function componentName({
             }}
           >
             <ActiveButton
-              onPressAction={() => {}}
+              onPressAction={inactiveCardAction}
               name="Set your first goal"
               icon={
                 <>
@@ -232,7 +232,7 @@ export default function componentName({
               }
               bgColor={appColors.secondaryColor}
               color={appColors.onSecondaryColor}
-              focusedColor=""
+              focusedColor={appColors.onSecondaryContainerColor}
             />
           </View>
         </View>

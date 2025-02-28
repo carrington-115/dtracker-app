@@ -10,6 +10,7 @@ import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -87,6 +88,8 @@ const InitialPageContent = ({
 }: {
   cardCalendar: { month: string; year: string };
 }) => {
+  const router = useRouter();
+
   return (
     <>
       <View
@@ -155,6 +158,7 @@ const InitialPageContent = ({
           type="inactive"
           month={cardCalendar.month}
           year={cardCalendar.year}
+          inactiveCardAction={() => router.push("/earnings/set-goal")}
         />
       </View>
     </>

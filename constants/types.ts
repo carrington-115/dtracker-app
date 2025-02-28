@@ -138,7 +138,7 @@ interface goalCardProps {
   goalAmountCompleted?: number;
   goalDeadline?: string;
   type: "active" | "inactive" | "goal";
-  link?: string;
+  inactiveCardAction: () => void;
 }
 
 interface goalPageComponentProps {
