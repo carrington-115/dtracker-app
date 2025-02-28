@@ -1,6 +1,8 @@
-import { TextInputElement } from "@/components";
+import { ActiveButton, BottomButton, TextInputElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -20,6 +22,7 @@ export default function componentName() {
   const [goalName, setGoalName] = useState<string>("");
   const [goalAmount, setGoalAmount] = useState<string>("");
   const [goalDescription, setGoalDescription] = useState<string>("");
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,8 +38,11 @@ export default function componentName() {
         }}
         statusBarHeight={0}
       >
-        <Appbar.BackAction onPress={() => {}} />
-        <Appbar.Content title="Set Goal" />
+        <Appbar.BackAction onPress={() => router.back()} />
+        <Appbar.Content
+          title="Goal details"
+          titleStyle={{ ...textFontStyles.titleLargeMedium }}
+        />
       </Appbar.Header>
       <ScrollView>
         <View
@@ -96,12 +102,44 @@ export default function componentName() {
               type="multiline"
               keyboardType="default"
               placeholder="Description"
-              value={goalAmount}
-              onChangeValue={setGoalAmount}
+              value={goalDescription}
+              onChangeValue={setGoalDescription}
               required
               multiline
               numberOfLines={10}
             />
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "space-between",
+              paddingHorizontal: 20,
+            }}
+          >
+            <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+              Goal deadline:
+            </Text>
+            <ActiveButton
+              icon={
+                <>
+                  <MaterialIcons
+                    name="calendar-month"
+                    size={24}
+                    color={appColors.onTertiaryContainerColor}
+                  />
+                </>
+              }
+              name="Add deadline"
+              onPressAction={() => {}}
+              bgColor={appColors.tertiaryContainerColor}
+              color={appColors.onTertiaryContainerColor}
+              focusedColor=""
+            />
+          </View>
+          <View style={{ width: "100%", marginTop: 20 }}>
+            <BottomButton name="Set Goal" onPressAction={() => {}} />
           </View>
         </View>
       </ScrollView>
