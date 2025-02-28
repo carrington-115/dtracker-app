@@ -32,6 +32,8 @@ import EarningsComponent from "./molecules/EarningsComponent";
 import GoalPageCard from "./organisms/GoalPageCard";
 import OutlineButton from "./atoms/OutlineButton";
 import GoalListComponent from "./organisms/GoalListComponent";
+import AmountLevelLoader from "./atoms/AmountLevelLoader";
+import AmountElement from "./atoms/AmountElement";
 
 export {
   OnboardingSlider,
@@ -67,4 +69,6 @@ export {
   GoalPageCard,
   OutlineButton,
   GoalListComponent,
+  AmountLevelLoader,
+  AmountElement,
 };

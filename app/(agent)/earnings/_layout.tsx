@@ -1,16 +1,18 @@
-import { Stack, Tabs, usePathname, useSegments } from "expo-router";
+import { Stack, Tabs, useSegments } from "expo-router";
 
 export default function componentName() {
   const segments = useSegments();
-  const pathname = usePathname();
 
-  console.log(segments, pathname);
   return (
     <>
       <Tabs.Screen
         options={{
           tabBarStyle: {
-            height: segments.length > 2 && segments[2] === "set-goal" ? 0 : 60,
+            height:
+              segments.length > 2 &&
+              (segments[2] === "set-goal" || segments[2] === "[goalId]")
+                ? 0
+                : 60,
           },
         }}
       />
@@ -21,6 +23,7 @@ export default function componentName() {
       >
         <Stack.Screen name="index" options={{}} />
         <Stack.Screen name="set-goal" options={{}} />
+        <Stack.Screen name="[goalId]" options={{}} />
       </Stack>
     </>
   );

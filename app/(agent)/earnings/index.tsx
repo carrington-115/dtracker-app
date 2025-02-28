@@ -158,7 +158,12 @@ const InitialPageContent = ({
           type="inactive"
           month={cardCalendar.month}
           year={cardCalendar.year}
-          inactiveCardAction={() => router.push("/earnings/set-goal")}
+          inactiveCardAction={() =>
+            router.push({
+              pathname: "/earnings/[goalId]",
+              params: { goalId: "1" },
+            })
+          }
         />
       </View>
     </>
