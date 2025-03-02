@@ -131,8 +131,8 @@ interface verificationElementProps {
 }
 
 interface goalCardProps {
-  month: string;
-  year: string;
+  month?: string;
+  year?: string;
   monthlyEarning?: number;
   currentGoalTotal?: number;
   goalAmountCompleted?: number;

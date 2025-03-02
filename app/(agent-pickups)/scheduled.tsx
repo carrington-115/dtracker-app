@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 export default function componentName() {
   return (
     <View>
-      <Text></Text>
+      <Text>Hello scheduled</Text>
     </View>
   );
 }

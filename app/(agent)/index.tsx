@@ -39,7 +39,7 @@ export default function componentName() {
         />
       ),
       name: "Immediate pickups",
-      onPress: () => router.navigate("../(pickups)/immediate"),
+      onPress: () => router.navigate("/(agent-pickups)/immediate"),
     },
     {
       icon: (
@@ -50,7 +50,7 @@ export default function componentName() {
         />
       ),
       name: "Scheduled pickups",
-      onPress: () => router.navigate("../(pickups)/reserve"),
+      onPress: () => router.navigate("/(agent-pickups)/scheduled"),
     },
   ];
 
@@ -101,6 +101,7 @@ export default function componentName() {
             month={cardCalendar.month}
             year={cardCalendar.year}
             type="inactive"
+            inactiveCardAction={() => router.navigate("/earnings")}
           />
         </View>
         <View
