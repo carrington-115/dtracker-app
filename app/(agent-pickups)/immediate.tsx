@@ -1,5 +1,6 @@
 import { ActionsElement } from "@/components";
 import appColors from "@/constants/colors";
+import { useRouter } from "expo-router";
 import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -25,6 +27,12 @@ export default function componentName() {
           status="available"
           distance="2.5km"
           userProfileImage={require("@/assets/images/user-image.png")}
+          pressAction={() =>
+            router.navigate({
+              pathname: "/(agent-pickups)/[pickupId]",
+              params: { pickupId: "1" },
+            })
+          }
         />
         <ActionsElement
           actionType="pickup"

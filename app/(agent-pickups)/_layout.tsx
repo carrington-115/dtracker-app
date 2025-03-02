@@ -4,7 +4,7 @@ import { textFontStyles } from "@/constants/fonts";
 import { tabsButtonProps } from "@/constants/types";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Stack, useRouter, useSegments } from "expo-router";
+import { Stack, usePathname, useRouter, useSegments } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { View, Text, Dimensions, StyleSheet, StatusBar } from "react-native";
 import { Appbar } from "react-native-paper";
@@ -17,6 +17,7 @@ export default function componentName() {
 
   const router = useRouter();
   const segments = useSegments();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (segments[1] === "immediate") {
@@ -55,25 +56,44 @@ export default function componentName() {
     },
   ];
 
+  const navigateBack = () => {
+    if (pathname === "/immediate" || pathname === "/scheduled") {
+      router.navigate("/(agent)");
+    } else {
+      router.back();
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container]}>
       <StatusBar
         barStyle={"dark-content"}
-        backgroundColor={appColors.surfaceContainerLow}
+        backgroundColor={
+          pathname === "/immediate" || pathname === "/scheduled"
+            ? appColors.surfaceContainerLow
+            : "transparent"
+        }
       />
       <Appbar.Header
         statusBarHeight={0}
-        style={{ backgroundColor: appColors.surfaceContainerLow }}
+        style={{
+          backgroundColor:
+            pathname === "/immediate" || pathname === "/scheduled"
+              ? appColors.surfaceContainerLow
+              : "transparent",
+        }}
       >
-        <Appbar.BackAction onPress={() => router.navigate("/(agent)")} />
-        <Appbar.Content
-          title={titleName}
-          titleStyle={{ ...textFontStyles.titleLargeMedium }}
-        />
+        <Appbar.BackAction onPress={navigateBack} />
+        {(pathname === "/immediate" || pathname === "/scheduled") && (
+          <Appbar.Content
+            title={titleName}
+            titleStyle={{ ...textFontStyles.titleLargeMedium }}
+          />
+        )}
       </Appbar.Header>
-      <>
+      {(pathname == "/immediate" || pathname === "/scheduled") && (
         <TabsHeader headerContent={headerContent} />
-      </>
+      )}
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="immediate"
@@ -83,6 +103,12 @@ export default function componentName() {
         />
         <Stack.Screen
           name="scheduled"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="[pickupId]"
           options={{
             headerShown: false,
           }}
