@@ -1,5 +1,6 @@
 import { TabsButton } from "@/components";
 import appColors from "@/constants/colors";
+import { textFontStyles } from "@/constants/fonts";
 import { tabsButtonProps } from "@/constants/types";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -65,7 +66,10 @@ export default function componentName() {
         style={{ backgroundColor: appColors.surfaceContainerLow }}
       >
         <Appbar.BackAction onPress={() => router.navigate("/(agent)")} />
-        <Appbar.Content title={titleName} />
+        <Appbar.Content
+          title={titleName}
+          titleStyle={{ ...textFontStyles.titleLargeMedium }}
+        />
       </Appbar.Header>
       <>
         <TabsHeader headerContent={headerContent} />
