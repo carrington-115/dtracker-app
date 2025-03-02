@@ -1,4 +1,4 @@
-import { AmountElement, AmountLevelLoader } from "@/components";
+import { ActiveButton, AmountElement, AmountLevelLoader } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -210,6 +210,60 @@ export default function componentName() {
                 currency="XAF"
                 amountStyle={{ ...textFontStyles.titleLargeMedium }}
                 currentStyle={{ ...textFontStyles.bodySmallRegular }}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "column",
+              gap: 20,
+              marginTop: 20,
+            }}
+          >
+            <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+              Start earning
+            </Text>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <ActiveButton
+                icon={
+                  <>
+                    <MaterialIcons
+                      name="description"
+                      size={24}
+                      color={appColors.onPrimaryContainerColor}
+                    />
+                  </>
+                }
+                name="Pickup options"
+                bgColor={"transparent"}
+                color={appColors.onPrimaryContainerColor}
+                onPressAction={() => {}}
+                focusedColor={appColors.primaryContainerColor}
+                outlined
+              />
+              <ActiveButton
+                icon={
+                  <>
+                    <MaterialCommunityIcons
+                      name="store-plus-outline"
+                      size={24}
+                      color={appColors.onPrimaryContainerColor}
+                    />
+                  </>
+                }
+                name="Sell on Store"
+                bgColor={appColors.primaryContainerColor}
+                color={appColors.onPrimaryContainerColor}
+                onPressAction={() => {}}
+                focusedColor=""
               />
             </View>
           </View>
