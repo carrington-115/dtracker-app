@@ -99,6 +99,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="agent-pickups"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </Provider>
   );
