@@ -1,7 +1,9 @@
-import { Stack, Tabs, useSegments } from "expo-router";
+import appColors from "@/constants/colors";
+import { Stack, Tabs, usePathname, useSegments } from "expo-router";
 
 export default function componentName() {
   const segments = useSegments();
+  const pathname = usePathname();
 
   return (
     <>
@@ -10,9 +12,13 @@ export default function componentName() {
           tabBarStyle: {
             height:
               segments.length > 2 &&
-              (segments[2] === "set-goal" || segments[2] === "[goalId]")
+              (segments[2] === "set-goal" || segments[2] === "[goalId]") &&
+              pathname !== "/earnings/undefined"
                 ? 0
                 : 60,
+            backgroundColor: appColors.surfaceContainerLow,
+            borderTopWidth: 1,
+            borderTopColor: appColors.onSurfaceVariant,
           },
         }}
       />
