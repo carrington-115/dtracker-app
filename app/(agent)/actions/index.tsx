@@ -1,3 +1,4 @@
+import { ActionsElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import React from "react";
@@ -21,8 +22,32 @@ export default function componentName() {
         barStyle={"dark-content"}
         backgroundColor={appColors.surfaceContainerLow}
       />
-      <ScrollView>
-        <Text>Hello active</Text>
+      <ScrollView style={{ width: "100%" }}>
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="agent"
+          status="active"
+          pickupType="scheduled"
+          date="01 March"
+          time="10:00"
+          username="Clara Bih"
+        />
+        <ActionsElement
+          userProfileImage={require("@/assets/images/user-image.png")}
+          actionType="pickup"
+          size={2}
+          units="bags"
+          price={500}
+          userType="agent"
+          status="active"
+          pickupType="immediate"
+          username="Nde Peter"
+          distance="2.5 km"
+        />
       </ScrollView>
     </SafeAreaView>
   );
