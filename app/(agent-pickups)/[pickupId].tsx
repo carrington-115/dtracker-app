@@ -1,30 +1,14 @@
-import { AgentMap } from "@/components";
+import { AgentMap, AmountElement, BottomButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import { pickupDataProps } from "@/constants/types";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { View, Text, Dimensions, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-interface locationProps {
-  lat: number;
-  lng: number;
-}
-
-interface pickupDataProps {
-  id: string;
-  location: locationProps;
-  userLocation: locationProps;
-  status: "available" | "completed" | "in-progress" | "start journey";
-  size: number;
-  units: string;
-  price: number;
-  distance?: string;
-  date?: string;
-  time?: string;
-  userProfileImage: any;
-  pickupType: "immediate" | "scheduled";
-}
 
 const { width } = Dimensions.get("window");
 
@@ -43,7 +27,10 @@ export default function componentName() {
       units: "bags",
       price: 2000,
       distance: "2.5 km",
-      userProfileImage: require("@/assets/images/user-image.png"),
+      userData: {
+        image: require("@/assets/images/user-image.png"),
+        name: "John Doe",
+      },
       pickupType: "immediate",
     },
     {
@@ -56,7 +43,10 @@ export default function componentName() {
       price: 2000,
       date: "2021-09-20",
       time: "10:00",
-      userProfileImage: require("@/assets/images/user-image.png"),
+      userData: {
+        image: require("@/assets/images/user-image.png"),
+        name: "Jane Doe",
+      },
       pickupType: "scheduled",
     },
   ];
@@ -88,6 +78,117 @@ export default function componentName() {
             <Text style={{ ...textFontStyles.titleMediumRegular }}>
               Rond-point Express, Biyem-Assi
             </Text>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent:
+                currentPickupData?.date && currentPickupData?.time
+                  ? "space-between"
+                  : "flex-start",
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              borderBottomWidth: 0.5,
+              borderBottomColor: appColors.outlineVariant,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "column",
+                gap: 5,
+                width: "auto",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 5,
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="weight"
+                  size={24}
+                  color={appColors.onSurfaceVariant}
+                />
+                <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                  {currentPickupData?.size} {currentPickupData?.units}
+                </Text>
+              </View>
+              <AmountElement
+                currency="XAF"
+                amount={currentPickupData?.price!}
+                currentStyle={{ ...textFontStyles.titleMediumRegular }}
+                amountStyle={{ ...textFontStyles.headlineMediumMedium }}
+              />
+            </View>
+            <>
+              {currentPickupData?.date && currentPickupData?.time && (
+                <View
+                  style={{
+                    flexDirection: "column",
+                    gap: 5,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 5,
+                      alignItems: "center",
+                    }}
+                  >
+                    <MaterialIcons
+                      name="calendar-month"
+                      size={24}
+                      color={appColors.onSurfaceVariant}
+                    />
+                    <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                      {currentPickupData?.date}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 5,
+                      alignItems: "center",
+                    }}
+                  >
+                    <MaterialIcons
+                      name="schedule"
+                      size={24}
+                      color={appColors.onSurfaceVariant}
+                    />
+                    <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+                      {currentPickupData?.time}
+                    </Text>
+                  </View>
+                </View>
+              )}
+            </>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 12,
+              marginTop: 10,
+            }}
+          >
+            <Image
+              source={currentPickupData?.userData.image}
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 50,
+              }}
+            />
+            <Text style={{ ...textFontStyles.bodyLargeRegular }}>
+              {currentPickupData?.userData.name}
+            </Text>
+          </View>
+          <View style={{ width: "100%", marginTop: 30, paddingHorizontal: 16 }}>
+            <BottomButton name="Accept" onPressAction={() => {}} />
           </View>
         </ScrollView>
       </View>

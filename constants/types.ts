@@ -159,6 +159,26 @@ interface goalElementProps {
   onPressAction: () => void;
 }
 
+interface locationProps {
+  lat: number;
+  lng: number;
+}
+
+interface pickupDataProps {
+  id: string;
+  location: locationProps;
+  userLocation: locationProps;
+  status: "available" | "completed" | "in-progress" | "start journey";
+  size: number;
+  units: string;
+  price: number;
+  distance?: string;
+  date?: string;
+  time?: string;
+  userData: { image: any; name: string };
+  pickupType: "immediate" | "scheduled";
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -180,4 +200,6 @@ export type {
   goalCardProps,
   goalPageComponentProps,
   goalElementProps,
+  locationProps,
+  pickupDataProps,
 };
