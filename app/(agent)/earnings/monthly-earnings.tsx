@@ -1,5 +1,7 @@
+import { Chart } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import { BarChartElementProps } from "@/constants/types";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
@@ -17,6 +19,17 @@ const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
+
+  // there need to be an algorithm to calculate the height of the bars
+  const barsData: BarChartElementProps[] = [
+    { height: 30, day: "M" },
+    { height: 60, day: "T" },
+    { height: 40, day: "W" },
+    { height: 80, day: "T" },
+    { height: 60, day: "F" },
+    { height: 50, day: "SA" },
+    { height: 10, day: "S" },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,14 +52,30 @@ export default function componentName() {
           }}
         />
       </Appbar.Header>
-      <ScrollView>
-        {/*
-         * has 2 parts
-         * charts
-         * activities
-         */}
-        <View>{/* Chart */}</View>
-        <View>{/* Activity */}</View>
+      <ScrollView style={{ width: "100%" }}>
+        <View style={{ width: "100%", paddingHorizontal: 20, marginTop: 40 }}>
+          <Chart
+            bars={barsData}
+            date={{
+              month: "Jun",
+              initialDate: 1,
+              finalDate: 7,
+            }}
+            rightAction={() => {}}
+            leftAction={() => {}}
+          />
+        </View>
+        <View style={{ width: "100%", flexDirection: "column", marginTop: 20 }}>
+          <Text
+            style={{
+              ...textFontStyles.bodyLargeRegular,
+              marginLeft: 16,
+              color: appColors.onSurfaceVariant,
+            }}
+          >
+            Yesterday
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

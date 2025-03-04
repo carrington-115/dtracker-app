@@ -9,7 +9,7 @@ export default function componentName({ height, day }: BarChartElementProps) {
     <View style={styles.container}>
       <View
         style={{
-          height: height,
+          height: `${height}%`,
           width: 15,
           backgroundColor: appColors.primaryColor,
         }}

@@ -46,6 +46,10 @@ export default function componentName({
       <View
         style={{
           width: "100%",
+          flexDirection: "row",
+          alignItems: "flex-end",
+          justifyContent: "space-evenly",
+          height: 241,
         }}
       >
         {bars.map((bar, index) => (
@@ -64,8 +68,11 @@ const ChartActionBtn = ({
   action: () => void;
 }) => {
   return (
-    <TouchableOpacity onPress={action}>
-      <MaterialIcons name={icon} size={24} color={appColors.onSurface} />
+    <TouchableOpacity
+      onPress={action}
+      style={{ justifyContent: "center", alignItems: "center" }}
+    >
+      <MaterialIcons name={icon} size={24} color={appColors.onSurfaceVariant} />
     </TouchableOpacity>
   );
 };
