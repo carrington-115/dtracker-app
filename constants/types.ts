@@ -179,6 +179,11 @@ interface pickupDataProps {
   pickupType: "immediate" | "scheduled";
 }
 
+interface BarChartElementProps {
+  height: number;
+  day: "S" | "M" | "T" | "W" | "T" | "F" | "SA";
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -202,4 +207,5 @@ export type {
   goalElementProps,
   locationProps,
   pickupDataProps,
+  BarChartElementProps,
 };

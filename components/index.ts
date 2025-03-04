@@ -35,6 +35,7 @@ import GoalListComponent from "./organisms/GoalListComponent";
 import AmountLevelLoader from "./atoms/AmountLevelLoader";
 import AmountElement from "./atoms/AmountElement";
 import AgentMap from "./organisms/AgentMapView";
+import Chart from "./organisms/EarningChart";
 
 export {
   OnboardingSlider,
@@ -73,4 +74,5 @@ export {
   AmountLevelLoader,
   AmountElement,
   AgentMap,
+  Chart,
 };
