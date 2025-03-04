@@ -21,34 +21,12 @@ export default function componentName() {
         barStyle={"dark-content"}
         backgroundColor={appColors.surfaceContainerLow}
       />
-      <Header />
       <ScrollView>
-        <Text>Hello world</Text>
+        <Text>Hello active</Text>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const Header = () => {
-  return (
-    <>
-      <Appbar.Header
-        style={{
-          backgroundColor: appColors.surfaceContainerLow,
-          borderBottomWidth: 0.5,
-          borderBottomColor: appColors.outline,
-        }}
-      >
-        <Appbar.Content
-          title="Actions"
-          titleStyle={{ ...textFontStyles.titleLargeMedium }}
-        />
-        <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
-        <Appbar.Action icon="cog-outline" onPress={() => {}} />
-      </Appbar.Header>
-    </>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
