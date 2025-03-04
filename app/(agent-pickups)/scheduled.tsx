@@ -25,6 +25,7 @@ export default function componentName() {
           status="available"
           date="2021-09-20"
           time="10:00"
+          username="John Doe"
           userProfileImage={require("@/assets/images/user-image.png")}
         />
         <ActionsElement
@@ -37,6 +38,7 @@ export default function componentName() {
           status="available"
           date="2021-09-20"
           time="10:00"
+          username="Jane Doe"
           userProfileImage={require("@/assets/images/user-image.png")}
         />
       </View>

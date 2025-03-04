@@ -27,6 +27,7 @@ export default function componentName() {
           status="available"
           distance="2.5km"
           userProfileImage={require("@/assets/images/user-image.png")}
+          username="Nde Peter"
           pressAction={() =>
             router.navigate({
               pathname: "/(agent-pickups)/[pickupId]",
@@ -43,6 +44,7 @@ export default function componentName() {
           userType="agent"
           status="available"
           distance="2.5km"
+          username="Nde Nkwenti"
           userProfileImage={require("@/assets/images/user-image.png")}
         />
       </View>

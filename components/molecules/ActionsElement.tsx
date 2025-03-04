@@ -73,7 +73,8 @@ export default function componentName({
             <Text style={{ ...textFontStyles.titleMediumMedium }}>
               {userType === "agent"
                 ? username
-                : userType === "user" && status !== "active" && "Trash Pickup"}
+                : (userType === "user" && status !== "active") ||
+                  (status === "available" && "Trash Pickup")}
             </Text>
             <View
               style={{ flexDirection: "row", gap: 5, alignItems: "center" }}

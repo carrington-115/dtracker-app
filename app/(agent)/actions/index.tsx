@@ -10,7 +10,6 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
-import { Appbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
