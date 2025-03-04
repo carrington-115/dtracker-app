@@ -79,7 +79,7 @@ const ChartActionBtn = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 0,
     paddingVertical: 24,
     flexDirection: "column",
     gap: 40,
