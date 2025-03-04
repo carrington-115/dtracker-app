@@ -34,6 +34,7 @@ import OutlineButton from "./atoms/OutlineButton";
 import GoalListComponent from "./organisms/GoalListComponent";
 import AmountLevelLoader from "./atoms/AmountLevelLoader";
 import AmountElement from "./atoms/AmountElement";
+import AgentMap from "./organisms/AgentMapView";
 
 export {
   OnboardingSlider,
@@ -71,4 +72,5 @@ export {
   GoalListComponent,
   AmountLevelLoader,
   AmountElement,
+  AgentMap,
 };
