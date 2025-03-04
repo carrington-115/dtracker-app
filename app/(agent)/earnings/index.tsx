@@ -53,9 +53,10 @@ export default function componentName() {
       />
       <Header />
       <ScrollView style={{}}>
-        <View style={{ width: "100%", paddingHorizontal: 16 }}>
+        {/* <View style={{ width: "100%", paddingHorizontal: 16 }}>
           <InitialPageContent cardCalendar={cardCalendar} />
-        </View>
+        </View> */}
+        <FinalPageContent />
       </ScrollView>
     </SafeAreaView>
   );
@@ -196,7 +197,7 @@ const FinalPageContent = () => {
           />
         </View>
         <View style={{ width: "100%", marginTop: 20 }}>
-          <OutlineButton link={"/"} />
+          <OutlineButton link={"/(agent)/earnings/monthly-earnings"} />
         </View>
       </View>
       <View style={{ width: "100%", marginTop: 28 }}>

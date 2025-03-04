@@ -11,9 +11,10 @@ export default function componentName() {
         options={{
           tabBarStyle: {
             height:
-              segments.length > 2 &&
-              (segments[2] === "set-goal" || segments[2] === "[goalId]") &&
-              pathname !== "/earnings/undefined"
+              (segments.length > 2 &&
+                (segments[2] === "set-goal" || segments[2] === "[goalId]") &&
+                pathname !== "/earnings/undefined") ||
+              pathname === "/earnings/monthly-earnings"
                 ? 0
                 : 60,
             backgroundColor: appColors.surfaceContainerLow,
@@ -30,6 +31,7 @@ export default function componentName() {
         <Stack.Screen name="index" options={{}} />
         <Stack.Screen name="set-goal" options={{}} />
         <Stack.Screen name="[goalId]" options={{}} />
+        <Stack.Screen name="monthly-earnings" options={{}} />
       </Stack>
     </>
   );

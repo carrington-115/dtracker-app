@@ -28,9 +28,7 @@ export default function componentName({
           paddingHorizontal: 16,
           paddingVertical: 10,
           alignItems: "center",
-          backgroundColor: pressed
-            ? appColors.tertiaryContainerColor
-            : "transparent",
+          backgroundColor: pressed ? "rgba(239, 237, 227, 0.3)" : "transparent",
         },
       ]}
     >
