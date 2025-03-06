@@ -16,7 +16,12 @@ export default function componentName() {
         backgroundColor={appColors.surfaceContainerLow}
       />
       <Appbar.Header
-        style={{ width: width, backgroundColor: appColors.surfaceContainerLow }}
+        style={{
+          width: width,
+          backgroundColor: appColors.surfaceContainerLow,
+          borderBottomWidth: 0.5,
+          borderBottomColor: appColors.outline,
+        }}
         statusBarHeight={0}
       >
         <Appbar.BackAction onPress={() => router.back()} />

@@ -184,6 +184,12 @@ interface BarChartElementProps {
   day: "S" | "M" | "T" | "W" | "T" | "F" | "SA";
 }
 
+interface ChatInputElementProps {
+  text: string;
+  setText: (text: string) => void;
+  submitAction: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -208,4 +214,5 @@ export type {
   locationProps,
   pickupDataProps,
   BarChartElementProps,
+  ChatInputElementProps,
 };
