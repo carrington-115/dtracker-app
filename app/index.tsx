@@ -14,7 +14,7 @@ export default function Index() {
     setTimeout(() => {
       setLoading(false);
       if (!signedIn) {
-        router.navigate("./(agent)");
+        router.navigate("./chat");
       }
     }, 2000);
   }, []);
