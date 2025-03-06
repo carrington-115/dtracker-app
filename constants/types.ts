@@ -190,6 +190,13 @@ interface ChatInputElementProps {
   submitAction: () => void;
 }
 
+interface ChatMessageElementProps {
+  message: string;
+  username?: string;
+  isCurrentUser: boolean;
+  time: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -215,4 +222,5 @@ export type {
   pickupDataProps,
   BarChartElementProps,
   ChatInputElementProps,
+  ChatMessageElementProps,
 };
