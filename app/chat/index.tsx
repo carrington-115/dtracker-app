@@ -34,15 +34,9 @@ export default function componentName() {
               message={message}
               key={index}
               isCurrentUser={true}
-              time={"09:30"}
+              time={time?.toLocaleTimeString()!}
             />
           ))}
-          <ChatMessage
-            message={"I fine Thank you. Waiting for the app to be completed."}
-            isCurrentUser={false}
-            time={"09:30"}
-            username="John Doe"
-          />
         </View>
       </ScrollView>
       <ChatInput
