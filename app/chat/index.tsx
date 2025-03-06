@@ -41,6 +41,7 @@ export default function componentName() {
             message={"I fine Thank you. Waiting for the app to be completed."}
             isCurrentUser={false}
             time={"09:30"}
+            username="John Doe"
           />
         </View>
       </ScrollView>
