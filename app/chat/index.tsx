@@ -11,8 +11,6 @@ export default function componentName() {
   const [messages, setMessages] = useState<string[]>([]);
   const [time, setTime] = useState<Date | null>(null);
 
-  // converting the local time
-
   const handleSubmitMessage = (message: string) => {
     if (text === "") return;
     else {

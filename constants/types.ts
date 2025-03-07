@@ -197,6 +197,38 @@ interface ChatMessageElementProps {
   time: string;
 }
 
+interface pickupFlowElementProps {
+  pickupStart: boolean;
+  arrivedAtPickup: boolean;
+  pickupVerify: boolean;
+}
+
+interface stateObserverProps {
+  active: boolean;
+  icon: React.ReactNode;
+}
+
+interface pickupFlowDetailsProps {
+  userType: "user" | "agent";
+  image: any;
+  price: number;
+  units: "bags" | "buckets";
+  trashSize: number;
+  username: string;
+  buttonAction: () => void;
+}
+
+interface navigationElementProps {
+  mapDetails: {
+    message: string;
+    startTime: string;
+    ETA: string;
+    totalETA: string;
+  };
+  flowStates: pickupFlowElementProps;
+  details: pickupFlowDetailsProps;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -214,7 +246,7 @@ export type {
   storeImageComponentProps,
   storeItemProps,
   tabsButtonProps,
-  verificationElementProps,
+  navigationElementProps,
   goalCardProps,
   goalPageComponentProps,
   goalElementProps,
@@ -223,4 +255,8 @@ export type {
   BarChartElementProps,
   ChatInputElementProps,
   ChatMessageElementProps,
+  pickupFlowElementProps,
+  stateObserverProps,
+  pickupFlowDetailsProps,
+  verificationElementProps,
 };

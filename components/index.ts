@@ -38,6 +38,8 @@ import AgentMap from "./organisms/AgentMapView";
 import Chart from "./organisms/EarningChart";
 import ChatInput from "./molecules/ChatInputElement";
 import ChatMessage from "./molecules/ChatMessageElement";
+import NavigationHeader from "./organisms/MapNavHeader";
+import PickupNavigationElement from "./organisms/PickupNavigationElement";
 
 export {
   OnboardingSlider,
@@ -79,4 +81,6 @@ export {
   Chart,
   ChatInput,
   ChatMessage,
+  NavigationHeader,
+  PickupNavigationElement,
 };
