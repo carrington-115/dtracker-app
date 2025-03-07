@@ -36,6 +36,8 @@ import AmountLevelLoader from "./atoms/AmountLevelLoader";
 import AmountElement from "./atoms/AmountElement";
 import AgentMap from "./organisms/AgentMapView";
 import Chart from "./organisms/EarningChart";
+import ChatInput from "./molecules/ChatInputElement";
+import ChatMessage from "./molecules/ChatMessageElement";
 
 export {
   OnboardingSlider,
@@ -75,4 +77,6 @@ export {
   AmountElement,
   AgentMap,
   Chart,
+  ChatInput,
+  ChatMessage,
 };
