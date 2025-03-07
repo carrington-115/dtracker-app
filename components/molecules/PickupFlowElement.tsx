@@ -50,8 +50,8 @@ export default function componentName({
         }}
       >
         {observerElements.map((element, index) => (
-          <>
-            <PickupStateObserver key={index} {...element} />
+          <React.Fragment key={index}>
+            <PickupStateObserver {...element} />
             {index !== observerElements.length - 1 && (
               <View
                 style={{
@@ -61,7 +61,7 @@ export default function componentName({
                 }}
               />
             )}
-          </>
+          </React.Fragment>
         ))}
       </View>
     </View>

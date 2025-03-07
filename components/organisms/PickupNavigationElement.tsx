@@ -28,12 +28,11 @@ export default function componentName({
         <View
           style={{
             width: "100%",
-            flexDirection: "row",
-            alignItems: "flex-end",
+            flexDirection: "column",
             paddingVertical: 10,
-            justifyContent: "space-between",
             borderBottomWidth: 1,
-            borderBottomColor: appColors.outlineVariant,
+            borderBottomColor: appColors.surfaceContainer,
+            gap: 10,
           }}
         >
           <Text
@@ -47,6 +46,7 @@ export default function componentName({
           <View
             style={{
               flexDirection: "row",
+              width: "100%",
               alignItems: "center",
               justifyContent: "space-between",
             }}
@@ -82,9 +82,10 @@ export default function componentName({
         <TouchableOpacity
           style={{
             width: "100%",
+            flexDirection: "row",
             paddingVertical: 2.5,
             justifyContent: "center",
-            alignContent: "center",
+            alignItems: "center",
             gap: 5,
           }}
           onPress={() => setShowDetails(!showDetails)}
@@ -126,5 +127,7 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: "center",
     padding: 20,
+    backgroundColor: appColors.surfaceContainerLow,
+    borderRadius: 10,
   },
 });
