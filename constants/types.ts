@@ -229,6 +229,38 @@ interface navigationElementProps {
   details: pickupFlowDetailsProps;
 }
 
+interface mapVerificationElementProps {
+  visible: boolean;
+  userType: "user" | "agent";
+  pinCode?: string;
+  qrCode?: any;
+  inputError: boolean;
+  setPinCode: (pinCode: string) => void;
+  scanCodeAction: () => void;
+  submitCodeAction: () => void;
+  closeModalAction: () => void;
+}
+
+interface agentVerificationElementProps {
+  inputError: boolean;
+  setPinCode: (otp: string) => void;
+  scanCodeAction: () => void;
+  submitCode: () => void;
+}
+
+interface userVerificationElementProps {
+  code: string;
+  qrCode: any;
+  user: "agent" | "user";
+  closeModalAction: () => void;
+  agent: agentVerificationElementProps;
+}
+
+interface mapViewInputProps {
+  error: boolean;
+  setOtp: (otp: string) => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -259,4 +291,8 @@ export type {
   stateObserverProps,
   pickupFlowDetailsProps,
   verificationElementProps,
+  mapVerificationElementProps,
+  agentVerificationElementProps,
+  userVerificationElementProps,
+  mapViewInputProps,
 };

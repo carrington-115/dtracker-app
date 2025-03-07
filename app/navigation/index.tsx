@@ -1,12 +1,15 @@
-import { PickupNavigationElement } from "@/components";
+import { MapVerifyElement, PickupNavigationElement } from "@/components";
 import appColors from "@/constants/colors";
-import React from "react";
+import React, { useState } from "react";
 import { Text, StyleSheet, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
+  const [pinCode, setPinCode] = useState<string>("");
+  const [visible, setVisible] = useState<boolean>(true);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>Hello navigation</Text>
@@ -31,6 +34,16 @@ export default function componentName() {
           userType: "user",
           buttonAction: () => console.log("Button pressed"),
         }}
+      />
+      <MapVerifyElement
+        visible={visible}
+        pinCode={pinCode!}
+        userType="agent"
+        submitCodeAction={() => console.log("Submit code")}
+        scanCodeAction={() => console.log("Scan code")}
+        inputError={false}
+        setPinCode={setPinCode}
+        closeModalAction={() => setVisible(false)}
       />
     </SafeAreaView>
   );

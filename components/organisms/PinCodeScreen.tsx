@@ -7,21 +7,25 @@ import { OtpInput } from "react-native-otp-entry";
 import { ActiveButton, BottomButton } from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
+interface pinCodeScreenProps {
+  buttonAction: () => void;
+  otp: string;
+  setOtp: (otp: string) => void;
+  resendCodeAction: () => void;
+  pinNumber?: number;
+}
+
 export default function componentName({
   buttonAction,
   otp,
   setOtp,
   resendCodeAction,
-}: {
-  buttonAction: () => void;
-  otp: string;
-  setOtp: (otp: string) => void;
-  resendCodeAction: () => void;
-}) {
+  pinNumber,
+}: pinCodeScreenProps) {
   const [error, setError] = useState<boolean>(false);
 
   const handleSubmitForm = () => {
-    if (otp.length < 6 || otp === "") setError(true);
+    if (otp.length < pinNumber! || otp.length < 6 || otp === "") setError(true);
     else {
       buttonAction();
     }
@@ -52,7 +56,7 @@ export default function componentName({
           }}
         >
           <OtpInput
-            numberOfDigits={6}
+            numberOfDigits={pinNumber ? pinNumber : 6}
             focusColor={error ? appColors.errorColor : appColors.primaryColor}
             onTextChange={(code) => setOtp(code)}
             theme={{
