@@ -1,18 +1,9 @@
 import appColors from "@/constants/colors";
+import { pickupFlowElementProps, stateObserverProps } from "@/constants/types";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React from "react";
 import { View, StyleSheet } from "react-native";
-
-interface pickupFlowElementProps {
-  pickupStart: boolean;
-  arrivedAtPickup: boolean;
-  pickupVerify: boolean;
-}
-
-interface stateObserverProps {
-  active: boolean;
-  icon: React.ReactNode;
-}
+import PickupStateObserver from "../atoms/PickupStateObserver";
 
 export default function componentName({
   pickupStart,
@@ -76,22 +67,6 @@ export default function componentName({
     </View>
   );
 }
-
-const PickupStateObserver = ({ active, icon }: stateObserverProps) => {
-  return (
-    <View
-      style={{
-        padding: 10,
-        borderRadius: 50,
-        backgroundColor: active
-          ? appColors.surfaceContainerHighest
-          : appColors.surfaceContainer,
-      }}
-    >
-      <>{icon}</>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

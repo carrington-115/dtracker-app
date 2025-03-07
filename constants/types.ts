@@ -197,6 +197,17 @@ interface ChatMessageElementProps {
   time: string;
 }
 
+interface pickupFlowElementProps {
+  pickupStart: boolean;
+  arrivedAtPickup: boolean;
+  pickupVerify: boolean;
+}
+
+interface stateObserverProps {
+  active: boolean;
+  icon: React.ReactNode;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -223,4 +234,6 @@ export type {
   BarChartElementProps,
   ChatInputElementProps,
   ChatMessageElementProps,
+  pickupFlowElementProps,
+  stateObserverProps,
 };
