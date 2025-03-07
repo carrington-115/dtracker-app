@@ -13,6 +13,8 @@ export default function componentName({
   inputError,
   setPinCode,
   scanCodeAction,
+  submitCodeAction,
+  closeModalAction,
 }: mapVerificationElementProps) {
   return (
     <Modal
@@ -35,11 +37,12 @@ export default function componentName({
           code={pinCode!}
           qrCode={qrCode}
           user={userType}
+          closeModalAction={closeModalAction}
           agent={{
             inputError: inputError,
             setPinCode: setPinCode,
             scanCodeAction: scanCodeAction,
-            submitCode: () => console.log("Submit code"),
+            submitCode: submitCodeAction,
           }}
         />
       </View>

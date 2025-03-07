@@ -40,6 +40,7 @@ import ChatInput from "./molecules/ChatInputElement";
 import ChatMessage from "./molecules/ChatMessageElement";
 import NavigationHeader from "./organisms/MapNavHeader";
 import PickupNavigationElement from "./organisms/PickupNavigationElement";
+import MapVerifyElement from "./organisms/VerificationElement";
 
 export {
   OnboardingSlider,
@@ -83,4 +84,5 @@ export {
   ChatMessage,
   NavigationHeader,
   PickupNavigationElement,
+  MapVerifyElement,
 };

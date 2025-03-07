@@ -237,6 +237,8 @@ interface mapVerificationElementProps {
   inputError: boolean;
   setPinCode: (pinCode: string) => void;
   scanCodeAction: () => void;
+  submitCodeAction: () => void;
+  closeModalAction: () => void;
 }
 
 interface agentVerificationElementProps {
@@ -250,6 +252,7 @@ interface userVerificationElementProps {
   code: string;
   qrCode: any;
   user: "agent" | "user";
+  closeModalAction: () => void;
   agent: agentVerificationElementProps;
 }
 

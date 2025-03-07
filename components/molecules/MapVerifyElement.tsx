@@ -5,7 +5,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import React from "react";
 import { View, Text } from "react-native";
-import { BottomButton, IconButton } from "..";
+import { ActiveButton, BottomButton, IconButton } from "..";
 import MapViewPinInput from "../atoms/MapPinInput";
 
 const UserVerificationElement = ({
@@ -13,6 +13,7 @@ const UserVerificationElement = ({
   qrCode,
   user,
   agent,
+  closeModalAction,
 }: userVerificationElementProps) => {
   return (
     <>
@@ -26,17 +27,20 @@ const UserVerificationElement = ({
             flexDirection: "column",
             alignItems: "center",
             gap: 20,
+            width: "100%",
           }}
         >
           <View
             style={{
               flexDirection: "row",
               width: "100%",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               alignItems: "center",
             }}
           >
-            <Text>Verification Pin</Text>
+            <Text style={{ ...textFontStyles.headlineLargeMedium }}>
+              Verification Pin
+            </Text>
             <IconButton
               icon={
                 <>
@@ -52,8 +56,20 @@ const UserVerificationElement = ({
               bgColor="rgba(215, 236, 227, 0.5)"
             />
           </View>
-          <MapViewPinInput error={agent.inputError} setOtp={agent.setPinCode} />
+          <View style={{ width: "90%" }}>
+            <MapViewPinInput
+              error={agent.inputError}
+              setOtp={agent.setPinCode}
+            />
+          </View>
           <BottomButton name="Verify" onPressAction={agent.submitCode} />
+          <ActiveButton
+            name="Close"
+            bgColor="transparent"
+            focusedColor={appColors.primaryContainerColor}
+            onPressAction={closeModalAction}
+            color={appColors.onPrimaryContainerColor}
+          />
         </View>
       ) : (
         <View
@@ -64,9 +80,13 @@ const UserVerificationElement = ({
             gap: 20,
             backgroundColor: appColors.surfaceContainerLow,
             borderRadius: 20,
+            paddingVertical: 30,
+            paddingHorizontal: 16,
           }}
         >
-          <Text>Verification Pin</Text>
+          <Text style={{ ...textFontStyles.headlineLargeMedium }}>
+            Verification Pin
+          </Text>
           <View
             style={{
               width: "100%",
@@ -90,11 +110,18 @@ const UserVerificationElement = ({
           <View
             style={{
               width: "100%",
-              height: 200,
+              height: 300,
               padding: 20,
             }}
           >
             <Image source={qrCode} style={{ width: "100%", height: "100%" }} />
+            <ActiveButton
+              name="Close"
+              bgColor="transparent"
+              focusedColor={appColors.primaryContainerColor}
+              onPressAction={closeModalAction}
+              color={appColors.onPrimaryContainerColor}
+            />
           </View>
         </View>
       )}
