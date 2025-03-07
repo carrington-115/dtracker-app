@@ -111,6 +111,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="navigation"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </Provider>
   );
