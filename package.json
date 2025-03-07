@@ -28,6 +28,7 @@
     "expo-blur": "~14.0.2",
     "expo-camera": "~16.0.14",
     "expo-constants": "~17.0.4",
+    "expo-document-picker": "~13.0.3",
     "expo-font": "~13.0.3",
     "expo-haptics": "~14.0.1",
     "expo-image": "~2.0.4",
@@ -38,7 +39,6 @@
     "expo-splash-screen": "~0.29.20",
     "expo-status-bar": "~2.0.1",
     "expo-symbols": "~0.2.1",
-    "expo-system-ui": "~4.0.7",
     "expo-updates": "~0.26.13",
     "expo-web-browser": "~14.0.2",
     "firebase": "^11.2.0",
@@ -58,8 +58,7 @@
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
     "swiper": "^11.2.1",
-    "undefined": "expo-auth-session/providers/google",
-    "expo-document-picker": "~13.0.3"
+    "undefined": "expo-auth-session/providers/google"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
