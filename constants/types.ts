@@ -208,6 +208,27 @@ interface stateObserverProps {
   icon: React.ReactNode;
 }
 
+interface pickupFlowDetailsProps {
+  userType: "user" | "agent";
+  image: any;
+  price: number;
+  units: "bags" | "buckets";
+  trashSize: number;
+  username: string;
+  buttonAction: () => void;
+}
+
+interface navigationElementProps {
+  mapDetails: {
+    message: string;
+    startTime: string;
+    ETA: string;
+    totalETA: string;
+  };
+  flowStates: pickupFlowElementProps;
+  details: pickupFlowDetailsProps;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -225,7 +246,7 @@ export type {
   storeImageComponentProps,
   storeItemProps,
   tabsButtonProps,
-  verificationElementProps,
+  navigationElementProps,
   goalCardProps,
   goalPageComponentProps,
   goalElementProps,
@@ -236,4 +257,6 @@ export type {
   ChatMessageElementProps,
   pickupFlowElementProps,
   stateObserverProps,
+  pickupFlowDetailsProps,
+  verificationElementProps,
 };
