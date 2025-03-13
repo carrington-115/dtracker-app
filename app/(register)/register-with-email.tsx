@@ -1,9 +1,4 @@
-import {
-  AuthButton,
-  AuthCheckElement,
-  BottomButton,
-  TextInputElement,
-} from "@/components";
+import { AuthCheckElement, BottomButton, TextInputElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
@@ -16,10 +11,18 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { auth, firestore } from "@/firebase/config.firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Appbar } from "react-native-paper";
+import {
+  account,
+  appCredentials,
+  databases,
+  id,
+} from "@/appwrite/config.appwrite";
+import {
+  createUserSession,
+  isUserSignIn,
+  signUpUser,
+} from "@/appwrite/actions";
 
 export default function componentName() {
   const [email, setEmail] = useState<string>("");
@@ -102,33 +105,27 @@ export default function componentName() {
   };
 
   const handleOnSubmit = async () => {
-    handleVerifications();
-    setLoading(true);
     try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
+      handleVerifications();
+      await signUpUser(handleVerifications, email, password);
+      const user = await createUserSession(email, password);
+      const userExist = await isUserSignIn();
+      console.log("User: ", user);
+      console.log("User existing: ", userExist);
+
+      const response = await databases.createDocument(
+        appCredentials.appwriteDb,
+        appCredentials.usersCollection,
+        id.unique(),
+        {
+          email: email,
+          name: username,
+        }
       );
-      const { user } = userCredentials;
-      const usersCollection = collection(firestore, "users");
-      const userDoc = doc(usersCollection, user.uid);
-      await setDoc(userDoc, {
-        uid: user.uid,
-        username: username,
-        email: user.email,
-        phone: user.phoneNumber,
-        photoURL: user.photoURL,
-        emailVerified: user.emailVerified,
-        role: null,
-        created_at: Timestamp.now(),
-        updated_at: Timestamp.now(),
-      });
-      if (user !== null) {
-        router.push("/(register)/user-category");
-      }
+
+      console.log("db response: ", response);
     } catch (error) {
-      console.error(error);
+      console.error("error: ", error);
     }
   };
 
@@ -174,14 +171,13 @@ export default function componentName() {
         },
       ]}
     >
+      <Appbar.Header statusBarHeight={0}>
+        <Appbar.BackAction onPress={() => router.back()} />
+      </Appbar.Header>
       {loading ? (
         <ActivityIndicator size={48} color={appColors.primaryColor} />
       ) : (
         <>
-          <AuthButton
-            type="back-icon-btn"
-            onPressAction={() => router.back()}
-          />
           <ScrollView style={styles.scrollViewContainer}>
             <View style={styles.innerContainerStyles}>
               <Text

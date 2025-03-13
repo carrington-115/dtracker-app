@@ -14,7 +14,7 @@ export default function Index() {
     setTimeout(() => {
       setLoading(false);
       if (!signedIn) {
-        router.navigate("./navigation");
+        router.navigate("./onboarding");
       }
     }, 2000);
   }, []);
