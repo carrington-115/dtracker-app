@@ -3,46 +3,56 @@ import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { auth, firestore } from "@/firebase/config.firebase";
 import {
-  updateDoc,
-  doc,
-  query,
-  where,
-  collection,
-  getDocs,
-} from "firebase/firestore";
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView,
+  Dimensions,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { databases, appCredentials } from "@/appwrite/config.appwrite";
+import { useSelector } from "react-redux";
+import { useRouter } from "expo-router";
+import { Appbar } from "react-native-paper";
+
+const { width } = Dimensions.get("window");
 
 export default function componentName() {
-  const [userrole, setUserrole] = useState<string>("User");
+  const [userrole, setUserrole] = useState<"user" | "agent" | "collector">(
+    "user"
+  );
   const [loading, setLoading] = useState<boolean>(false);
-  const [userId, setUserId] = useState<any>(null);
-  const [docId, setDocId] = useState<any>(null);
-
-  const userCollections = collection(firestore, "users");
+  const stateDocId = useSelector((state: any) => state.auth.userDocId);
+  const router = useRouter();
 
   useEffect(() => {
-    const user = auth.currentUser;
-    setUserId(user?.uid);
     const action = async () => {
-      const fieldQuery = query(userCollections, where("uid", "==", userId));
-      const fieldSnap = await getDocs(fieldQuery);
-      fieldSnap.forEach((doc) => {
-        setDocId(doc.id);
-      });
+      // action
     };
     action();
-  }, [userId]);
+  }, []);
 
+  /*
+      - first get the user sign in state
+      - from the state, get the signed in email that can ge used to get the doc id
+      - update the doc by the user role
+      - 
+  */
   const handleAddUserCategory = async () => {
     try {
-      const docRef = doc(firestore, "users", docId);
       setLoading(true);
-      await updateDoc(docRef, {
-        role: userrole,
-      });
+      await databases.updateDocument(
+        appCredentials.appwriteDb,
+        appCredentials.usersCollection,
+        stateDocId,
+        {
+          category: userrole,
+        }
+      );
+
+      router.push(userrole === "user" ? "../(user)" : "../(agent)");
     } catch (error) {
       console.log(error);
     }
@@ -55,18 +65,23 @@ export default function componentName() {
           ? {
               flex: 1,
               backgroundColor: appColors.surfaceBright,
-              justifyContent: "center",
-              alignItems: "center",
             }
           : styles.container
       }
     >
+      <>
+        {!loading && (
+          <Appbar.Header statusBarHeight={0}>
+            <Appbar.BackAction onPress={() => router.dismissAll()} />
+          </Appbar.Header>
+        )}
+      </>
       {loading ? (
-        <>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
           <ActivityIndicator size={48} color={appColors.primaryColor} />
-        </>
+        </View>
       ) : (
-        <>
+        <ScrollView style={{ width: "100%", marginTop: 50 }}>
           <View style={styles.innerContainer}>
             <View style={styles.formContainer}>
               <Text
@@ -79,16 +94,22 @@ export default function componentName() {
                 How would you like to continue?
               </Text>
               <RadioComponent
-                label="User: I want to enjoy waste management solutions"
-                value="User"
+                label="Homes & Businesses: Schedule pickups, sell recyclables, and keep your space clean."
+                value="user"
                 checked={userrole}
-                checkedAction={() => setUserrole("User")}
+                checkedAction={() => setUserrole("user")}
               />
               <RadioComponent
-                label="Agent: For individuals or businesses looking to earn by becoming waste collection or recycling agents."
-                value="Agent"
+                label="Agents: Collect, deliver, and earn from recyclables."
+                value="agent"
                 checked={userrole}
-                checkedAction={() => setUserrole("Agent")}
+                checkedAction={() => setUserrole("agent")}
+              />
+              <RadioComponent
+                label="Collection Centers: Process recyclables and connect with businesses and agents."
+                value="collector"
+                checked={userrole}
+                checkedAction={() => setUserrole("collector")}
               />
             </View>
             <View style={styles.infoContainer}>
@@ -115,13 +136,13 @@ export default function componentName() {
               />
             </View>
           </View>
-          <View style={{ width: "100%", marginTop: 200 }}>
+          <View style={{ width: "100%", marginTop: 150 }}>
             <BottomButton
               name="Complete"
               onPressAction={handleAddUserCategory}
             />
           </View>
-        </>
+        </ScrollView>
       )}
     </SafeAreaView>
   );
@@ -130,11 +151,9 @@ export default function componentName() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
     backgroundColor: appColors.surfaceBright,
     paddingHorizontal: 16,
-    paddingTop: 190,
+    width: width,
   },
   innerContainer: {
     width: "100%",

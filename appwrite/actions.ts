@@ -9,12 +9,7 @@ async function isUserSignIn() {
   }
 }
 
-const signUpUser = async (
-  handleVerifications: () => void,
-  email: string,
-  password: string
-) => {
-  handleVerifications();
+const signUpUser = async (email: string, password: string) => {
   await account.create(id.unique(), email, password);
 };
 

@@ -12,17 +12,14 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ActivityIndicator, Appbar } from "react-native-paper";
-import {
-  account,
-  appCredentials,
-  databases,
-  id,
-} from "@/appwrite/config.appwrite";
+import { appCredentials, databases, id } from "@/appwrite/config.appwrite";
 import {
   createUserSession,
   isUserSignIn,
   signUpUser,
 } from "@/appwrite/actions";
+import { useDispatch } from "react-redux";
+import { addUserDocId } from "@/redux/features/authSlice";
 
 export default function componentName() {
   const [email, setEmail] = useState<string>("");
@@ -39,6 +36,7 @@ export default function componentName() {
     termsError: false,
     errorMessage: "",
   });
+  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -106,11 +104,10 @@ export default function componentName() {
 
   const handleOnSubmit = async () => {
     handleVerifications();
+    await signUpUser(email, password);
     setLoading(true);
-    await signUpUser(handleVerifications, email, password);
     await createUserSession(email, password);
     const userExist = await isUserSignIn();
-    console.log(userExist);
     if (userExist) {
       const response = await databases.createDocument(
         appCredentials.appwriteDb,
@@ -121,7 +118,7 @@ export default function componentName() {
           name: username,
         }
       );
-      console.log(response);
+      dispatch(addUserDocId(response?.$id));
     }
     router.push("./user-category");
   };
@@ -193,6 +190,7 @@ export default function componentName() {
                   keyboardType="default"
                   placeholder="Name"
                   type="auth-input"
+                  errorMessage={errorCheck.errorMessage}
                 />
                 <TextInputElement
                   error={errorCheck.emailError}
@@ -202,6 +200,7 @@ export default function componentName() {
                   keyboardType="email-address"
                   placeholder="Email"
                   type="auth-input"
+                  errorMessage={errorCheck.errorMessage}
                 />
                 <TextInputElement
                   error={errorCheck.passwordError}

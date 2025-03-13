@@ -7,6 +7,7 @@ import reserveImageReducer from "./features/reserveImageSlice";
 import profileReducer from "./features/profileSlice";
 import storeReducer from "./features/storeSlice";
 import agentReducer from "./features/agentSlice";
+import authSlicReducer from "./features/authSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     profile: profileReducer,
     store: storeReducer,
     agent: agentReducer,
+    auth: authSlicReducer,
   },
 });
 
