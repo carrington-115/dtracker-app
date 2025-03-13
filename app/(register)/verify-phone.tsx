@@ -24,6 +24,11 @@ export default function componentName() {
   }, [phoneNumber]);
 
   return (
-    <PinCodeScreen otp={otp} setOtp={setOtp} buttonAction={handleSubmitForm} />
+    <PinCodeScreen
+      otp={otp}
+      setOtp={setOtp}
+      buttonAction={handleSubmitForm}
+      resendCodeAction={() => {}}
+    />
   );
 }

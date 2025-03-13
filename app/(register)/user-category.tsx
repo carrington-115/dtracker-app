@@ -16,6 +16,8 @@ import { databases, appCredentials } from "@/appwrite/config.appwrite";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 import { Appbar } from "react-native-paper";
+import { isUserSignIn } from "@/appwrite/actions";
+import { Query } from "react-native-appwrite";
 
 const { width } = Dimensions.get("window");
 
@@ -23,16 +25,15 @@ export default function componentName() {
   const [userrole, setUserrole] = useState<"user" | "agent" | "collector">(
     "user"
   );
-  const [loading, setLoading] = useState<boolean>(false);
-  const stateDocId = useSelector((state: any) => state.auth.userDocId);
   const router = useRouter();
 
-  useEffect(() => {
-    const action = async () => {
-      // action
-    };
-    action();
-  }, []);
+  const [loading, setLoading] = useState<boolean>(false);
+  const stateDocId = useSelector((state: any) => state.auth.userDocId);
+
+  async function getUserDocId() {
+    const user: any = await isUserSignIn();
+    return user.email;
+  }
 
   /*
       - first get the user sign in state
@@ -51,12 +52,26 @@ export default function componentName() {
           category: userrole,
         }
       );
-
-      router.push(userrole === "user" ? "../(user)" : "../(agent)");
+      router.push(userrole === "user" ? "/(user)" : "/(agent)");
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    const action = async () => {
+      const email = await getUserDocId();
+      const userDocId = await databases.listDocuments(
+        appCredentials.appwriteDb,
+        appCredentials.usersCollection,
+        [Query.equal("email", email)]
+      );
+      if (userDocId.documents[0]?.category) {
+        router.push("/(user)");
+      }
+    };
+    action();
+  }, [stateDocId]);
 
   return (
     <SafeAreaView
@@ -77,7 +92,14 @@ export default function componentName() {
         )}
       </>
       {loading ? (
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <ActivityIndicator size={48} color={appColors.primaryColor} />
         </View>
       ) : (

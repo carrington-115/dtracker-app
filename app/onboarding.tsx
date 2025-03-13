@@ -10,7 +10,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import appColors from "@/constants/colors";
 import { useRouter } from "expo-router";
 import { isUserSignIn } from "@/appwrite/actions";
-import { setSignedInState } from "@/redux/features/authSlice";
+import { addUserDocId, setSignedInState } from "@/redux/features/authSlice";
 import { useDispatch } from "react-redux";
 import { appCredentials, databases } from "@/appwrite/config.appwrite";
 import { Query } from "react-native-appwrite";
@@ -21,33 +21,6 @@ export default function componentName() {
   const [signedEmail, setSignedEmail] = useState<string>("");
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const authorizeAddUserAuthState = async () => {
-    try {
-      const user: any = await isUserSignIn(); // user sign in state
-      const userCategory = await databases.listDocuments(
-        appCredentials.appwriteDb,
-        appCredentials.usersCollection,
-        [Query.equal("email", user.email)]
-      );
-
-      if (user?.email && userCategory?.documents[0]?.category) {
-        dispatch(setSignedInState(user.email));
-        setSignedEmail(user.email);
-        router.push("/(user)");
-      } else if (!user) {
-        router.push("/(register)/register-with-email");
-      } else if (userCategory?.documents[0]?.category) {
-        router.push("/(register)/user-category");
-      } else if (user?.email && !userCategory?.documents[0]?.category) {
-        router.push("/(register)/user-category");
-      } else {
-        router.push("/(register)");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const registerButtonData: authButtonPropsType[] = [
     {
@@ -93,6 +66,32 @@ export default function componentName() {
     },
   ];
 
+  const authorizeAddUserAuthState = async () => {
+    try {
+      const user: any = await isUserSignIn(); // user sign in state
+      const userCategory = await databases.listDocuments(
+        appCredentials.appwriteDb,
+        appCredentials.usersCollection,
+        [Query.equal("email", user.email)]
+      );
+
+      if (user?.email && userCategory?.documents[0]?.category) {
+        dispatch(setSignedInState(user.email));
+        setSignedEmail(user.email);
+        router.push("/(user)");
+      } else if (userCategory?.documents[0]?.category) {
+        router.push("/(register)/user-category");
+      } else if (user?.email && !userCategory?.documents[0]?.category) {
+        dispatch(addUserDocId(userCategory.documents[0].$id));
+        router.push("/(register)/user-category");
+      } else {
+        router.push("/(register)/register-with-email");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       await authorizeAddUserAuthState();
@@ -102,6 +101,10 @@ export default function componentName() {
 
   return (
     <SafeAreaView style={styles.container} testID="onboarding-screen">
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={appColors.surfaceBright}
+      />
       <StatusBar
         barStyle="dark-content"
         backgroundColor={appColors.surfaceBright}
