@@ -105,14 +105,13 @@ export default function componentName() {
   };
 
   const handleOnSubmit = async () => {
-    try {
-      handleVerifications();
-      await signUpUser(handleVerifications, email, password);
-      const user = await createUserSession(email, password);
-      const userExist = await isUserSignIn();
-      console.log("User: ", user);
-      console.log("User existing: ", userExist);
-
+    handleVerifications();
+    setLoading(true);
+    await signUpUser(handleVerifications, email, password);
+    await createUserSession(email, password);
+    const userExist = await isUserSignIn();
+    console.log(userExist);
+    if (userExist) {
       const response = await databases.createDocument(
         appCredentials.appwriteDb,
         appCredentials.usersCollection,
@@ -122,11 +121,9 @@ export default function componentName() {
           name: username,
         }
       );
-
-      console.log("db response: ", response);
-    } catch (error) {
-      console.error("error: ", error);
+      console.log(response);
     }
+    router.push("./user-category");
   };
 
   useEffect(() => {
@@ -171,9 +168,11 @@ export default function componentName() {
         },
       ]}
     >
-      <Appbar.Header statusBarHeight={0}>
-        <Appbar.BackAction onPress={() => router.back()} />
-      </Appbar.Header>
+      {!loading && (
+        <Appbar.Header statusBarHeight={0}>
+          <Appbar.BackAction onPress={() => router.back()} />
+        </Appbar.Header>
+      )}
       {loading ? (
         <ActivityIndicator size={48} color={appColors.primaryColor} />
       ) : (
