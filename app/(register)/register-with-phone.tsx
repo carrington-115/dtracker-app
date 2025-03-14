@@ -11,11 +11,14 @@ import { View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./register-with-email";
 import { textFontStyles } from "@/constants/fonts";
-import { ActivityIndicator } from "react-native-paper";
-import { signInWithPhoneNumber } from "firebase/auth";
-import { auth } from "@/firebase/config.firebase";
+import { ActivityIndicator, Appbar } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { addNumber, addName } from "@/redux/features/PhoneSlice";
+import { account, id } from "@/appwrite/config.appwrite";
+import {
+  addAuthName,
+  setPhoneAuth,
+  addUserId,
+} from "@/redux/features/authSlice";
 
 export default function componentName() {
   const [username, setUsername] = useState<string>("");
@@ -50,10 +53,13 @@ export default function componentName() {
   };
 
   const handleRegisterWithPhone = async () => {
-    userVerification();
     try {
-      dispatch(addNumber(phonenumber));
-      dispatch(addName(username));
+      userVerification();
+      const user = await account.createPhoneToken(id.unique(), phonenumber);
+      dispatch(setPhoneAuth(phonenumber));
+      dispatch(addAuthName(username));
+      console.log(user.userId);
+      if (user) dispatch(addUserId(user.userId));
       router.push("/verify-phone");
     } catch (error) {
       console.log(error);
@@ -97,10 +103,9 @@ export default function componentName() {
         </>
       ) : (
         <>
-          <AuthButton
-            type="back-icon-btn"
-            onPressAction={() => router.back()}
-          />
+          <Appbar.Header>
+            <Appbar.BackAction onPress={() => router.back()} />
+          </Appbar.Header>
           <ScrollView style={styles.scrollViewContainer}>
             <View style={styles.innerContainerStyles}>
               <Text
@@ -117,6 +122,7 @@ export default function componentName() {
                   type="auth-input"
                   required
                   error={inputError.nameError}
+                  errorMessage="This field is required"
                 />
                 <TextInputElement
                   value={phonenumber}
@@ -126,6 +132,7 @@ export default function componentName() {
                   type="auth-input"
                   required
                   error={inputError.phoneError}
+                  errorMessage="This field id required"
                 />
               </KeyboardAvoidingView>
               <AuthCheckElement

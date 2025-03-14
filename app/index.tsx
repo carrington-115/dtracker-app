@@ -15,17 +15,21 @@ export default function Index() {
   const handleUpdateAuthRoute = async () => {
     try {
       const user: any = await isUserSignIn();
-      const userDoc = await databases.listDocuments(
-        appCredentials.appwriteDb,
-        appCredentials.usersCollection,
-        [Query.equal("email", user.email)]
-      );
-      if (user && userDoc?.documents[0]?.category) {
-        router.push(
-          userDoc.documents[0].category === "user" ? "/(user)" : "/(agent)"
+      if (user?.email) {
+        const userDoc = await databases.listDocuments(
+          appCredentials.appwriteDb,
+          appCredentials.usersCollection,
+          [Query.equal("email", user?.email)]
         );
+        if (userDoc?.documents[0]?.category) {
+          router.push(
+            userDoc.documents[0].category === "user" ? "/(user)" : "/(agent)"
+          );
+        } else {
+          router.push("/(register)/user-category");
+        }
       } else {
-        router.push("/(onboarding)");
+        router.push("/login");
       }
     } catch (error) {
       console.error(error);
@@ -42,7 +46,7 @@ export default function Index() {
       loadTimeout();
     };
     action();
-  }, [loading]);
+  }, [router]);
 
   return (
     <GestureHandlerRootView>

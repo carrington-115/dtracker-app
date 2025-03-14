@@ -10,7 +10,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import appColors from "@/constants/colors";
 import { useRouter } from "expo-router";
 import { isUserSignIn } from "@/appwrite/actions";
-import { addUserDocId, setSignedInState } from "@/redux/features/authSlice";
+import { setSignedInState } from "@/redux/features/authSlice";
 import { useDispatch } from "react-redux";
 import { appCredentials, databases } from "@/appwrite/config.appwrite";
 import { Query } from "react-native-appwrite";
@@ -69,23 +69,25 @@ export default function componentName() {
   const authorizeAddUserAuthState = async () => {
     try {
       const user: any = await isUserSignIn(); // user sign in state
-      const userCategory = await databases.listDocuments(
-        appCredentials.appwriteDb,
-        appCredentials.usersCollection,
-        [Query.equal("email", user.email)]
-      );
-
-      if (user?.email && userCategory?.documents[0]?.category) {
+      if (user?.email) {
         dispatch(setSignedInState(user.email));
         setSignedEmail(user.email);
-        router.push("/(user)");
-      } else if (userCategory?.documents[0]?.category) {
-        router.push("/(register)/user-category");
-      } else if (user?.email && !userCategory?.documents[0]?.category) {
-        dispatch(addUserDocId(userCategory.documents[0].$id));
-        router.push("/(register)/user-category");
+        const userCategory = await databases.listDocuments(
+          appCredentials.appwriteDb,
+          appCredentials.usersCollection,
+          [Query.equal("email", user.email)]
+        );
+        if (userCategory?.documents[0]?.category) {
+          router.push(
+            userCategory?.documents[0]?.category === "user"
+              ? "/(user)"
+              : "/(agent)"
+          );
+        } else {
+          router.push("/(register)/user-category");
+        }
       } else {
-        router.push("/(register)/register-with-email");
+        router.push("/onboarding");
       }
     } catch (error) {
       console.error(error);

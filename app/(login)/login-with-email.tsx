@@ -1,13 +1,16 @@
-import { AuthButton, BottomButton, TextInputElement } from "@/components";
+import { BottomButton, TextInputElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { auth } from "@/firebase/config.firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Appbar } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { isUserSignIn } from "@/appwrite/actions";
+import { setSignedInState } from "@/redux/features/authSlice";
+import { appCredentials, databases } from "@/appwrite/config.appwrite";
+import { Query } from "react-native-appwrite";
 
 export default function componentName() {
   const [email, setEmail] = useState<string>("");
@@ -17,6 +20,7 @@ export default function componentName() {
     nameError: false,
     passwordError: false,
   });
+  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -36,24 +40,30 @@ export default function componentName() {
   const handleSignInWithEmail = async () => {
     userVerification();
     try {
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      setLoading(true);
-      const { user } = userCredentials;
-      // const userRole: any = user?.role;
-      /* 
-      if (user?.role === "user") {
-        router.navigate("../(user)");
-      } else if (user?.role === "agent") {
-        router.navigate("../(admin)");
-      } else {
-        throw new Error("User not found");
-      }
-      */
     } catch (error) {}
+  };
+
+  const authorizeAddUserAuthState = async () => {
+    try {
+      const user: any = await isUserSignIn(); // user sign in state
+      if (user?.email) {
+        dispatch(setSignedInState(user.email));
+        const userCategory = await databases.listDocuments(
+          appCredentials.appwriteDb,
+          appCredentials.usersCollection,
+          [Query.equal("email", user.email)]
+        );
+        if (userCategory?.documents[0]?.category) {
+          router.push(
+            userCategory?.documents[0]?.category === "user"
+              ? "/(user)"
+              : "/(agent)"
+          );
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -70,6 +80,11 @@ export default function componentName() {
       }
     };
 
+    const fetchData = async () => {
+      await authorizeAddUserAuthState();
+    };
+
+    fetchData();
     handleErrorCheck();
   }, [email, password]);
 
@@ -86,16 +101,19 @@ export default function componentName() {
           : styles.container
       }
     >
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={appColors.surfaceBright}
+      />
       {loading ? (
         <>
           <ActivityIndicator size={48} color={appColors.primaryColor} />
         </>
       ) : (
         <>
-          <AuthButton
-            type="back-icon-btn"
-            onPressAction={() => router.back()}
-          />
+          <Appbar.Header>
+            <Appbar.BackAction onPress={() => router.back()} />
+          </Appbar.Header>
           <View style={styles.innerContainer}>
             <Text style={[textFontStyles.titleLargeBold]}>
               Log in with Email
@@ -108,6 +126,7 @@ export default function componentName() {
               type="auth-input"
               required
               error={error.nameError}
+              errorMessage="This field is required"
             />
             <TextInputElement
               placeholder="Password"
@@ -118,6 +137,7 @@ export default function componentName() {
               password
               required
               error={error.passwordError}
+              errorMessage="This field is required"
             />
           </View>
           <View style={{ width: "100%", marginTop: 200 }}>
@@ -133,7 +153,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: appColors.surfaceBright,
     paddingHorizontal: 16,
-    paddingTop: 190,
     flex: 1,
     flexDirection: "column",
     alignItems: "flex-start",
@@ -143,6 +162,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     alignItems: "center",
+    marginTop: 100,
     gap: 20,
   },
 });

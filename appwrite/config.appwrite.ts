@@ -1,4 +1,10 @@
-import { Client, Databases, Account, ID, Query } from "react-native-appwrite";
+import {
+  Client,
+  Databases,
+  Account,
+  ID,
+  OAuthProvider,
+} from "react-native-appwrite";
 
 // appwrite variables
 const projectId = String(process.env.EXPO_PUBLIC_PROJECT_ID);
@@ -18,5 +24,6 @@ const account = new Account(client);
 
 const databases = new Databases(client);
 const id = ID;
+const oAuth = OAuthProvider;
 
-export { client, databases, id, appCredentials, account };
+export { client, databases, id, appCredentials, account, oAuth };
