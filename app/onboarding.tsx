@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Dimensions, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
@@ -9,9 +9,18 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import appColors from "@/constants/colors";
 import { useRouter } from "expo-router";
+import { isUserSignIn } from "@/appwrite/actions";
+import { setSignedInState } from "@/redux/features/authSlice";
+import { useDispatch } from "react-redux";
+import { appCredentials, databases } from "@/appwrite/config.appwrite";
+import { Query } from "react-native-appwrite";
+
+const { width } = Dimensions.get("window");
 
 export default function componentName() {
+  const [signedEmail, setSignedEmail] = useState<string>("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const registerButtonData: authButtonPropsType[] = [
     {
@@ -56,8 +65,48 @@ export default function componentName() {
       type: "text-auth-buttons",
     },
   ];
+
+  const authorizeAddUserAuthState = async () => {
+    try {
+      const user: any = await isUserSignIn(); // user sign in state
+      if (user?.email) {
+        dispatch(setSignedInState(user.email));
+        setSignedEmail(user.email);
+        const userCategory = await databases.listDocuments(
+          appCredentials.appwriteDb,
+          appCredentials.usersCollection,
+          [Query.equal("email", user.email)]
+        );
+        if (userCategory?.documents[0]?.category) {
+          router.push(
+            userCategory?.documents[0]?.category === "user"
+              ? "/(user)"
+              : "/(agent)"
+          );
+        } else {
+          router.push("/(register)/user-category");
+        }
+      } else {
+        router.push("/onboarding");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await authorizeAddUserAuthState();
+    };
+    fetchData();
+  }, [signedEmail]);
+
   return (
     <SafeAreaView style={styles.container} testID="onboarding-screen">
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={appColors.surfaceBright}
+      />
       <StatusBar
         barStyle="dark-content"
         backgroundColor={appColors.surfaceBright}
@@ -87,6 +136,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 0,
     backgroundColor: appColors.surfaceBright,
+    width: width,
   },
   logoImage: {
     width: 190,

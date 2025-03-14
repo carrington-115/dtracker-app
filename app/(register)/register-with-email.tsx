@@ -1,9 +1,4 @@
-import {
-  AuthButton,
-  AuthCheckElement,
-  BottomButton,
-  TextInputElement,
-} from "@/components";
+import { AuthCheckElement, BottomButton, TextInputElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { useRouter } from "expo-router";
@@ -16,10 +11,15 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { auth, firestore } from "@/firebase/config.firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Appbar } from "react-native-paper";
+import { appCredentials, databases, id } from "@/appwrite/config.appwrite";
+import {
+  createUserSession,
+  isUserSignIn,
+  signUpUser,
+} from "@/appwrite/actions";
+import { useDispatch } from "react-redux";
+import { addUserDocId } from "@/redux/features/authSlice";
 
 export default function componentName() {
   const [email, setEmail] = useState<string>("");
@@ -36,6 +36,7 @@ export default function componentName() {
     termsError: false,
     errorMessage: "",
   });
+  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -103,33 +104,23 @@ export default function componentName() {
 
   const handleOnSubmit = async () => {
     handleVerifications();
+    await signUpUser(email, password);
     setLoading(true);
-    try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
+    await createUserSession(email, password);
+    const userExist = await isUserSignIn();
+    if (userExist) {
+      const response = await databases.createDocument(
+        appCredentials.appwriteDb,
+        appCredentials.usersCollection,
+        id.unique(),
+        {
+          email: email,
+          name: username,
+        }
       );
-      const { user } = userCredentials;
-      const usersCollection = collection(firestore, "users");
-      const userDoc = doc(usersCollection, user.uid);
-      await setDoc(userDoc, {
-        uid: user.uid,
-        username: username,
-        email: user.email,
-        phone: user.phoneNumber,
-        photoURL: user.photoURL,
-        emailVerified: user.emailVerified,
-        role: null,
-        created_at: Timestamp.now(),
-        updated_at: Timestamp.now(),
-      });
-      if (user !== null) {
-        router.push("/(register)/user-category");
-      }
-    } catch (error) {
-      console.error(error);
+      dispatch(addUserDocId(response?.$id));
     }
+    router.push("./user-category");
   };
 
   useEffect(() => {
@@ -174,14 +165,15 @@ export default function componentName() {
         },
       ]}
     >
+      {!loading && (
+        <Appbar.Header statusBarHeight={0}>
+          <Appbar.BackAction onPress={() => router.back()} />
+        </Appbar.Header>
+      )}
       {loading ? (
         <ActivityIndicator size={48} color={appColors.primaryColor} />
       ) : (
         <>
-          <AuthButton
-            type="back-icon-btn"
-            onPressAction={() => router.back()}
-          />
           <ScrollView style={styles.scrollViewContainer}>
             <View style={styles.innerContainerStyles}>
               <Text
@@ -198,6 +190,7 @@ export default function componentName() {
                   keyboardType="default"
                   placeholder="Name"
                   type="auth-input"
+                  errorMessage={errorCheck.errorMessage}
                 />
                 <TextInputElement
                   error={errorCheck.emailError}
@@ -207,6 +200,7 @@ export default function componentName() {
                   keyboardType="email-address"
                   placeholder="Email"
                   type="auth-input"
+                  errorMessage={errorCheck.errorMessage}
                 />
                 <TextInputElement
                   error={errorCheck.passwordError}

@@ -6,6 +6,8 @@ import appColors from "@/constants/colors";
 import { OtpInput } from "react-native-otp-entry";
 import { ActiveButton, BottomButton } from "@/components";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { Appbar } from "react-native-paper";
+import { useRouter } from "expo-router";
 
 interface pinCodeScreenProps {
   buttonAction: () => void;
@@ -23,6 +25,7 @@ export default function componentName({
   pinNumber,
 }: pinCodeScreenProps) {
   const [error, setError] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleSubmitForm = () => {
     if (otp.length < pinNumber! || otp.length < 6 || otp === "") setError(true);
@@ -37,6 +40,9 @@ export default function componentName({
 
   return (
     <SafeAreaView style={styles.container}>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => router.back()} />
+      </Appbar.Header>
       <KeyboardAvoidingView style={styles.innerContainer}>
         <Text
           style={[
