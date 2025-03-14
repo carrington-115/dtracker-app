@@ -65,12 +65,17 @@ export default function componentName() {
   const authorizeAddUserAuthState = async () => {
     try {
       const user: any = await isUserSignIn(); // user sign in state
-      if (user?.email) {
+      if (user?.email || user?.phone) {
         dispatch(setSignedInState(user.email));
         const userCategory = await databases.listDocuments(
           appCredentials.appwriteDb,
           appCredentials.usersCollection,
-          [Query.equal("email", user.email)]
+          [
+            Query.or([
+              Query.equal("email", user.email),
+              Query.equal("phone", user.phone),
+            ]),
+          ]
         );
         if (userCategory?.documents[0]?.category) {
           router.push(

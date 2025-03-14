@@ -58,7 +58,6 @@ export default function componentName() {
       const user = await account.createPhoneToken(id.unique(), phonenumber);
       dispatch(setPhoneAuth(phonenumber));
       dispatch(addAuthName(username));
-      console.log(user.userId);
       if (user) dispatch(addUserId(user.userId));
       router.push("/verify-phone");
     } catch (error) {

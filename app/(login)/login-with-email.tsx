@@ -9,7 +9,7 @@ import { ActivityIndicator, Appbar } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { isUserSignIn } from "@/appwrite/actions";
 import { setSignedInState } from "@/redux/features/authSlice";
-import { appCredentials, databases } from "@/appwrite/config.appwrite";
+import { account, appCredentials, databases } from "@/appwrite/config.appwrite";
 import { Query } from "react-native-appwrite";
 
 export default function componentName() {
@@ -38,20 +38,45 @@ export default function componentName() {
   };
 
   const handleSignInWithEmail = async () => {
-    userVerification();
     try {
-    } catch (error) {}
+      userVerification();
+      const user: any = await account.createEmailPasswordSession(
+        email,
+        password
+      );
+      const userCategory = await databases.listDocuments(
+        appCredentials.appwriteDb,
+        appCredentials.usersCollection,
+        [
+          Query.or([Query.equal("email", user?.email)]),
+          Query.equal("phone", user?.phone),
+        ]
+      );
+      if (userCategory)
+        router.push(
+          userCategory?.documents[0]?.category === "user"
+            ? "/(user)"
+            : "/(agent)"
+        );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const authorizeAddUserAuthState = async () => {
     try {
       const user: any = await isUserSignIn(); // user sign in state
-      if (user?.email) {
+      if (user?.email || user?.phone) {
         dispatch(setSignedInState(user.email));
         const userCategory = await databases.listDocuments(
           appCredentials.appwriteDb,
           appCredentials.usersCollection,
-          [Query.equal("email", user.email)]
+          [
+            Query.or([
+              Query.equal("email", user.email),
+              Query.equal("phone", user.phone),
+            ]),
+          ]
         );
         if (userCategory?.documents[0]?.category) {
           router.push(
