@@ -8,7 +8,6 @@ import { PinCodeScreen } from "@/components";
 import { addUserDocId } from "@/redux/features/authSlice";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Appbar } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function componentName() {
