@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, KeyboardAvoidingView, View } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  View,
+  Dimensions,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { textFontStyles } from "@/constants/fonts";
 import appColors from "@/constants/colors";
@@ -17,6 +23,8 @@ interface pinCodeScreenProps {
   pinNumber?: number;
 }
 
+const { width } = Dimensions.get("window");
+
 export default function componentName({
   buttonAction,
   otp,
@@ -26,9 +34,11 @@ export default function componentName({
 }: pinCodeScreenProps) {
   const [error, setError] = useState<boolean>(false);
   const router = useRouter();
+  const otpState: boolean =
+    otp.length < pinNumber! || otp.length < 6 || otp === "";
 
   const handleSubmitForm = () => {
-    if (otp.length < pinNumber! || otp.length < 6 || otp === "") setError(true);
+    if (otpState) setError(true);
     else {
       buttonAction();
     }
@@ -125,16 +135,16 @@ export default function componentName({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     paddingHorizontal: 16,
-    paddingTop: 190,
     backgroundColor: appColors.surfaceBright,
+    width: width,
   },
   innerContainer: {
     width: "100%",
     flexDirection: "column",
     gap: 30,
     alignItems: "center",
+    marginTop: 50,
   },
   otpInputContainer: {
     width: "100%",

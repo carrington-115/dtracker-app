@@ -15,11 +15,16 @@ export default function Index() {
   const handleUpdateAuthRoute = async () => {
     try {
       const user: any = await isUserSignIn();
-      if (user?.email) {
+      if (user?.email || user?.phone) {
         const userDoc = await databases.listDocuments(
           appCredentials.appwriteDb,
           appCredentials.usersCollection,
-          [Query.equal("email", user?.email)]
+          [
+            Query.or([
+              Query.equal("email", user.email),
+              Query.equal("phone", user.phone),
+            ]),
+          ]
         );
         if (userDoc?.documents[0]?.category) {
           router.push(
