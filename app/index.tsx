@@ -43,21 +43,25 @@ export default function Index() {
     }
   };
 
+  // useEffect(() => {
+  //   const loadTimeout = () => {
+  //     if (loading) setTimeout(() => setLoading(false), 500);
+  //   };
+
+  //   const action = async () => {
+  //     await handleUpdateAuthRoute();
+  //     loadTimeout();
+  //   };
+
+  //   if (isReady) {
+  //     action();
+  //     router.push("/(user)");
+  //   }
+  // });
+
   useEffect(() => {
-    const loadTimeout = () => {
-      if (loading) setTimeout(() => setLoading(false), 500);
-    };
-
-    const action = async () => {
-      await handleUpdateAuthRoute();
-      loadTimeout();
-    };
-
-    if (isReady) {
-      // action();
-      router.push("/(user)");
-    }
-  }, [router]);
+    router.push("/(user)");
+  }, []);
 
   return (
     <GestureHandlerRootView>
