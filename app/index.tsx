@@ -57,7 +57,7 @@ export default function Index() {
 
     if (isReady && !loading) {
       // action();
-      router.push("/(user)");
+      router.push("/(marketplace)");
     }
   });
 

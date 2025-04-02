@@ -115,6 +115,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="(marketplace)"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </Provider>
   );

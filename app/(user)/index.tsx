@@ -5,7 +5,7 @@ import { pickupButtonProps } from "@/constants/types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Tabs, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   View,
