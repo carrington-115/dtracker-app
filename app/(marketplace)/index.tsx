@@ -93,7 +93,7 @@ export default function componentName() {
             <ActionButton
               title="Create your business profile"
               context="Create your business profile to start sending exchange alerts."
-              action={() => {}}
+              action={() => router.push("../navigation/business_location")}
             />
           </View>
         </ScrollView>

@@ -17,7 +17,7 @@ export default function componentName({
           styles.container,
           {
             backgroundColor: pressed
-              ? "rgba(221, 236, 236, 0.8)"
+              ? "rgba(221, 236, 236, 0.6)"
               : "rgba(221, 236, 236, 0.3)",
           },
         ]}
