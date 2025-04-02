@@ -1,29 +1,12 @@
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import { actionsElementProps } from "@/constants/types";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-
-interface actionsElementProps {
-  userProfileImage?: any;
-  actionType: "pickup" | "marketplace";
-  itemName?: string;
-  size: number;
-  units: string;
-  distance?: string;
-  price?: number;
-  userType?: "user" | "agent";
-  status: "active" | "pending" | "available";
-  date?: string;
-  username?: string;
-  time?: string;
-  pickupType?: "immediate" | "scheduled";
-  paymentMethod?: "fixed" | "negotiate" | "free";
-  pressAction?: () => void;
-}
 
 export default function componentName({
   userProfileImage,

@@ -41,6 +41,7 @@ import ChatMessage from "./molecules/ChatMessageElement";
 import NavigationHeader from "./organisms/MapNavHeader";
 import PickupNavigationElement from "./organisms/PickupNavigationElement";
 import MapVerifyElement from "./organisms/VerificationElement";
+import ActionButton from "./molecules/ActionButton";
 
 export {
   OnboardingSlider,
@@ -85,4 +86,5 @@ export {
   NavigationHeader,
   PickupNavigationElement,
   MapVerifyElement,
+  ActionButton,
 };

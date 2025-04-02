@@ -261,6 +261,24 @@ interface mapViewInputProps {
   setOtp: (otp: string) => void;
 }
 
+interface actionsElementProps {
+  userProfileImage?: any;
+  actionType: "pickup" | "marketplace";
+  itemName?: string;
+  size: number;
+  units: string;
+  distance?: string;
+  price?: number;
+  userType?: "user" | "agent";
+  status: "active" | "pending" | "available";
+  date?: string;
+  username?: string;
+  time?: string;
+  pickupType?: "immediate" | "scheduled";
+  paymentMethod?: "fixed" | "negotiate" | "free";
+  pressAction?: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -295,4 +313,5 @@ export type {
   agentVerificationElementProps,
   userVerificationElementProps,
   mapViewInputProps,
+  actionsElementProps,
 };
