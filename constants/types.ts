@@ -279,6 +279,12 @@ interface actionsElementProps {
   pressAction?: () => void;
 }
 
+interface actionButtonProps {
+  title: string;
+  context: string;
+  action: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -314,4 +320,5 @@ export type {
   userVerificationElementProps,
   mapViewInputProps,
   actionsElementProps,
+  actionButtonProps,
 };

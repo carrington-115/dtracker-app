@@ -1,4 +1,4 @@
-import { PickupButton } from "@/components";
+import { ActionButton, PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { pickupButtonProps } from "@/constants/types";
@@ -60,11 +60,6 @@ export default function componentName() {
 
   return (
     <>
-      <Tabs.Screen
-        options={{
-          headerShown: false,
-        }}
-      />
       <SafeAreaView style={styles.container}>
         <StatusBar
           barStyle="dark-content"
@@ -87,6 +82,19 @@ export default function componentName() {
                 <PickupButton key={index} {...option} />
               ))}
             </View>
+          </View>
+
+          <View
+            style={{
+              paddingHorizontal: 16,
+              marginTop: 20,
+            }}
+          >
+            <ActionButton
+              title="Add your location"
+              context="Turn on your device location and get access to all exchange points closest to you"
+              action={() => {}}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>

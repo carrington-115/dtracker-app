@@ -18,7 +18,6 @@ export default function componentName() {
           title: "Greenstore",
           headerShadowVisible: false,
           headerTransparent: true,
-
           tabBarStyle: {
             display:
               segments[segments.length - 1] === "[id]" &&

@@ -1,23 +1,28 @@
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
+import { actionButtonProps } from "@/constants/types";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-
-interface ActionButtonProps {
-  title: string;
-  context: string;
-  action: () => void;
-}
 
 export default function componentName({
   title,
   context,
   action,
-}: ActionButtonProps) {
+}: actionButtonProps) {
   return (
     <>
-      <Pressable style={styles.container} onPress={action}>
+      <Pressable
+        style={({ pressed }) => [
+          styles.container,
+          {
+            backgroundColor: pressed
+              ? "rgba(221, 236, 236, 0.8)"
+              : "rgba(221, 236, 236, 0.3)",
+          },
+        ]}
+        onPress={action}
+      >
         <View
           style={{
             padding: 12,
@@ -36,6 +41,7 @@ export default function componentName({
             flexDirection: "column",
             gap: 5,
             justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Text
@@ -66,7 +72,9 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 40,
     borderRadius: 40,
-    backgroundColor: "rgba(221, 236, 236, 0.3)",
     gap: 10,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, usePathname } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import appColors from "@/constants/colors";
@@ -10,23 +10,27 @@ import { Appbar } from "react-native-paper";
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
+  const pathname = usePathname();
+
   return (
     <>
       <View style={styles.container}>
-        <Appbar.Header
-          style={{
-            height: "auto",
-            paddingBottom: 0,
-            marginBottom: 0,
-          }}
-        >
-          <Appbar.Content
-            title="DTRACKER"
-            titleStyle={{ ...textFontStyles.headlineSmallBold }}
-          />
-          <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
-          <Appbar.Action icon="cog-outline" onPress={() => {}} />
-        </Appbar.Header>
+        {pathname === "/" && (
+          <Appbar.Header
+            style={{
+              height: "auto",
+              paddingBottom: 0,
+              marginBottom: 0,
+            }}
+          >
+            <Appbar.Content
+              title="DTRACKER"
+              titleStyle={{ ...textFontStyles.headlineSmallBold }}
+            />
+            <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
+            <Appbar.Action icon="cog-outline" onPress={() => {}} />
+          </Appbar.Header>
+        )}
         <Tabs
           screenOptions={{
             tabBarActiveTintColor: appColors.onSurface,
