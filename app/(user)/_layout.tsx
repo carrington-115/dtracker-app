@@ -33,6 +33,7 @@ export default function componentName() {
         )}
         <Tabs
           screenOptions={{
+            headerShown: false,
             tabBarActiveTintColor: appColors.onSurface,
             tabBarInactiveTintColor: appColors.onSurface,
             tabBarStyle: {
