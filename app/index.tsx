@@ -7,10 +7,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { isUserSignIn } from "@/appwrite/actions";
 import { appCredentials, databases } from "@/appwrite/config.appwrite";
 import { Query } from "react-native-appwrite";
+import { useNavigationState } from "@react-navigation/native";
 
 export default function Index() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+  const isReady = useNavigationState((state) => state.key !== undefined);
 
   const handleUpdateAuthRoute = async () => {
     try {
@@ -50,7 +52,11 @@ export default function Index() {
       await handleUpdateAuthRoute();
       loadTimeout();
     };
-    action();
+
+    if (isReady) {
+      // action();
+      router.push("/(user)");
+    }
   }, [router]);
 
   return (

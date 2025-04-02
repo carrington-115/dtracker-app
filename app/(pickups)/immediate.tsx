@@ -148,9 +148,13 @@ export default function componentName() {
             left: 0,
             backgroundColor: "transparent",
           }}
+          statusBarHeight={0}
         >
           <Appbar.BackAction onPress={handleBackBtnAction} />
-          <Appbar.Content title="Immediate" />
+          <Appbar.Content
+            title="Immediate"
+            titleStyle={{ ...textFontStyles.titleLargeMedium }}
+          />
         </Appbar.Header>
         <ScrollView style={styles.scrollContainer}>
           <>
