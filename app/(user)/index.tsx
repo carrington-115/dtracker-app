@@ -1,4 +1,4 @@
-import { ActionButton, PickupButton } from "@/components";
+import { ActionButton, MapElementView, PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { locationPropsType, pickupButtonProps } from "@/constants/types";
@@ -18,7 +18,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
@@ -78,7 +78,7 @@ export default function componentName() {
         />
       ),
       name: "Request exchange",
-      onPress: () => router.navigate("../(pickups)/reserve"),
+      onPress: () => router.navigate("/exchange"),
     },
   ];
 
@@ -120,6 +120,51 @@ export default function componentName() {
               action={() => {}}
             />
           </View>
+          <View
+            style={{
+              width: "100%",
+              gap: 10,
+              flexDirection: "column",
+              marginVertical: 20,
+            }}
+          >
+            <Text
+              style={{
+                ...textFontStyles.bodyLargeRegular,
+                color: appColors.onSurface,
+                marginLeft: 16,
+                marginTop: 10,
+              }}
+            >
+              Recommended exchange points
+            </Text>
+            <MapElementView
+              mapsDetails={[
+                {
+                  location: {
+                    latitude: 0,
+                    longitude: 0,
+                  },
+                  user: {
+                    name: "User",
+                    photoUrl: "",
+                  },
+                  delay: "2 hours",
+                },
+                {
+                  location: {
+                    latitude: 0,
+                    longitude: 0,
+                  },
+                  user: {
+                    name: "User",
+                    photoUrl: "",
+                  },
+                  delay: "2 hours",
+                },
+              ]}
+            />
+          </View>
         </ScrollView>
       </SafeAreaView>
     </>
@@ -146,5 +191,7 @@ const styles = StyleSheet.create({
   },
   scrollContainerStyles: {
     width: width,
+    height: height,
+    marginTop: 0,
   },
 });

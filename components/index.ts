@@ -42,6 +42,8 @@ import NavigationHeader from "./organisms/MapNavHeader";
 import PickupNavigationElement from "./organisms/PickupNavigationElement";
 import MapVerifyElement from "./organisms/VerificationElement";
 import ActionButton from "./molecules/ActionButton";
+import MapActivityElement from "./molecules/MapActivityElement";
+import MapElementView from "./organisms/MapElementView";
 
 export {
   OnboardingSlider,
@@ -87,4 +89,6 @@ export {
   PickupNavigationElement,
   MapVerifyElement,
   ActionButton,
+  MapActivityElement,
+  MapElementView,
 };

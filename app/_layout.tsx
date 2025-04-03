@@ -121,6 +121,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="exchange"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </Provider>
   );

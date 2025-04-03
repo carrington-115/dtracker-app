@@ -285,6 +285,15 @@ interface actionButtonProps {
   action: () => void;
 }
 
+interface mapActivityElementProps {
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  user: { photoUrl: string; name: string };
+  delay: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -321,4 +330,5 @@ export type {
   mapViewInputProps,
   actionsElementProps,
   actionButtonProps,
+  mapActivityElementProps,
 };

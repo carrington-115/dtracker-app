@@ -21,6 +21,7 @@ export default function componentName() {
               height: "auto",
               paddingBottom: 0,
               marginBottom: 0,
+              backgroundColor: appColors.surfaceBright,
             }}
           >
             <Appbar.Content
@@ -44,6 +45,9 @@ export default function componentName() {
             },
             tabBarLabelStyle: {
               ...textFontStyles.bodySmallRegular,
+            },
+            headerStyle: {
+              height: 0,
             },
           }}
         >
