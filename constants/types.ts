@@ -294,6 +294,16 @@ interface mapActivityElementProps {
   delay: string;
 }
 
+interface popularStoresElementProps {
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  photoUrl: string;
+  storeName: string;
+  storeOwnerName: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -331,4 +341,5 @@ export type {
   actionsElementProps,
   actionButtonProps,
   mapActivityElementProps,
+  popularStoresElementProps,
 };

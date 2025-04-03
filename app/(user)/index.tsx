@@ -134,7 +134,7 @@ export default function componentName() {
               action={() => {}}
             />
           </View>
-          <View
+          {/* <View
             style={{
               width: "100%",
               gap: 10,
@@ -165,20 +165,9 @@ export default function componentName() {
                   },
                   delay: "2 hours",
                 },
-                {
-                  location: {
-                    latitude: 0,
-                    longitude: 0,
-                  },
-                  user: {
-                    name: "User",
-                    photoUrl: "",
-                  },
-                  delay: "2 hours",
-                },
               ]}
             />
-          </View>
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </>
