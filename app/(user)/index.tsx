@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
+import { Appbar } from "react-native-paper";
 
 const { width, height } = Dimensions.get("window");
 
@@ -90,6 +91,19 @@ export default function componentName() {
           translucent={true}
           backgroundColor={appColors.surfaceContainerLowest}
         />
+        <Appbar.Header
+          style={{
+            backgroundColor: appColors.surfaceBright,
+          }}
+          statusBarHeight={0}
+        >
+          <Appbar.Content
+            title="DTRACKER"
+            titleStyle={{ ...textFontStyles.headlineSmallBold }}
+          />
+          <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
+          <Appbar.Action icon="cog-outline" onPress={() => {}} />
+        </Appbar.Header>
         <ScrollView style={styles.scrollContainerStyles}>
           <View style={styles.homeTitleStyle}>
             <Text
@@ -191,7 +205,6 @@ const styles = StyleSheet.create({
   },
   scrollContainerStyles: {
     width: width,
-    height: height,
-    marginTop: 0,
+    paddingTop: 30,
   },
 });
