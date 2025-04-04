@@ -305,6 +305,18 @@ interface popularStoresElementProps {
   action: () => void;
 }
 
+interface exchangeElementProps {
+  title: string;
+  wasteType: "plastics" | "metals" | "papers" | "glass" | "others";
+  size: number;
+  owner: boolean;
+  price: number;
+  storeLocation: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -343,4 +355,5 @@ export type {
   actionButtonProps,
   mapActivityElementProps,
   popularStoresElementProps,
+  exchangeElementProps,
 };
