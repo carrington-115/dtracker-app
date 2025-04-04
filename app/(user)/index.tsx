@@ -95,7 +95,7 @@ export default function componentName() {
         <StatusBar
           barStyle="dark-content"
           translucent={true}
-          backgroundColor={appColors.surfaceContainerLowest}
+          backgroundColor={appColors.surfaceBright}
         />
         <Appbar.Header
           style={{
@@ -107,8 +107,14 @@ export default function componentName() {
             title="DTRACKER"
             titleStyle={{ ...textFontStyles.headlineSmallBold }}
           />
-          <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
-          <Appbar.Action icon="cog-outline" onPress={() => {}} />
+          <Appbar.Action
+            icon={"recycle"}
+            onPress={() => router.navigate("/exchange")}
+          />
+          <Appbar.Action
+            icon="cog-outline"
+            onPress={() => router.push("/settings")}
+          />
         </Appbar.Header>
         <ScrollView style={styles.scrollContainerStyles}>
           <View style={styles.homeTitleStyle}>
@@ -139,14 +145,50 @@ export default function componentName() {
               action={() => {}}
             />
           </View>
-          <ExchangeElement
-            title="Plastic bottles"
-            wasteType="plastics"
-            size={5}
-            storeLocation={{ latitude: 0, longitude: 0 }}
-            owner={true}
-            price={200}
-          />
+
+          {/* <PopularStoreElement
+            location={{
+              latitude: 0,
+              longitude: 0,
+            }}
+            storeName="Store Name"
+            storeOwnerName="Store Owner Name"
+            photoUrl=""
+            action={() => {}}
+          /> */}
+          {/* <View
+            style={{
+              width: "100%",
+              gap: 10,
+              flexDirection: "column",
+              marginVertical: 20,
+            }}
+          >
+            <Text
+              style={{
+                ...textFontStyles.bodyLargeRegular,
+                color: appColors.onSurface,
+                marginTop: 10,
+              }}
+            >
+              Recommended exchange points
+            </Text>
+            <MapElementView
+              mapsDetails={[
+                {
+                  location: {
+                    latitude: 0,
+                    longitude: 0,
+                  },
+                  user: {
+                    name: "User",
+                    photoUrl: "",
+                  },
+                  delay: "2 hours",
+                },
+              ]}
+            />
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </>

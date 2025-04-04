@@ -16,14 +16,16 @@ export default function componentName({
   storeLocation,
   owner,
   price,
+  action,
 }: exchangeElementProps) {
   return (
     <Pressable
+      onPress={action}
       style={({ pressed }) => [
         styles.container,
         {
           backgroundColor: pressed
-            ? appColors.surfaceContainer
+            ? appColors.surfaceContainerLow
             : owner
             ? appColors.surfaceContainerLow
             : "transparent",
@@ -76,12 +78,12 @@ export default function componentName({
       </View>
       <View style={styles.rightContainerStyles}>
         <MapView
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%", borderRadius: 10 }}
           initialRegion={{
             latitude: storeLocation.latitude,
             longitude: storeLocation.longitude,
-            latitudeDelta: 0.5,
-            longitudeDelta: 0.5,
+            latitudeDelta: 1.0,
+            longitudeDelta: 1.0,
           }}
           liteMode={false}
           customMapStyle={mapStyle}
@@ -115,5 +117,6 @@ const styles = StyleSheet.create({
   rightContainerStyles: {
     width: "40%",
     height: 160,
+    borderRadius: 10,
   },
 });

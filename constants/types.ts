@@ -306,6 +306,7 @@ interface popularStoresElementProps {
 }
 
 interface exchangeElementProps {
+  id?: string | number;
   title: string;
   wasteType: "plastics" | "metals" | "papers" | "glass" | "others";
   size: number;
@@ -315,6 +316,7 @@ interface exchangeElementProps {
     latitude: number;
     longitude: number;
   };
+  action?: () => void;
 }
 
 export type {

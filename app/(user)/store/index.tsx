@@ -1,8 +1,8 @@
-import { StoreItemComponent } from "@/components";
+import { ExchangeElement } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { storeItemProps } from "@/constants/types";
-import { Stack, useRouter } from "expo-router";
+import { exchangeElementProps } from "@/constants/types";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -22,22 +22,53 @@ export default function componentName() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
-  const itemTestProps: storeItemProps = {
-    name: "Metal can bottle",
-    image: require("@/assets/images/can-bottle.png"),
-    labels: {
-      type: "Can",
-      size: "500ml",
+  const exchangeOffers: exchangeElementProps[] = [
+    {
+      id: 1,
+      title: "Plastic bottles",
+      wasteType: "plastics",
+      size: 5,
+      storeLocation: { latitude: 0, longitude: 0 },
+      owner: false,
+      price: 200,
     },
-    price: 2000,
-    id: "1",
-    pressAction: () =>
-      router.navigate({
-        pathname: "/(user)/store/[id]",
-        params: { id: Number(itemTestProps.id) },
-      }),
-    addButtonAction: () => {},
-  };
+    {
+      id: 2,
+      title: "Glass jars",
+      wasteType: "glass",
+      size: 3,
+      storeLocation: { latitude: 10, longitude: 20 },
+      owner: false,
+      price: 150,
+    },
+    {
+      id: 3,
+      title: "Cardboard boxes",
+      wasteType: "papers",
+      size: 10,
+      storeLocation: { latitude: 15, longitude: 25 },
+      owner: false,
+      price: 100,
+    },
+    {
+      id: 4,
+      title: "Metal cans",
+      wasteType: "metals",
+      size: 7,
+      storeLocation: { latitude: 5, longitude: 10 },
+      owner: false,
+      price: 250,
+    },
+    {
+      id: 5,
+      title: "Electronic waste",
+      wasteType: "others",
+      size: 2,
+      storeLocation: { latitude: 30, longitude: 40 },
+      owner: false,
+      price: 300,
+    },
+  ];
 
   useEffect(() => {
     setTimeout(() => {
@@ -63,45 +94,61 @@ export default function componentName() {
     <SafeAreaView style={styles.container}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={"F2F2F266"}
+        backgroundColor={appColors.surfaceContainerLow}
         translucent
       />
-      <Appbar.Header
-        statusBarHeight={0}
-        style={{
-          backgroundColor: "rgb(242, 242, 242)",
-          borderBottomWidth: 0.2,
-          borderColor: appColors.outlineVariant,
-        }}
-      >
-        <Appbar.Content
-          title="Green Store"
-          titleStyle={{ ...textFontStyles.titleLargeMedium }}
-        />
-        <Appbar.Action
-          icon={"store-plus-outline"}
-          onPress={() => router.navigate("/(indirect)/marketplace/add-item")}
-        />
-        <Appbar.Action
-          icon={"cog-outline"}
-          onPress={() => router.navigate("/settings")}
-        />
-      </Appbar.Header>
+      <Header />
       <ScrollView style={styles.scrollViewStyles}>
-        <View style={styles.innerGridViewStyles}>
-          <StoreItemComponent {...itemTestProps} />
-          <StoreItemComponent {...itemTestProps} />
-          <StoreItemComponent {...itemTestProps} />
-          <StoreItemComponent {...itemTestProps} />
-          <StoreItemComponent {...itemTestProps} />
-          <StoreItemComponent {...itemTestProps} />
-          <StoreItemComponent {...itemTestProps} />
-          <StoreItemComponent {...itemTestProps} />
+        <Text
+          style={{ ...textFontStyles.titleMediumRegular, marginVertical: 20 }}
+        >
+          Store offers
+        </Text>
+        <View style={{ width: "100%", flexDirection: "column", gap: 10 }}>
+          {exchangeOffers.map((items) => (
+            <ExchangeElement
+              action={() =>
+                router.navigate({
+                  pathname: "/(user)/store/[id]",
+                  params: { id: items?.id! },
+                })
+              }
+              key={items?.id}
+              {...items}
+            />
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+const Header = () => {
+  const router = useRouter();
+  return (
+    <Appbar.Header
+      statusBarHeight={0}
+      style={{
+        backgroundColor: appColors.surfaceContainerLow,
+        borderBottomWidth: 0.2,
+        borderColor: appColors.outlineVariant,
+      }}
+    >
+      <Appbar.Content
+        title="Greenstore"
+        titleStyle={{ ...textFontStyles.titleLargeMedium }}
+      />
+      <Appbar.Action
+        icon={"recycle"}
+        onPress={() => router.navigate("/exchange")}
+      />
+      <Appbar.Action
+        icon={"cog-outline"}
+        onPress={() => router.navigate("/settings")}
+      />
+    </Appbar.Header>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
