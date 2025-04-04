@@ -1,4 +1,9 @@
-import { ActionButton, MapElementView, PickupButton } from "@/components";
+import {
+  ActionButton,
+  MapElementView,
+  PickupButton,
+  PopularStoreElement,
+} from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { locationPropsType, pickupButtonProps } from "@/constants/types";
@@ -124,7 +129,6 @@ export default function componentName() {
 
           <View
             style={{
-              paddingHorizontal: 16,
               marginTop: 20,
             }}
           >
@@ -134,40 +138,6 @@ export default function componentName() {
               action={() => {}}
             />
           </View>
-          {/* <View
-            style={{
-              width: "100%",
-              gap: 10,
-              flexDirection: "column",
-              marginVertical: 20,
-            }}
-          >
-            <Text
-              style={{
-                ...textFontStyles.bodyLargeRegular,
-                color: appColors.onSurface,
-                marginLeft: 16,
-                marginTop: 10,
-              }}
-            >
-              Recommended exchange points
-            </Text>
-            <MapElementView
-              mapsDetails={[
-                {
-                  location: {
-                    latitude: 0,
-                    longitude: 0,
-                  },
-                  user: {
-                    name: "User",
-                    photoUrl: "",
-                  },
-                  delay: "2 hours",
-                },
-              ]}
-            />
-          </View> */}
         </ScrollView>
       </SafeAreaView>
     </>
@@ -189,11 +159,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
-    paddingHorizontal: 16,
     gap: 13.5,
   },
   scrollContainerStyles: {
     width: width,
+    paddingHorizontal: 16,
     paddingTop: 30,
   },
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import customMapStyles from "@/constants/map_styles";
 import { Image } from "expo-image";
 import { textFontStyles } from "@/constants/fonts";
@@ -12,6 +12,7 @@ export default function componentName({
   photoUrl,
   storeName,
   storeOwnerName,
+  action,
 }: popularStoresElementProps) {
   return (
     <Pressable
@@ -23,6 +24,7 @@ export default function componentName({
             : "transparent",
         },
       ]}
+      onPress={action}
     >
       <View style={styles.mapStyles}>
         <MapView
@@ -33,6 +35,8 @@ export default function componentName({
             longitudeDelta: 0.5,
           }}
           customMapStyle={customMapStyles}
+          style={{ width: "100%", height: "100%", borderRadius: 5 }}
+          provider={PROVIDER_GOOGLE}
         >
           <Marker
             coordinate={{
@@ -65,6 +69,7 @@ export default function componentName({
             style={{
               width: 48,
               height: 48,
+              borderRadius: 100,
             }}
           />
           <Text style={{ ...textFontStyles.bodyLargeRegular }}>
@@ -85,10 +90,11 @@ const styles = StyleSheet.create({
   mapStyles: {
     width: "100%",
     height: 200,
-    backgroundColor: "red",
+    borderRadius: 10,
   },
   mapContentStyles: {
     flexDirection: "column",
     gap: 10,
+    marginTop: 10,
   },
 });

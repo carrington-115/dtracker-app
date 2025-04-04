@@ -302,6 +302,7 @@ interface popularStoresElementProps {
   photoUrl: string;
   storeName: string;
   storeOwnerName: string;
+  action: () => void;
 }
 
 export type {

@@ -44,6 +44,7 @@ import MapVerifyElement from "./organisms/VerificationElement";
 import ActionButton from "./molecules/ActionButton";
 import MapActivityElement from "./molecules/MapActivityElement";
 import MapElementView from "./organisms/MapElementView";
+import PopularStoreElement from "./molecules/PopularStores";
 
 export {
   OnboardingSlider,
@@ -91,4 +92,5 @@ export {
   ActionButton,
   MapActivityElement,
   MapElementView,
+  PopularStoreElement,
 };
