@@ -25,7 +25,7 @@ export default function componentName({
         <View>{icon}</View>
         <Text
           style={{
-            ...textFontStyles.bodyLargeMedium,
+            ...textFontStyles.bodyMediumRegular,
             color: appColors.onPrimaryContainerColor,
             textAlign: "center",
           }}
