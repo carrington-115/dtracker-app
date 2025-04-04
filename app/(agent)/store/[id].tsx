@@ -281,7 +281,7 @@ export default function componentName() {
                 name="Chat"
                 color={appColors.onSurface}
                 bgColor={"rgba(179, 179, 179, 1)"}
-                onPressAction={() => {}}
+                onPressAction={() => router.navigate("/chat")}
                 focusedColor={appColors.onSurface}
               />
               <ActiveButton

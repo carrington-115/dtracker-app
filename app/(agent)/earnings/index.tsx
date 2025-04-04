@@ -227,6 +227,7 @@ const FinalPageContent = () => {
 };
 
 const Header = () => {
+  const router = useRouter();
   return (
     <>
       <Appbar.Header
@@ -235,13 +236,17 @@ const Header = () => {
           borderBottomWidth: 0.5,
           borderBottomColor: appColors.outline,
         }}
+        statusBarHeight={0}
       >
         <Appbar.Content
           title="Earnings"
           titleStyle={{ ...textFontStyles.titleLargeMedium }}
         />
         <Appbar.Action icon="bell-outline" onPress={() => {}} />
-        <Appbar.Action icon="cog-outline" onPress={() => {}} />
+        <Appbar.Action
+          icon="cog-outline"
+          onPress={() => router.navigate("/settings")}
+        />
       </Appbar.Header>
     </>
   );

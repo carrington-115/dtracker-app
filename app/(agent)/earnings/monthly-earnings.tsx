@@ -43,6 +43,7 @@ export default function componentName() {
           borderBottomWidth: 0.5,
           borderBottomColor: appColors.outlineVariant,
         }}
+        statusBarHeight={0}
       >
         <Appbar.BackAction onPress={() => router.back()} />
         <Appbar.Content
