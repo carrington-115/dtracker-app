@@ -15,9 +15,9 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   Dimensions,
   StatusBar,
+  Pressable,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { ActivityIndicator, Appbar } from "react-native-paper";
@@ -46,6 +46,7 @@ export default function componentName() {
     latitude: 20,
     longtitude: 20,
   });
+  const [showInterest, setShowInterest] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -191,38 +192,115 @@ export default function componentName() {
             </View>
           }
         />
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "space-around",
-            paddingTop: 50,
-          }}
-        >
-          <ActiveButton
-            icon={<MaterialIcons name="check" size={24} color={"white"} />}
-            name="Show interest"
-            color={"white"}
-            bgColor={appColors.onSurfaceVariant}
-            onPressAction={() => {}}
-            focusedColor={appColors.onSurface}
-          />
-          <ActiveButton
-            icon={
+        {!showInterest ? (
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "space-around",
+              paddingTop: 50,
+            }}
+          >
+            <ActiveButton
+              icon={<MaterialIcons name="check" size={24} color={"white"} />}
+              name="Show interest"
+              color={"white"}
+              bgColor={appColors.onSurfaceVariant}
+              onPressAction={() => setShowInterest(true)}
+              focusedColor={appColors.onSurface}
+            />
+            <ActiveButton
+              icon={
+                <MaterialIcons
+                  name="close"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              }
+              name="Cancel"
+              color={appColors.onSurface}
+              bgColor={appColors.surfaceContainerLow}
+              onPressAction={() => router.back()}
+              focusedColor={appColors.surfaceContainer}
+            />
+          </View>
+        ) : (
+          <View
+            style={{
+              flexDirection: "column",
+              width: "100%",
+              alignItems: "center",
+              gap: 20,
+            }}
+          >
+            <Pressable
+              style={{
+                flexDirection: "row",
+                gap: 12,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "90%",
+                backgroundColor: appColors.primaryColor,
+                borderRadius: 40,
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+              }}
+              onPress={() => router.navigate("/exchange")}
+            >
               <MaterialIcons
-                name="close"
+                name="document-scanner"
                 size={24}
-                color={appColors.onSurface}
+                color={appColors.onPrimaryColor}
               />
-            }
-            name="Cancel"
-            color={appColors.onSurface}
-            bgColor={appColors.surfaceContainerLow}
-            onPressAction={() => {}}
-            focusedColor={appColors.surfaceContainer}
-          />
-        </View>
+              <Text
+                style={{
+                  ...textFontStyles.bodyLargeRegular,
+                  color: appColors.onPrimaryColor,
+                }}
+              >
+                Complete exchange
+              </Text>
+            </Pressable>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <ActiveButton
+                icon={
+                  <MaterialCommunityIcons
+                    name="chat-plus-outline"
+                    size={24}
+                    color={appColors.onSurface}
+                  />
+                }
+                name="Chat"
+                color={appColors.onSurface}
+                bgColor={"rgba(179, 179, 179, 1)"}
+                onPressAction={() => {}}
+                focusedColor={appColors.onSurface}
+              />
+              <ActiveButton
+                icon={
+                  <MaterialIcons
+                    name="add-call"
+                    size={24}
+                    color={appColors.onSurface}
+                  />
+                }
+                name="Call"
+                color={appColors.onSurface}
+                bgColor={"rgba(179, 179, 179, 1)"}
+                onPressAction={() => {}}
+                focusedColor={appColors.surfaceContainer}
+              />
+            </View>
+          </View>
+        )}
       </View>
     </View>
   );
