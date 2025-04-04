@@ -28,7 +28,7 @@ export default function componentName() {
       title: "Plastic bottles",
       wasteType: "plastics",
       size: 5,
-      storeLocation: { latitude: 0, longitude: 0 },
+      storeLocation: { latitude: 5, longitude: -50 },
       owner: false,
       price: 200,
     },
@@ -109,7 +109,7 @@ export default function componentName() {
             <ExchangeElement
               action={() =>
                 router.navigate({
-                  pathname: "/(user)/store/[id]",
+                  pathname: "/(agent)/store/[id]",
                   params: { id: items?.id! },
                 })
               }

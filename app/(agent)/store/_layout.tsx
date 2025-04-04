@@ -1,16 +1,9 @@
-import { IconButton } from "@/components";
-import appColors from "@/constants/colors";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Stack, Tabs, usePathname, useRouter, useSegments } from "expo-router";
+import { Stack, Tabs, usePathname, useSegments } from "expo-router";
 import React from "react";
-import { StyleSheet, View } from "react-native";
 
 export default function componentName() {
-  const router = useRouter();
   const segments = useSegments();
   const pathname = usePathname();
-
   return (
     <>
       <Tabs.Screen
@@ -31,38 +24,6 @@ export default function componentName() {
                 : 62,
           },
           headerShown: false,
-          headerRight: () => (
-            <>
-              <View style={styles.headerIconStyles}>
-                <IconButton
-                  icon={
-                    <MaterialCommunityIcons
-                      name="store-plus-outline"
-                      size={24}
-                      color={appColors.onSurface}
-                    />
-                  }
-                  btnAction={() =>
-                    router.navigate("/(indirect)/marketplace/add-item")
-                  }
-                  bgColor="transparent"
-                  pressedColor={appColors.surfaceContainerLow}
-                />
-                <IconButton
-                  icon={
-                    <MaterialIcons
-                      name="settings"
-                      size={24}
-                      color={appColors.onSurface}
-                    />
-                  }
-                  btnAction={() => router.navigate("/settings")}
-                  bgColor={"transparent"}
-                  pressedColor={appColors.surfaceContainerLow}
-                />
-              </View>
-            </>
-          ),
         }}
       />
       <Stack screenOptions={{ headerShown: false }}>
@@ -82,12 +43,3 @@ export default function componentName() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  headerIconStyles: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginRight: 16,
-  },
-});
