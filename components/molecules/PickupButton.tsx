@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.25,
     borderRadius: 10,
     borderColor: appColors.primaryColor,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     paddingVertical: 12,
-    width: 150,
+    width: 118,
   },
 });

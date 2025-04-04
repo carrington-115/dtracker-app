@@ -24,6 +24,11 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#38A176"
       },
+      "config": {
+        "googleMaps": {
+          "apiKey": "process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY"
+        }
+      },
       "package": "com.carringtonchei.dtracker",
       "runtimeVersion": "1.0.0"
     },

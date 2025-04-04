@@ -26,11 +26,9 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <Stack
-        screenOptions={
-          {
-            // headerShown: false,
-          }
-        }
+        screenOptions={{
+          headerShown: false,
+        }}
       >
         <Stack.Screen
           name="index"
@@ -113,6 +111,18 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="navigation"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(marketplace)"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="exchange"
           options={{
             headerShown: false,
           }}

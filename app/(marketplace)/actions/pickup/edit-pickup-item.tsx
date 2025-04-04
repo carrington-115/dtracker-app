@@ -148,13 +148,9 @@ export default function componentName() {
             left: 0,
             backgroundColor: "transparent",
           }}
-          statusBarHeight={0}
         >
           <Appbar.BackAction onPress={handleBackBtnAction} />
-          <Appbar.Content
-            title="Immediate"
-            titleStyle={{ ...textFontStyles.titleLargeMedium }}
-          />
+          <Appbar.Content title="Immediate" />
         </Appbar.Header>
         <ScrollView style={styles.scrollContainer}>
           <>
@@ -279,7 +275,7 @@ export default function componentName() {
           >
             <View style={{ width: "90%", marginTop: 50 }}>
               <BottomButton
-                name="Set pickup"
+                name="Update pickup"
                 onPressAction={handleOnSubmitForm}
               />
             </View>

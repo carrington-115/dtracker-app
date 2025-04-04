@@ -8,15 +8,17 @@ import { View, Text, Switch, StyleSheet } from "react-native";
 export default function componentName({
   switchPosition,
   handleGetDeviceLocation,
+  locationTitle,
 }: {
   switchPosition: boolean;
   handleGetDeviceLocation: () => void;
+  locationTitle?: string;
 }) {
   return (
     <>
       <View style={styles.locatorStyles}>
         <Text style={{ ...textFontStyles.bodyLargeRegular }}>
-          Pickup Location
+          {locationTitle || "Pickup Location"}
         </Text>
         <View
           style={{

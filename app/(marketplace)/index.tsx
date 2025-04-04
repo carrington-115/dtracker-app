@@ -1,18 +1,12 @@
-import {
-  ActionButton,
-  ExchangeElement,
-  MapElementView,
-  PickupButton,
-  PopularStoreElement,
-} from "@/components";
+import { ActionButton, PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { locationPropsType, pickupButtonProps } from "@/constants/types";
+import { pickupButtonProps } from "@/constants/types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -22,36 +16,11 @@ import {
   Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as Location from "expo-location";
-import { Appbar } from "react-native-paper";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
-  const [locationDetails, setLocationDetails] =
-    useState<locationPropsType | null>(null);
-  const [deviceLocation, setDeviceLocation] = useState<boolean>(false);
-
-  const handleGetDeviceLocation = async () => {
-    setDeviceLocation((previous) => !previous);
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.error("Permission to access location was denied");
-        return;
-      }
-
-      const location = await Location.getCurrentPositionAsync({});
-      setLocationDetails({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        accuracy: location.coords.accuracy,
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   const pickupOptions: pickupButtonProps[] = [
     {
@@ -85,7 +54,7 @@ export default function componentName() {
         />
       ),
       name: "Request exchange",
-      onPress: () => router.navigate("/exchange"),
+      onPress: () => router.navigate("../(pickups)/reserve"),
     },
   ];
 
@@ -97,19 +66,6 @@ export default function componentName() {
           translucent={true}
           backgroundColor={appColors.surfaceContainerLowest}
         />
-        <Appbar.Header
-          style={{
-            backgroundColor: appColors.surfaceBright,
-          }}
-          statusBarHeight={0}
-        >
-          <Appbar.Content
-            title="DTRACKER"
-            titleStyle={{ ...textFontStyles.headlineSmallBold }}
-          />
-          <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
-          <Appbar.Action icon="cog-outline" onPress={() => {}} />
-        </Appbar.Header>
         <ScrollView style={styles.scrollContainerStyles}>
           <View style={styles.homeTitleStyle}>
             <Text
@@ -130,23 +86,16 @@ export default function componentName() {
 
           <View
             style={{
+              paddingHorizontal: 16,
               marginTop: 20,
             }}
           >
             <ActionButton
-              title="Add your location"
-              context="Turn on your device location and get access to all exchange points closest to you"
-              action={() => {}}
+              title="Create your business profile"
+              context="Create your business profile to start sending exchange alerts."
+              action={() => router.push("../navigation/business_location")}
             />
           </View>
-          <ExchangeElement
-            title="Plastic bottles"
-            wasteType="plastics"
-            size={5}
-            storeLocation={{ latitude: 0, longitude: 0 }}
-            owner={true}
-            price={200}
-          />
         </ScrollView>
       </SafeAreaView>
     </>
@@ -168,11 +117,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
+    paddingHorizontal: 16,
     gap: 13.5,
   },
   scrollContainerStyles: {
     width: width,
-    paddingHorizontal: 16,
-    paddingTop: 30,
   },
 });

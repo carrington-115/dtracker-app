@@ -123,13 +123,16 @@ export default function componentName() {
           top: 0,
           right: 0,
           left: 0,
-          backgroundColor: "rgba(242, 242, 242, 0.40)",
+          backgroundColor: "transparent",
           borderBottomWidth: 0.5,
           borderBottomColor: appColors.outline,
         }}
       >
         <Appbar.BackAction onPress={() => router.back()} />
-        <Appbar.Content title="Pickup reservation" />
+        <Appbar.Content
+          title="Pickup reservation"
+          titleStyle={{ ...textFontStyles.titleLargeMedium }}
+        />
       </Appbar.Header>
       <ScrollView style={styles.formContainer}>
         <View style={styles.sectionOneStyle}>

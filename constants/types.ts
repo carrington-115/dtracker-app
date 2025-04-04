@@ -261,6 +261,62 @@ interface mapViewInputProps {
   setOtp: (otp: string) => void;
 }
 
+interface actionsElementProps {
+  userProfileImage?: any;
+  actionType: "pickup" | "marketplace";
+  itemName?: string;
+  size: number;
+  units: string;
+  distance?: string;
+  price?: number;
+  userType?: "user" | "agent";
+  status: "active" | "pending" | "available";
+  date?: string;
+  username?: string;
+  time?: string;
+  pickupType?: "immediate" | "scheduled";
+  paymentMethod?: "fixed" | "negotiate" | "free";
+  pressAction?: () => void;
+}
+
+interface actionButtonProps {
+  title: string;
+  context: string;
+  action: () => void;
+}
+
+interface mapActivityElementProps {
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  user: { photoUrl: string; name: string };
+  delay: string;
+}
+
+interface popularStoresElementProps {
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  photoUrl: string;
+  storeName: string;
+  storeOwnerName: string;
+  action: () => void;
+}
+
+interface exchangeElementProps {
+  title: string;
+  wasteType: "plastics" | "metals" | "papers" | "glass" | "others";
+  size: number;
+  owner: boolean;
+  price: number;
+  storeLocation: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -295,4 +351,9 @@ export type {
   agentVerificationElementProps,
   userVerificationElementProps,
   mapViewInputProps,
+  actionsElementProps,
+  actionButtonProps,
+  mapActivityElementProps,
+  popularStoresElementProps,
+  exchangeElementProps,
 };
