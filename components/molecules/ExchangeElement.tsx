@@ -27,7 +27,7 @@ export default function componentName({
             : owner
             ? appColors.surfaceContainerLow
             : "transparent",
-          borderBottomWidth: pressed ? 0 : 0.5,
+          borderBottomWidth: pressed || owner ? 0 : 0.5,
           borderBottomColor: appColors.outlineVariant,
         },
       ]}
@@ -114,6 +114,6 @@ const styles = StyleSheet.create({
   },
   rightContainerStyles: {
     width: "40%",
-    height: "100%",
+    height: 160,
   },
 });

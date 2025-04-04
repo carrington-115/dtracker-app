@@ -1,5 +1,6 @@
 import {
   ActionButton,
+  ExchangeElement,
   MapElementView,
   PickupButton,
   PopularStoreElement,
@@ -138,6 +139,14 @@ export default function componentName() {
               action={() => {}}
             />
           </View>
+          <ExchangeElement
+            title="Plastic bottles"
+            wasteType="plastics"
+            size={5}
+            storeLocation={{ latitude: 0, longitude: 0 }}
+            owner={true}
+            price={200}
+          />
         </ScrollView>
       </SafeAreaView>
     </>
