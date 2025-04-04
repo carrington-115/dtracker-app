@@ -46,6 +46,7 @@ import MapActivityElement from "./molecules/MapActivityElement";
 import MapElementView from "./organisms/MapElementView";
 import PopularStoreElement from "./molecules/PopularStores";
 import ExchangeElement from "./molecules/ExchangeElement";
+import AddLocationElement from "./organisms/AddLocationElement";
 
 export {
   OnboardingSlider,
@@ -95,4 +96,5 @@ export {
   MapElementView,
   PopularStoreElement,
   ExchangeElement,
+  AddLocationElement,
 };

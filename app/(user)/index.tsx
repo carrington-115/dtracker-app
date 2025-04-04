@@ -1,5 +1,6 @@
 import {
   ActionButton,
+  AddLocationElement,
   ExchangeElement,
   MapElementView,
   PickupButton,
@@ -25,7 +26,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import { Appbar } from "react-native-paper";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
@@ -133,18 +134,7 @@ export default function componentName() {
               ))}
             </View>
           </View>
-
-          <View
-            style={{
-              marginTop: 20,
-            }}
-          >
-            <ActionButton
-              title="Add your location"
-              context="Turn on your device location and get access to all exchange points closest to you"
-              action={() => {}}
-            />
-          </View>
+          <AddLocationElement />
 
           {/* <PopularStoreElement
             location={{
