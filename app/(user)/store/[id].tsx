@@ -1,6 +1,13 @@
-import { IconButton } from "@/components";
+import {
+  ActiveButton,
+  AmountElement,
+  IconButton,
+  ViewElement,
+} from "@/components";
 import appColors from "@/constants/colors";
+import { textFontStyles } from "@/constants/fonts";
 import mapStyle from "@/constants/map_styles";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -26,9 +33,11 @@ export default function componentName() {
   const { id } = useLocalSearchParams();
 
   // item details
-  const [itemName, setItemName] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [itemWeight, setItemWeight] = useState<string>("");
+  const [storeName, setStoreName] = useState<string>("Store name");
+  const [category, setCategory] = useState<
+    "plastics" | "metals" | "papers" | "glass" | "others"
+  >("plastics");
+  const [itemWeight, setItemWeight] = useState<null | number>(5);
   const [pricePerUnit, setPricePerUnit] = useState<number>(0);
   const [storeLocation, setStoreLocation] = useState<null | {
     latitude: number;
@@ -121,7 +130,100 @@ export default function componentName() {
           </View>
         )}
       </View>
-      <View style={styles.contentViewStyles}></View>
+      <View style={styles.contentViewStyles}>
+        <ViewElement
+          icon={
+            <MaterialIcons
+              name="storefront"
+              size={24}
+              color={appColors.onSurface}
+            />
+          }
+          details={
+            <Text style={{ ...textFontStyles.titleMediumRegular }}>
+              {storeName}
+            </Text>
+          }
+        />
+        <ViewElement
+          icon={
+            <MaterialIcons
+              name="recycling"
+              size={24}
+              color={appColors.onSurface}
+            />
+          }
+          details={
+            <Text style={{ ...textFontStyles.titleMediumRegular }}>
+              {category}
+            </Text>
+          }
+        />
+        <ViewElement
+          icon={
+            <MaterialCommunityIcons
+              name="weight"
+              size={24}
+              color={appColors.onSurface}
+            />
+          }
+          details={
+            <Text style={{ ...textFontStyles.titleMediumRegular }}>
+              {itemWeight} kg
+            </Text>
+          }
+        />
+        <ViewElement
+          icon={
+            <MaterialIcons name="sell" size={24} color={appColors.onSurface} />
+          }
+          details={
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+            >
+              <AmountElement
+                currency="XAF"
+                currentStyle={{ ...textFontStyles.titleMediumMedium }}
+                amount={pricePerUnit}
+                amountStyle={{ ...textFontStyles.headlineMediumRegular }}
+              />
+              <Text style={{ ...textFontStyles.bodyMediumMedium }}>/kg</Text>
+            </View>
+          }
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-around",
+            paddingTop: 50,
+          }}
+        >
+          <ActiveButton
+            icon={<MaterialIcons name="check" size={24} color={"white"} />}
+            name="Show interest"
+            color={"white"}
+            bgColor={appColors.onSurfaceVariant}
+            onPressAction={() => {}}
+            focusedColor={appColors.onSurface}
+          />
+          <ActiveButton
+            icon={
+              <MaterialIcons
+                name="close"
+                size={24}
+                color={appColors.onSurface}
+              />
+            }
+            name="Cancel"
+            color={appColors.onSurface}
+            bgColor={appColors.surfaceContainerLow}
+            onPressAction={() => {}}
+            focusedColor={appColors.surfaceContainer}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -150,5 +252,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
     paddingHorizontal: 16,
     elevation: 10,
+    flexDirection: "column",
+    alignItems: "center",
   },
 });
