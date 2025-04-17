@@ -319,6 +319,13 @@ interface exchangeElementProps {
   action?: () => void;
 }
 
+interface pinCodeVerificationBoxProps {
+  buttonAction: () => void;
+  cameraAction: () => void;
+  setOtp: (otp: string) => void;
+  otp: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -358,4 +365,5 @@ export type {
   mapActivityElementProps,
   popularStoresElementProps,
   exchangeElementProps,
+  pinCodeVerificationBoxProps,
 };

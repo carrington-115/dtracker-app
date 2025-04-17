@@ -2,6 +2,7 @@ import {
   ActiveButton,
   AmountElement,
   IconButton,
+  PinCodeVerificationBox,
   ViewElement,
 } from "@/components";
 import appColors from "@/constants/colors";
@@ -9,68 +10,26 @@ import { textFontStyles } from "@/constants/fonts";
 import mapStyle from "@/constants/map_styles";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
   StatusBar,
+  ActivityIndicator,
   Pressable,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { ActivityIndicator, Appbar } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
 const { width, height } = Dimensions.get("window");
 
 export default function componentName() {
-  // use tanstack query when loading the data
-  // current testing with react state
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const { id } = useLocalSearchParams();
-
-  // item details
-  const [storeName, setStoreName] = useState<string>("Store name");
-  const [category, setCategory] = useState<
-    "plastics" | "metals" | "papers" | "glass" | "others"
-  >("plastics");
-  const [itemWeight, setItemWeight] = useState<null | number>(5);
-  const [pricePerUnit, setPricePerUnit] = useState<number>(0);
-  const [storeLocation, setStoreLocation] = useState<null | {
-    latitude: number;
-    longtitude: number;
-  }>({
-    latitude: 20,
-    longtitude: 20,
-  });
-  const [showInterest, setShowInterest] = useState<boolean>(false);
-
   const router = useRouter();
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, [loading, id]);
-
-  // add more useEffects during data fetching and for other corrections
-
-  if (loading) {
-    return (
-      <SafeAreaView
-        style={{
-          ...styles.container,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ActivityIndicator size="large" color={appColors.primaryColor} />
-      </SafeAreaView>
-    );
-  }
+  const store = useSelector((state: any) => state.store);
+  const [show, setShow] = useState<boolean>(false);
 
   return (
     <View style={styles.container}>
@@ -96,11 +55,11 @@ export default function componentName() {
             borderColor: appColors.outline,
           }}
         />
-        {storeLocation ? (
+        {store.location ? (
           <MapView
             initialRegion={{
-              latitude: storeLocation?.latitude || 0,
-              longitude: storeLocation?.longtitude || 0,
+              latitude: store.location?.latitude || 0,
+              longitude: store.location?.longtitude || 0,
               latitudeDelta: 3,
               longitudeDelta: 1.5,
             }}
@@ -113,8 +72,8 @@ export default function componentName() {
           >
             <Marker
               coordinate={{
-                latitude: storeLocation?.latitude || 0,
-                longitude: storeLocation?.longtitude || 0,
+                latitude: store.location?.latitude || 0,
+                longitude: store.location?.longtitude || 0,
               }}
             />
           </MapView>
@@ -141,9 +100,7 @@ export default function componentName() {
             />
           }
           details={
-            <Text style={{ ...textFontStyles.titleMediumRegular }}>
-              {storeName}
-            </Text>
+            <Text style={{ ...textFontStyles.titleMediumRegular }}>{}</Text>
           }
         />
         <ViewElement
@@ -156,7 +113,7 @@ export default function componentName() {
           }
           details={
             <Text style={{ ...textFontStyles.titleMediumRegular }}>
-              {category}
+              {store.trashType}
             </Text>
           }
         />
@@ -170,7 +127,7 @@ export default function componentName() {
           }
           details={
             <Text style={{ ...textFontStyles.titleMediumRegular }}>
-              {itemWeight} kg
+              {store.itemSize} kg
             </Text>
           }
         />
@@ -185,126 +142,124 @@ export default function componentName() {
               <AmountElement
                 currency="XAF"
                 currentStyle={{ ...textFontStyles.titleMediumMedium }}
-                amount={pricePerUnit}
+                amount={store.pricePerUnit}
                 amountStyle={{ ...textFontStyles.headlineMediumRegular }}
               />
               <Text style={{ ...textFontStyles.bodyMediumMedium }}>/kg</Text>
             </View>
           }
         />
-        {!showInterest ? (
+
+        <View
+          style={{
+            flexDirection: "column",
+            width: "100%",
+            alignItems: "center",
+            gap: 20,
+            paddingTop: 20,
+          }}
+        >
+          <Pressable
+            style={{
+              flexDirection: "row",
+              gap: 12,
+              justifyContent: "center",
+              alignItems: "center",
+              width: "90%",
+              backgroundColor: appColors.primaryColor,
+              borderRadius: 40,
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+            }}
+            onPress={() => setShow(true)}
+          >
+            <MaterialIcons
+              name="recycling"
+              size={24}
+              color={appColors.onPrimaryColor}
+            />
+            <Text
+              style={{
+                ...textFontStyles.bodyLargeRegular,
+                color: appColors.onPrimaryColor,
+              }}
+            >
+              Verify exchange
+            </Text>
+          </Pressable>
           <View
             style={{
               flexDirection: "row",
               width: "100%",
               alignItems: "center",
               justifyContent: "space-around",
-              paddingTop: 50,
             }}
           >
             <ActiveButton
-              icon={<MaterialIcons name="check" size={24} color={"white"} />}
-              name="Show interest"
-              color={"white"}
-              bgColor={appColors.onSurfaceVariant}
-              onPressAction={() => setShowInterest(true)}
+              icon={
+                <MaterialCommunityIcons
+                  name="chat-plus-outline"
+                  size={24}
+                  color={appColors.onSurface}
+                />
+              }
+              name="Messages"
+              color={appColors.onSurface}
+              bgColor={"rgba(179, 179, 179, 1)"}
+              onPressAction={() => {}}
               focusedColor={appColors.onSurface}
             />
             <ActiveButton
               icon={
                 <MaterialIcons
-                  name="close"
+                  name="playlist-add"
                   size={24}
                   color={appColors.onSurface}
                 />
               }
-              name="Cancel"
+              name="Collections"
               color={appColors.onSurface}
-              bgColor={appColors.surfaceContainerLow}
-              onPressAction={() => router.back()}
+              bgColor={"rgba(179, 179, 179, 1)"}
+              onPressAction={() => {}}
               focusedColor={appColors.surfaceContainer}
             />
           </View>
-        ) : (
-          <View
-            style={{
-              flexDirection: "column",
-              width: "100%",
-              alignItems: "center",
-              gap: 20,
-            }}
-          >
-            <Pressable
-              style={{
-                flexDirection: "row",
-                gap: 12,
-                justifyContent: "center",
-                alignItems: "center",
-                width: "90%",
-                backgroundColor: appColors.primaryColor,
-                borderRadius: 40,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-              }}
-              onPress={() => router.navigate("/exchange")}
-            >
-              <MaterialIcons
-                name="document-scanner"
-                size={24}
-                color={appColors.onPrimaryColor}
-              />
-              <Text
-                style={{
-                  ...textFontStyles.bodyLargeRegular,
-                  color: appColors.onPrimaryColor,
-                }}
-              >
-                Complete exchange
-              </Text>
-            </Pressable>
-            <View
-              style={{
-                flexDirection: "row",
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "space-around",
-              }}
-            >
-              <ActiveButton
-                icon={
-                  <MaterialCommunityIcons
-                    name="chat-plus-outline"
-                    size={24}
-                    color={appColors.onSurface}
-                  />
-                }
-                name="Chat"
-                color={appColors.onSurface}
-                bgColor={"rgba(179, 179, 179, 1)"}
-                onPressAction={() => {}}
-                focusedColor={appColors.onSurface}
-              />
-              <ActiveButton
-                icon={
-                  <MaterialIcons
-                    name="add-call"
-                    size={24}
-                    color={appColors.onSurface}
-                  />
-                }
-                name="Call"
-                color={appColors.onSurface}
-                bgColor={"rgba(179, 179, 179, 1)"}
-                onPressAction={() => {}}
-                focusedColor={appColors.surfaceContainer}
-              />
-            </View>
-          </View>
-        )}
+        </View>
       </View>
+      {show && <VerificationPinCodeForm show={show} setShow={setShow} />}
     </View>
   );
 }
+
+const VerificationPinCodeForm = ({
+  show,
+  setShow,
+}: {
+  show: boolean;
+  setShow: (show: boolean) => void;
+}) => {
+  const [otp, setOtp] = useState<string>("");
+
+  const handleSubmitPinCode = async () => {
+    setShow(false);
+  };
+  return (
+    <Pressable
+      style={[
+        styles.verificationPinCodeFormStyles,
+        { display: show ? "flex" : "none" },
+      ]}
+      onPress={() => setShow(false)}
+    >
+      <PinCodeVerificationBox
+        buttonAction={handleSubmitPinCode}
+        otp={otp}
+        setOtp={setOtp}
+        cameraAction={() => {}}
+      />
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -332,5 +287,20 @@ const styles = StyleSheet.create({
     elevation: 10,
     flexDirection: "column",
     alignItems: "center",
+  },
+
+  verificationPinCodeFormStyles: {
+    height: height,
+    width: width,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    paddingHorizontal: 16,
   },
 });

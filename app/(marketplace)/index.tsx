@@ -1,12 +1,12 @@
-import { ActionButton, PickupButton } from "@/components";
+import { ActionButton, ExchangeElement, PickupButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { pickupButtonProps } from "@/constants/types";
+import { exchangeElementProps, pickupButtonProps } from "@/constants/types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -16,11 +16,29 @@ import {
   Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
+import {
+  setItemName,
+  setItemSize,
+  setTrashType,
+  setPriceControl,
+  setLocation,
+} from "@/redux/features/storeSlice";
 
 const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
+  const [agentElement, setAgentElement] = useState<exchangeElementProps>({
+    title: "Need 5kg of plastics",
+    wasteType: "papers",
+    storeLocation: { latitude: 20, longitude: -25 },
+    owner: true,
+    price: 500,
+    action: () => {},
+    size: 5,
+  });
+  const dispatch = useDispatch();
 
   const pickupOptions: pickupButtonProps[] = [
     {
@@ -57,6 +75,15 @@ export default function componentName() {
       onPress: () => router.navigate("../(pickups)/reserve"),
     },
   ];
+
+  const goToExchangeElement = () => {
+    dispatch(setItemName(agentElement.title));
+    dispatch(setItemSize(agentElement.size));
+    dispatch(setTrashType(agentElement.wasteType));
+    dispatch(setPriceControl(agentElement.price));
+    dispatch(setLocation(agentElement.storeLocation));
+    router.navigate("./store/agent-exchange");
+  };
 
   return (
     <>
@@ -95,6 +122,14 @@ export default function componentName() {
               context="Create your business profile to start sending exchange alerts."
               action={() => router.push("../navigation/business_location")}
             />
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+              paddingHorizontal: 16,
+            }}
+          >
+            <ExchangeElement {...agentElement} action={goToExchangeElement} />
           </View>
         </ScrollView>
       </SafeAreaView>

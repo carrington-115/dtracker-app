@@ -47,7 +47,7 @@ import MapElementView from "./organisms/MapElementView";
 import PopularStoreElement from "./molecules/PopularStores";
 import ExchangeElement from "./molecules/ExchangeElement";
 import AddLocationElement from "./organisms/AddLocationElement";
-
+import PinCodeVerificationBox from "./organisms/PinCodeVerificationBox";
 export {
   OnboardingSlider,
   AuthButton,
@@ -97,4 +97,5 @@ export {
   PopularStoreElement,
   ExchangeElement,
   AddLocationElement,
+  PinCodeVerificationBox,
 };
