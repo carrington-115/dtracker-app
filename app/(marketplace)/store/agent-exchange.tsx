@@ -5,6 +5,7 @@ import {
   PinCodeVerificationBox,
   ViewElement,
 } from "@/components";
+import QrCamera from "@/components/organisms/QrCamera";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import mapStyle from "@/constants/map_styles";
@@ -239,25 +240,54 @@ const VerificationPinCodeForm = ({
   setShow: (show: boolean) => void;
 }) => {
   const [otp, setOtp] = useState<string>("");
+  const [showCamera, setShowCamera] = useState<boolean>(false);
 
   const handleSubmitPinCode = async () => {
     setShow(false);
   };
   return (
-    <Pressable
+    <View
       style={[
         styles.verificationPinCodeFormStyles,
         { display: show ? "flex" : "none" },
       ]}
-      onPress={() => setShow(false)}
     >
-      <PinCodeVerificationBox
-        buttonAction={handleSubmitPinCode}
-        otp={otp}
-        setOtp={setOtp}
-        cameraAction={() => {}}
-      />
-    </Pressable>
+      <View style={{ position: "relative", width: "100%", height: "100%" }}>
+        <View
+          style={{
+            width: "auto",
+            height: "auto",
+            position: "absolute",
+            top: "35%",
+            left: 15,
+            zIndex: 100,
+          }}
+        >
+          <PinCodeVerificationBox
+            buttonAction={handleSubmitPinCode}
+            otp={otp}
+            setOtp={setOtp}
+            cameraAction={() => setShowCamera(true)}
+          />
+        </View>
+        <Pressable
+          onPress={() => setShow(false)}
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            zIndex: 90,
+          }}
+        />
+      </View>
+      {showCamera && (
+        <QrCamera
+          onScannedAction={() => {}}
+          onBackButtonAction={() => setShowCamera(false)}
+          setShowCamera={setShowCamera}
+        />
+      )}
+    </View>
   );
 };
 

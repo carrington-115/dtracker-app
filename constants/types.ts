@@ -326,6 +326,12 @@ interface pinCodeVerificationBoxProps {
   otp: string;
 }
 
+interface QrCameraProps {
+  onScannedAction: () => void;
+  onBackButtonAction: () => void;
+  setShowCamera: (show: boolean) => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -366,4 +372,5 @@ export type {
   popularStoresElementProps,
   exchangeElementProps,
   pinCodeVerificationBoxProps,
+  QrCameraProps,
 };

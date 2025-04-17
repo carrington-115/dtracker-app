@@ -48,6 +48,8 @@ import PopularStoreElement from "./molecules/PopularStores";
 import ExchangeElement from "./molecules/ExchangeElement";
 import AddLocationElement from "./organisms/AddLocationElement";
 import PinCodeVerificationBox from "./organisms/PinCodeVerificationBox";
+import QrCamera from "./organisms/QrCamera";
+
 export {
   OnboardingSlider,
   AuthButton,
@@ -98,4 +100,5 @@ export {
   ExchangeElement,
   AddLocationElement,
   PinCodeVerificationBox,
+  QrCamera,
 };
