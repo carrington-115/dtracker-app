@@ -1,7 +1,11 @@
 import { ActionsElement, ActiveButton, TabsButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { actionsElementProps, tabsButtonProps } from "@/constants/types";
+import {
+  actionsElementProps,
+  ActionSpecialDataProps,
+  tabsButtonProps,
+} from "@/constants/types";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useRouter } from "expo-router";
@@ -35,24 +39,10 @@ const tabButtonLinks: tabsButtonProps[] = [
   },
 ];
 
-interface ActionData {
-  userProfileImage: any;
-  actionType: "pickup" | "marketplace";
-  size: number;
-  units: string;
-  price: number;
-  userType: "user" | "agent";
-  status: "pending" | "active" | "available";
-  pickupType: "scheduled" | "immediate";
-  date: string;
-  time: string;
-  pickupId: number;
-}
-
 export default function componentName() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
-  const [actions, setActions] = useState<ActionData[]>([]);
+  const [actions, setActions] = useState<ActionSpecialDataProps[]>([]);
 
   useEffect(() => {
     setActions([]);

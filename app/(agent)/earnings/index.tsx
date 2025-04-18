@@ -53,10 +53,9 @@ export default function componentName() {
       />
       <Header />
       <ScrollView style={{}}>
-        {/* <View style={{ width: "100%", paddingHorizontal: 16 }}>
+        <View style={{ width: "100%", paddingHorizontal: 16 }}>
           <InitialPageContent cardCalendar={cardCalendar} />
-        </View> */}
-        <FinalPageContent />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -129,24 +128,26 @@ const InitialPageContent = ({
                   />
                 </>
               }
-              onPressAction={() => {}}
+              onPressAction={() =>
+                router.navigate("/(agent-pickups)/immediate")
+              }
               bgColor="transparent"
               color={appColors.onPrimaryContainerColor}
               outlined
               focusedColor={appColors.primaryContainerColor}
             />
             <ActiveButton
-              name="Sell on store"
+              name="Marketplace"
               icon={
                 <>
                   <MaterialCommunityIcons
-                    name="store-plus-outline"
+                    name="recycle"
                     size={24}
                     color={appColors.onPrimaryContainerColor}
                   />
                 </>
               }
-              onPressAction={() => {}}
+              onPressAction={() => router.push("/(agent)/store")}
               bgColor={appColors.primaryContainerColor}
               color={appColors.onPrimaryContainerColor}
               focusedColor={appColors.primaryContainerColor}
@@ -159,12 +160,7 @@ const InitialPageContent = ({
           type="inactive"
           month={cardCalendar.month}
           year={cardCalendar.year}
-          inactiveCardAction={() =>
-            router.push({
-              pathname: "/earnings/[goalId]",
-              params: { goalId: "1" },
-            })
-          }
+          inactiveCardAction={() => router.push("/(agent)/earnings/set-goal")}
         />
       </View>
     </>

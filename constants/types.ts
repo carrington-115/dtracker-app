@@ -370,6 +370,22 @@ interface AddExchangeElementProps {
   handleGetDeviceLocation: () => void;
 }
 
+interface ActionSpecialDataProps {
+  userProfileImage: any;
+  actionType: "pickup" | "marketplace";
+  size: number;
+  units: string;
+  price: number;
+  userType: "user" | "agent";
+  status: "pending" | "active" | "available";
+  pickupType: "scheduled" | "immediate";
+  date: string;
+  time: string;
+  pickupId: number;
+  distance?: string;
+  username?: string;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -414,4 +430,5 @@ export type {
   MessagesComponentProps,
   CollectionsComponentProps,
   AddExchangeElementProps,
+  ActionSpecialDataProps,
 };

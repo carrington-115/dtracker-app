@@ -6,7 +6,7 @@ export default function componentName() {
   return (
     <View
       style={{
-        marginTop: 20,
+        marginVertical: 20,
       }}
     >
       <ActionButton

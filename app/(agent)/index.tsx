@@ -114,7 +114,6 @@ export default function componentName() {
               <PickupButton key={index} {...option} />
             ))}
           </View>
-          <AddLocationElement />
 
           <GoalCard
             month={cardCalendar.month}
@@ -129,7 +128,7 @@ export default function componentName() {
             paddingHorizontal: 30,
             alignItems: "center",
             justifyContent: "space-between",
-            marginVertical: 20,
+            marginTop: 20,
           }}
         >
           <ActiveButton
@@ -166,6 +165,7 @@ export default function componentName() {
             outlined
           />
         </View>
+        <AddLocationElement />
       </ScrollView>
     </SafeAreaView>
   );
