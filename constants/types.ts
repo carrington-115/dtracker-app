@@ -363,8 +363,7 @@ interface AddExchangeElementProps {
   location: {
     latitude: number;
     longtitude: number;
-    accuracy: number | null;
-  };
+  } | null;
   locationSwitchState: boolean;
   deviceLocationState: boolean;
   isBusinessLocationAvailable: boolean;

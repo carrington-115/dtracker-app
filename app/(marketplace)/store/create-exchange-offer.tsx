@@ -3,33 +3,31 @@ import appColors from "@/constants/colors";
 import mapStyle from "@/constants/map_styles";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
   Dimensions,
   StatusBar,
   ActivityIndicator,
+  Text,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
+import { textFontStyles } from "@/constants/fonts";
 
 const { width, height } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
+  const mapRef = useRef<MapView>(null);
   const [trashType, setTrashType] = useState<string>("");
   const [trashSize, setTrashSize] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [location, setLocation] = useState<{
     latitude: number;
     longtitude: number;
-    accuracy: number | null;
-  }>({
-    latitude: 0,
-    longtitude: 0,
-    accuracy: null,
-  });
+  } | null>(null);
   const [locationSwitchState, setLocationSwitchState] =
     useState<boolean>(false);
   const [deviceLocationState, setDeviceLocationState] =
@@ -44,28 +42,29 @@ export default function componentName() {
       if (status !== "granted") {
         return;
       }
-
       const location = await Location.getCurrentPositionAsync({});
-      deviceLocationState &&
-        setLocation({
-          latitude: location.coords.latitude,
-          longtitude: location.coords.longitude,
-          accuracy: location.coords.accuracy,
-        });
+      setLocation({
+        latitude: location.coords.latitude,
+        longtitude: location.coords.longitude,
+      });
     } catch (e) {
       console.error(e);
     }
   };
 
   useEffect(() => {
-    if (location) {
-      setLocation({
-        latitude: location.latitude,
-        longtitude: location.longtitude,
-        accuracy: location.accuracy,
-      });
+    if (location && mapRef.current) {
+      mapRef.current.animateToRegion(
+        {
+          latitude: location.latitude,
+          longitude: location.longtitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        },
+        1000
+      );
     }
-  }, []);
+  }, [location]);
 
   return (
     <View style={styles.container}>
@@ -105,15 +104,14 @@ export default function componentName() {
               width: "100%",
               height: "100%",
             }}
+            ref={mapRef}
           >
-            {location.latitude !== 0 && location.longtitude !== 0 && (
-              <Marker
-                coordinate={{
-                  latitude: location?.latitude,
-                  longitude: location?.longtitude,
-                }}
-              />
-            )}
+            <Marker
+              coordinate={{
+                latitude: location?.latitude,
+                longitude: location?.longtitude,
+              }}
+            />
           </MapView>
         ) : (
           <View
@@ -122,8 +120,17 @@ export default function componentName() {
               height: "100%",
               justifyContent: "center",
               alignItems: "center",
+              gap: 5,
             }}
           >
+            <Text
+              style={{
+                ...textFontStyles.bodyLargeRegular,
+                color: appColors.onSurface,
+              }}
+            >
+              We are waiting for your location....
+            </Text>
             <ActivityIndicator size={"large"} color={appColors.primaryColor} />
           </View>
         )}
