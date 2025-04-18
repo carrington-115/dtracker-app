@@ -1,3 +1,4 @@
+import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
@@ -16,7 +17,13 @@ export const NoElementOnPage = ({
       >
         {title}
       </Text>
-      <Text style={{ ...textFontStyles.bodyLargeRegular, textAlign: "center" }}>
+      <Text
+        style={{
+          ...textFontStyles.bodyLargeRegular,
+          textAlign: "center",
+          color: appColors.onSurfaceVariant,
+        }}
+      >
         {message}
       </Text>
     </View>

@@ -1,10 +1,11 @@
 import MessagesComponent from "@/components/molecules/MessagesComponent";
+import { NoElementOnPage } from "@/components/organisms/NoElementOnPage";
 import appColors from "@/constants/colors";
+import { MessagesComponentProps } from "@/constants/types";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   SafeAreaView,
   Dimensions,
@@ -12,10 +13,49 @@ import {
 } from "react-native";
 import { Appbar } from "react-native-paper";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
+  const [messages, setMessages] = useState<MessagesComponentProps[]>([]);
+
+  useEffect(() => {
+    setMessages([]);
+  }, []);
+
+  if (messages.length === 0) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          width: width,
+          height: height,
+          backgroundColor: appColors.surfaceBright,
+        }}
+      >
+        <Appbar.Header>
+          <Appbar.BackAction onPress={() => router.back()} />
+          <Appbar.Content title="Messages" />
+        </Appbar.Header>
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            paddingHorizontal: 50,
+            marginTop: height / 3,
+          }}
+        >
+          <NoElementOnPage
+            title="No messages Yet!"
+            message="Looks like you haven't received any messages yet—stay tuned 
+        for updates from the waste collection center or business agent!"
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Appbar.Header>
@@ -28,34 +68,9 @@ export default function componentName() {
             width: "100%",
           }}
         >
-          <MessagesComponent
-            image={require("@/assets/images/user-image.png")}
-            name="John Doe"
-            time="12:00 PM"
-            unread={0}
-            onPress={() => {}}
-          />
-          <MessagesComponent
-            image={require("@/assets/images/user-image.png")}
-            name="John Doe"
-            time="12:00 PM"
-            unread={4}
-            onPress={() => {}}
-          />
-          <MessagesComponent
-            image={require("@/assets/images/user-image.png")}
-            name="John Doe"
-            time="12:00 PM"
-            unread={10}
-            onPress={() => {}}
-          />
-          <MessagesComponent
-            image={require("@/assets/images/user-image.png")}
-            name="John Doe"
-            time="12:00 PM"
-            unread={200}
-            onPress={() => {}}
-          />
+          {messages.map((message, index) => (
+            <MessagesComponent key={index} {...message} />
+          ))}
         </ScrollView>
       </View>
     </SafeAreaView>
