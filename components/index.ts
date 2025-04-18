@@ -51,6 +51,7 @@ import PinCodeVerificationBox from "./organisms/PinCodeVerificationBox";
 import QrCamera from "./organisms/QrCamera";
 import MessagesComponent from "./molecules/MessagesComponent";
 import CollectionsComponent from "./organisms/CollectionsComponent";
+import AddExchangeElement from "./organisms/AddExchangeElement";
 
 export {
   OnboardingSlider,
@@ -105,4 +106,5 @@ export {
   QrCamera,
   MessagesComponent,
   CollectionsComponent,
+  AddExchangeElement,
 };

@@ -8,11 +8,17 @@ export default function componentName({
   dropDownItems,
   dropDownValue,
   onValueChange,
+  bgColor,
 }: dropDownElementProps) {
   return (
     <>
       <Picker
-        style={styles.pickerStyleType}
+        style={[
+          styles.pickerStyleType,
+          {
+            backgroundColor: bgColor ? bgColor : appColors.surfaceContainer,
+          },
+        ]}
         selectedValue={dropDownValue}
         onValueChange={onValueChange}
         itemStyle={{
@@ -31,7 +37,6 @@ export default function componentName({
 const styles = StyleSheet.create({
   pickerStyleType: {
     width: "100%",
-    backgroundColor: appColors.surfaceContainer,
     borderRadius: 50,
     paddingHorizontal: 30,
   },

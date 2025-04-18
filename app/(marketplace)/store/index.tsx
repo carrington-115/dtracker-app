@@ -154,7 +154,9 @@ const Header = () => {
       />
       <Appbar.Action
         icon={"recycle"}
-        onPress={() => router.navigate("/exchange")}
+        onPress={() =>
+          router.push("/(marketplace)/store/create-exchange-offer")
+        }
       />
       <Appbar.Action
         icon={"cog-outline"}

@@ -24,9 +24,8 @@ import {
   setPriceControl,
   setLocation,
 } from "@/redux/features/storeSlice";
-import { NoElementOnPage } from "@/components/organisms/NoElementOnPage";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
@@ -86,70 +85,6 @@ export default function componentName() {
     setAgentElement(null);
   }, []);
 
-  if (!agentElement) {
-    return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          width: width,
-          height: height,
-          backgroundColor: appColors.surfaceBright,
-        }}
-      >
-        <StatusBar
-          barStyle="dark-content"
-          translucent={true}
-          backgroundColor={appColors.surfaceContainerLowest}
-        />
-        <ScrollView style={styles.scrollContainerStyles}>
-          <View style={styles.homeTitleStyle}>
-            <Text
-              style={{
-                ...textFontStyles.headlineSmallMedium,
-                color: appColors.onSurface,
-                textAlign: "center",
-              }}
-            >
-              Trash Management Options
-            </Text>
-            <View style={styles.actionStyles}>
-              {pickupOptions.map((option, index) => (
-                <PickupButton key={index} {...option} />
-              ))}
-            </View>
-          </View>
-
-          <View
-            style={{
-              paddingHorizontal: 16,
-              marginTop: 20,
-            }}
-          >
-            <ActionButton
-              title="Create your business profile"
-              context="Create your business profile to start sending exchange alerts."
-              action={() => router.push("../navigation/business_location")}
-            />
-          </View>
-          <View
-            style={{
-              width: "100%",
-              height: "100%",
-              alignItems: "center",
-              paddingHorizontal: 50,
-              marginTop: height / 3,
-            }}
-          >
-            <NoElementOnPage
-              title="No Exchanges Available!"
-              message="There are currently no waste exchanges available. Create your business profile to start receiving exchange alerts."
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -193,7 +128,9 @@ export default function componentName() {
             paddingHorizontal: 16,
           }}
         >
-          <ExchangeElement {...agentElement} action={goToExchangeElement} />
+          {agentElement && (
+            <ExchangeElement {...agentElement} action={goToExchangeElement} />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

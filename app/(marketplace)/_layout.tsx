@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, usePathname } from "expo-router";
+import { Tabs, usePathname, useRouter } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import appColors from "@/constants/colors";
@@ -11,6 +11,7 @@ const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <>
@@ -27,8 +28,14 @@ export default function componentName() {
               title="DTRACKER"
               titleStyle={{ ...textFontStyles.headlineSmallBold }}
             />
-            <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
-            <Appbar.Action icon="cog-outline" onPress={() => {}} />
+            <Appbar.Action
+              icon="recycle"
+              onPress={() => router.push("/store/create-exchange-offer")}
+            />
+            <Appbar.Action
+              icon="cog-outline"
+              onPress={() => router.push("/settings")}
+            />
           </Appbar.Header>
         )}
         <Tabs

@@ -21,7 +21,8 @@ export default function componentName() {
                 : segments[segments.length - 1] === "[id]" ||
                   segments[segments.length - 1] === "agent-exchange" ||
                   segments[segments.length - 1] === "messages" ||
-                  segments[segments.length - 1] === "collections"
+                  segments[segments.length - 1] === "collections" ||
+                  segments[segments.length - 1] === "create-exchange-offer"
                 ? "none"
                 : "flex",
             height: 62,
@@ -59,6 +60,12 @@ export default function componentName() {
         />
         <Stack.Screen
           name="collections"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="create-exchange-offer"
           options={{
             headerShadowVisible: false,
           }}

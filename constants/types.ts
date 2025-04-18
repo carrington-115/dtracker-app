@@ -76,6 +76,7 @@ interface dropDownElementProps {
   dropDownItems: { label: string; value: string }[];
   dropDownValue: string;
   onValueChange: (itemValue: string) => void;
+  bgColor?: string;
 }
 
 interface bottomSheetPropsType {
@@ -351,6 +352,25 @@ interface CollectionsComponentProps {
   onPress: () => void;
 }
 
+interface AddExchangeElementProps {
+  action: () => void;
+  trashType: string;
+  setTrashType: (value: string) => void;
+  trashSize: number;
+  setTrashSize: (value: number) => void;
+  price: number;
+  setPrice: (value: number) => void;
+  location: {
+    latitude: number;
+    longtitude: number;
+    accuracy: number | null;
+  };
+  locationSwitchState: boolean;
+  deviceLocationState: boolean;
+  isBusinessLocationAvailable: boolean;
+  handleGetDeviceLocation: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -394,4 +414,5 @@ export type {
   QrCameraProps,
   MessagesComponentProps,
   CollectionsComponentProps,
+  AddExchangeElementProps,
 };
