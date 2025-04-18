@@ -185,14 +185,19 @@ const Header = () => {
           title="DTRACKER"
           titleStyle={{ ...textFontStyles.headlineSmallBold }}
         />
-        <Appbar.Action icon="bell-outline" onPress={() => {}} />
-        <Appbar.Action
-          icon="cog-outline"
-          onPress={() => router.navigate("/settings")}
-        />
         <Appbar.Action
           icon={"recycle"}
           onPress={() => router.navigate("/exchange")}
+        />
+        <Appbar.Action
+          icon="bell-outline"
+          onPress={() =>
+            router.navigate("/(indirect)/marketplace/agent-notification")
+          }
+        />
+        <Appbar.Action
+          icon="cog-outline"
+          onPress={() => router.navigate("/settings")}
         />
       </Appbar.Header>
     </>
