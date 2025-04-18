@@ -13,7 +13,11 @@ export const NoElementOnPage = ({
   return (
     <View style={styles.container}>
       <Text
-        style={{ ...textFontStyles.headlineMediumBold, textAlign: "center" }}
+        style={{
+          ...textFontStyles.headlineMediumBold,
+          textAlign: "center",
+          color: appColors.onSurfaceVariant,
+        }}
       >
         {title}
       </Text>

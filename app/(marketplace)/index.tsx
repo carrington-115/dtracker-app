@@ -66,7 +66,8 @@ export default function componentName() {
         />
       ),
       name: "Request exchange",
-      onPress: () => router.navigate("/actions"),
+      onPress: () =>
+        router.navigate("/(marketplace)/store/create-exchange-offer"),
     },
   ];
 
