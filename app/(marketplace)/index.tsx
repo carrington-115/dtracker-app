@@ -6,7 +6,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -24,20 +24,15 @@ import {
   setPriceControl,
   setLocation,
 } from "@/redux/features/storeSlice";
+import { NoElementOnPage } from "@/components/organisms/NoElementOnPage";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
-  const [agentElement, setAgentElement] = useState<exchangeElementProps>({
-    title: "Need 5kg of plastics",
-    wasteType: "papers",
-    storeLocation: { latitude: 20, longitude: -25 },
-    owner: true,
-    price: 500,
-    action: () => {},
-    size: 5,
-  });
+  const [agentElement, setAgentElement] = useState<exchangeElementProps | null>(
+    null
+  );
   const dispatch = useDispatch();
 
   const pickupOptions: pickupButtonProps[] = [
@@ -77,17 +72,30 @@ export default function componentName() {
   ];
 
   const goToExchangeElement = () => {
-    dispatch(setItemName(agentElement.title));
-    dispatch(setItemSize(agentElement.size));
-    dispatch(setTrashType(agentElement.wasteType));
-    dispatch(setPriceControl(agentElement.price));
-    dispatch(setLocation(agentElement.storeLocation));
-    router.navigate("./store/agent-exchange");
+    if (agentElement) {
+      dispatch(setItemName(agentElement.title));
+      dispatch(setItemSize(agentElement.size));
+      dispatch(setTrashType(agentElement.wasteType));
+      dispatch(setPriceControl(agentElement.price));
+      dispatch(setLocation(agentElement.storeLocation));
+      router.navigate("./store/agent-exchange");
+    }
   };
 
-  return (
-    <>
-      <SafeAreaView style={styles.container}>
+  useEffect(() => {
+    setAgentElement(null);
+  }, []);
+
+  if (!agentElement) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          width: width,
+          height: height,
+          backgroundColor: appColors.surfaceBright,
+        }}
+      >
         <StatusBar
           barStyle="dark-content"
           translucent={true}
@@ -125,15 +133,70 @@ export default function componentName() {
           </View>
           <View
             style={{
-              marginTop: 20,
-              paddingHorizontal: 16,
+              width: "100%",
+              height: "100%",
+              alignItems: "center",
+              paddingHorizontal: 50,
+              marginTop: height / 3,
             }}
           >
-            <ExchangeElement {...agentElement} action={goToExchangeElement} />
+            <NoElementOnPage
+              title="No Exchanges Available!"
+              message="There are currently no waste exchanges available. Create your business profile to start receiving exchange alerts."
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
-    </>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle="dark-content"
+        translucent={true}
+        backgroundColor={appColors.surfaceContainerLowest}
+      />
+      <ScrollView style={styles.scrollContainerStyles}>
+        <View style={styles.homeTitleStyle}>
+          <Text
+            style={{
+              ...textFontStyles.headlineSmallMedium,
+              color: appColors.onSurface,
+              textAlign: "center",
+            }}
+          >
+            Trash Management Options
+          </Text>
+          <View style={styles.actionStyles}>
+            {pickupOptions.map((option, index) => (
+              <PickupButton key={index} {...option} />
+            ))}
+          </View>
+        </View>
+
+        <View
+          style={{
+            paddingHorizontal: 16,
+            marginTop: 20,
+          }}
+        >
+          <ActionButton
+            title="Create your business profile"
+            context="Create your business profile to start sending exchange alerts."
+            action={() => router.push("../navigation/business_location")}
+          />
+        </View>
+        <View
+          style={{
+            marginTop: 20,
+            paddingHorizontal: 16,
+          }}
+        >
+          <ExchangeElement {...agentElement} action={goToExchangeElement} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

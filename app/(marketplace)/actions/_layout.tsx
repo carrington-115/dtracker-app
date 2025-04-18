@@ -5,9 +5,6 @@ export default function componentName() {
   const segments = useSegments();
   const pathname = usePathname();
 
-  console.log("segments", segments);
-  console.log("pathname", pathname);
-
   return (
     <>
       <Tabs.Screen

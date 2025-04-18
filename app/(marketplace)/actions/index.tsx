@@ -1,7 +1,7 @@
-import { ActionsElement, TabsButton } from "@/components";
+import { ActionsElement, ActiveButton, TabsButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { tabsButtonProps } from "@/constants/types";
+import { actionsElementProps, tabsButtonProps } from "@/constants/types";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useRouter } from "expo-router";
@@ -16,8 +16,9 @@ import {
 } from "react-native";
 import { ActivityIndicator, Appbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { NoElementOnPage } from "@/components/organisms/NoElementOnPage";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const tabButtonLinks: tabsButtonProps[] = [
   {
@@ -34,9 +35,28 @@ const tabButtonLinks: tabsButtonProps[] = [
   },
 ];
 
+interface ActionData {
+  userProfileImage: any;
+  actionType: "pickup" | "marketplace";
+  size: number;
+  units: string;
+  price: number;
+  userType: "user" | "agent";
+  status: "pending" | "active" | "available";
+  pickupType: "scheduled" | "immediate";
+  date: string;
+  time: string;
+  pickupId: number;
+}
+
 export default function componentName() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+  const [actions, setActions] = useState<ActionData[]>([]);
+
+  useEffect(() => {
+    setActions([]);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -47,7 +67,7 @@ export default function componentName() {
   if (loading) {
     return (
       <SafeAreaView style={[styles.container]}>
-        <Header tabButtonLinks={tabButtonLinks} />
+        <Header tabButtonLinks={tabButtonLinks} actions={actions} />
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
@@ -61,68 +81,100 @@ export default function componentName() {
     );
   }
 
+  if (actions.length === 0) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          width: width,
+          height: height,
+          backgroundColor: appColors.surfaceBright,
+        }}
+      >
+        <Header tabButtonLinks={tabButtonLinks} actions={actions} />
+        <StatusBar
+          barStyle="dark-content"
+          translucent={true}
+          backgroundColor={appColors.surfaceContainerLow}
+        />
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            paddingHorizontal: 50,
+            marginTop: height / 3,
+            gap: 10,
+          }}
+        >
+          <NoElementOnPage
+            title="No Actions Yet!"
+            message="You haven't created any actions yet. Start by creating a pickup or exchange request."
+          />
+          <ActiveButton
+            name="New action"
+            color={appColors.onPrimaryColor}
+            bgColor={appColors.primaryColor}
+            onPressAction={() => router.navigate("/(marketplace)")}
+            focusedColor={appColors.onPrimaryContainerColor}
+            icon={
+              <MaterialCommunityIcons name="plus" size={24} color="white" />
+            }
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
-        barStyle={"dark-content"}
-        backgroundColor={"rgb(242, 242, 242)"}
+        barStyle="dark-content"
+        translucent={true}
+        backgroundColor={appColors.surfaceContainerLowest}
       />
-      <Header tabButtonLinks={tabButtonLinks} />
+      <Header tabButtonLinks={tabButtonLinks} actions={actions} />
 
-      <ScrollView>
-        <ActionsElement
-          userProfileImage={require("@/assets/images/user-image.png")}
-          actionType="pickup"
-          size={2}
-          units="bags"
-          price={500}
-          userType="user"
-          status="pending"
-          pickupType="scheduled"
-          date="01 March"
-          time="10:00"
-          pressAction={() =>
-            router.navigate({
-              pathname: "/(user)/actions/pickup/[pickupId]",
-              params: { pickupId: 1 },
-            })
-          }
-        />
-        <ActionsElement
-          userProfileImage={require("@/assets/images/user-image.png")}
-          actionType="pickup"
-          size={2}
-          units="bags"
-          price={500}
-          userType="user"
-          status="active"
-          pickupType="scheduled"
-          username="John Doe"
-          date="01 March"
-          time="10:00"
-        />
-        <ActionsElement
-          itemName="Plastic Bottles"
-          userProfileImage={require("@/assets/images/user-image.png")}
-          status="available"
-          paymentMethod="fixed"
-          price={500}
-          size={2}
-          units="bags"
-          actionType="marketplace"
-          pressAction={() =>
-            router.navigate({
-              pathname: "/(user)/actions/store/[storeId]",
-              params: { storeId: 2 },
-            })
-          }
-        />
+      <ScrollView style={styles.scrollContainerStyles}>
+        <View
+          style={{
+            marginTop: 20,
+          }}
+        >
+          {actions.map((action, index) => (
+            <ActionsElement
+              key={index}
+              userProfileImage={action.userProfileImage}
+              actionType={action.actionType}
+              size={action.size}
+              units={action.units}
+              price={action.price}
+              userType={action.userType}
+              status={action.status}
+              pickupType={action.pickupType}
+              date={action.date}
+              time={action.time}
+              pressAction={() =>
+                router.navigate({
+                  pathname: "/(user)/actions/pickup/[pickupId]",
+                  params: { pickupId: action.pickupId },
+                })
+              }
+            />
+          ))}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-const Header = ({ tabButtonLinks }: { tabButtonLinks: tabsButtonProps[] }) => {
+const Header = ({
+  tabButtonLinks,
+  actions,
+}: {
+  tabButtonLinks: tabsButtonProps[];
+  actions: actionsElementProps[];
+}) => {
   const router = useRouter();
 
   return (
@@ -147,9 +199,10 @@ const Header = ({ tabButtonLinks }: { tabButtonLinks: tabsButtonProps[] }) => {
         />
       </Appbar.Header>
       <View style={styles.topBarStyles}>
-        {tabButtonLinks.map((item, index) => (
-          <TabsButton {...item} key={index} />
-        ))}
+        {actions.length > 0 &&
+          tabButtonLinks.map((item, index) => (
+            <TabsButton {...item} key={index} />
+          ))}
       </View>
     </>
   );
@@ -169,6 +222,14 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(242, 242, 242)",
     borderBottomWidth: 0.2,
     borderColor: appColors.outlineVariant,
+  },
+  homeTitleStyle: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  scrollContainerStyles: {
+    width: "100%",
   },
 });
 
