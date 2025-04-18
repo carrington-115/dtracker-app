@@ -15,7 +15,9 @@ export default function componentName() {
           tabBarStyle: {
             display:
               segments[segments.length - 1] === "[id]" ||
-              (segments[segments.length - 1] === "agent-exchange" &&
+              segments[segments.length - 1] === "agent-exchange" ||
+              segments[segments.length - 1] === "messages" ||
+              (segments[segments.length - 1] === "collections" &&
                 pathname !== "/store/undefined")
                 ? "none"
                 : "flex",
@@ -43,6 +45,18 @@ export default function componentName() {
         />
         <Stack.Screen
           name="agent-exchange"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="messages"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="collections"
           options={{
             headerShadowVisible: false,
           }}

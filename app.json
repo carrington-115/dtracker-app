@@ -72,8 +72,7 @@
           "microphonePermission": "Allow dtracker to access your microphone",
           "recordAudioAndroid": true
         }
-      ],
-      "expo-barcode-scanner"
+      ]
     ],
     "experiments": {
       "typedRoutes": true

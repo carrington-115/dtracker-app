@@ -49,6 +49,7 @@ import ExchangeElement from "./molecules/ExchangeElement";
 import AddLocationElement from "./organisms/AddLocationElement";
 import PinCodeVerificationBox from "./organisms/PinCodeVerificationBox";
 import QrCamera from "./organisms/QrCamera";
+import MessagesComponent from "./molecules/MessagesComponent";
 
 export {
   OnboardingSlider,
@@ -101,4 +102,5 @@ export {
   AddLocationElement,
   PinCodeVerificationBox,
   QrCamera,
+  MessagesComponent,
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { ImageSourcePropType } from "react-native";
 
 // all the app types
 interface onboardingSliderType {
@@ -332,6 +333,13 @@ interface QrCameraProps {
   setShowCamera: (show: boolean) => void;
 }
 
+interface MessagesComponentProps {
+  image: ImageSourcePropType;
+  name: string;
+  time: string;
+  unread: number;
+  onPress: () => void;
+}
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -373,4 +381,5 @@ export type {
   exchangeElementProps,
   pinCodeVerificationBoxProps,
   QrCameraProps,
+  MessagesComponentProps,
 };

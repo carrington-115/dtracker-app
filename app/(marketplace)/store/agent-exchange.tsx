@@ -46,7 +46,7 @@ export default function componentName() {
           }
           bgColor={"white"}
           pressedColor={appColors.surfaceContainer}
-          btnAction={() => router.back()}
+          btnAction={() => router.push("/store")}
           appStyles={{
             position: "absolute",
             top: 50,
@@ -207,8 +207,8 @@ export default function componentName() {
               name="Messages"
               color={appColors.onSurface}
               bgColor={"rgba(179, 179, 179, 1)"}
-              onPressAction={() => {}}
-              focusedColor={appColors.onSurface}
+              onPressAction={() => router.push("/store/messages")}
+              focusedColor={appColors.surfaceContainer}
             />
             <ActiveButton
               icon={
