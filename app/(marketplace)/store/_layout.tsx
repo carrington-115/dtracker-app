@@ -1,3 +1,4 @@
+import appColors from "@/constants/colors";
 import { Stack, Tabs, usePathname, useRouter, useSegments } from "expo-router";
 import React from "react";
 
@@ -14,18 +15,19 @@ export default function componentName() {
           headerTransparent: true,
           tabBarStyle: {
             display:
-              segments[segments.length - 1] === "[id]" ||
-              segments[segments.length - 1] === "agent-exchange" ||
-              segments[segments.length - 1] === "messages" ||
-              (segments[segments.length - 1] === "collections" &&
-                pathname !== "/store/undefined")
+              segments[segments.length - 1] === "[id]" &&
+              pathname === "/store/undefined"
+                ? "flex"
+                : segments[segments.length - 1] === "[id]" ||
+                  segments[segments.length - 1] === "agent-exchange" ||
+                  segments[segments.length - 1] === "messages" ||
+                  segments[segments.length - 1] === "collections"
                 ? "none"
                 : "flex",
-            height:
-              segments[segments.length - 1] === "[id]" &&
-              pathname !== "/store/undefined"
-                ? 0
-                : 62,
+            height: 62,
+            backgroundColor: appColors.surfaceContainerLow,
+            borderTopWidth: 1,
+            borderTopColor: appColors.onSurfaceVariant,
           },
           headerShown: false,
         }}

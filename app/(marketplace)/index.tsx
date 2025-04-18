@@ -67,7 +67,7 @@ export default function componentName() {
         />
       ),
       name: "Request exchange",
-      onPress: () => router.navigate("../(pickups)/reserve"),
+      onPress: () => router.navigate("/actions"),
     },
   ];
 
