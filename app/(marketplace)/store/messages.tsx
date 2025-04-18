@@ -32,7 +32,7 @@ export default function componentName() {
             image={require("@/assets/images/user-image.png")}
             name="John Doe"
             time="12:00 PM"
-            unread={1}
+            unread={0}
             onPress={() => {}}
           />
           <MessagesComponent

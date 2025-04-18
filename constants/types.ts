@@ -340,6 +340,17 @@ interface MessagesComponentProps {
   unread: number;
   onPress: () => void;
 }
+
+interface CollectionsComponentProps {
+  image: ImageSourcePropType;
+  name: string;
+  time: string;
+  wasteType: string;
+  size: number;
+  payUnits: number;
+  onPress: () => void;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -382,4 +393,5 @@ export type {
   pinCodeVerificationBoxProps,
   QrCameraProps,
   MessagesComponentProps,
+  CollectionsComponentProps,
 };

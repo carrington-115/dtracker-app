@@ -221,7 +221,7 @@ export default function componentName() {
               name="Collections"
               color={appColors.onSurface}
               bgColor={"rgba(179, 179, 179, 1)"}
-              onPressAction={() => {}}
+              onPressAction={() => router.push("/store/collections")}
               focusedColor={appColors.surfaceContainer}
             />
           </View>
