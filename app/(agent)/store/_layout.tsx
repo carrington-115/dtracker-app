@@ -1,3 +1,4 @@
+import appColors from "@/constants/colors";
 import { Stack, Tabs, usePathname, useSegments } from "expo-router";
 import React from "react";
 
@@ -22,6 +23,9 @@ export default function componentName() {
               pathname !== "/store/undefined"
                 ? 0
                 : 62,
+            backgroundColor: appColors.surfaceContainerLow,
+            borderTopWidth: 1,
+            borderTopColor: appColors.onSurfaceVariant,
           },
           headerShown: false,
         }}
