@@ -39,21 +39,21 @@ export default function componentName() {
             image={require("@/assets/images/user-image.png")}
             name="John Doe"
             time="12:00 PM"
-            unread={1}
+            unread={4}
             onPress={() => {}}
           />
           <MessagesComponent
             image={require("@/assets/images/user-image.png")}
             name="John Doe"
             time="12:00 PM"
-            unread={1}
+            unread={10}
             onPress={() => {}}
           />
           <MessagesComponent
             image={require("@/assets/images/user-image.png")}
             name="John Doe"
             time="12:00 PM"
-            unread={1}
+            unread={200}
             onPress={() => {}}
           />
         </ScrollView>

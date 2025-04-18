@@ -41,7 +41,7 @@ export default function componentName({
           gap: 5,
         }}
       >
-        <UnreadMessageElement number={unread} />
+        {unread > 0 && <UnreadMessageElement number={unread} />}
         <Text style={{ ...textFontStyles.bodySmallRegular }}>{time}</Text>
       </View>
     </Pressable>
