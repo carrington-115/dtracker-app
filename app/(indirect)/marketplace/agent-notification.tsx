@@ -19,6 +19,7 @@ export default function componentName() {
           borderBottomWidth: 0.25,
           borderBottomColor: appColors.outlineVariant,
         }}
+        statusBarHeight={0}
       >
         <StatusBar
           barStyle="dark-content"

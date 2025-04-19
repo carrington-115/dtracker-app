@@ -165,7 +165,13 @@ export default function componentName() {
             outlined
           />
         </View>
-        <AddLocationElement />
+        <View
+          style={{
+            paddingHorizontal: 16,
+          }}
+        >
+          <AddLocationElement />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

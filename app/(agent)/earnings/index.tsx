@@ -238,7 +238,12 @@ const Header = () => {
           title="Earnings"
           titleStyle={{ ...textFontStyles.titleLargeMedium }}
         />
-        <Appbar.Action icon="bell-outline" onPress={() => {}} />
+        <Appbar.Action
+          icon="bell-outline"
+          onPress={() =>
+            router.navigate("/(indirect)/marketplace/agent-notification")
+          }
+        />
         <Appbar.Action
           icon="cog-outline"
           onPress={() => router.navigate("/settings")}
