@@ -1,64 +1,86 @@
 import { AgentMap, AmountElement, BottomButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { pickupDataProps } from "@/constants/types";
+import { ActionSpecialDataProps } from "@/constants/types";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Dimensions, StyleSheet, ScrollView } from "react-native";
+import MapView from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
 
+/*
+  - The Google maps api required here
+  - The routes api
+  - the geocoding api
+
+*/
+
 export default function componentName() {
   const { pickupId } = useLocalSearchParams();
-  const [currentPickupData, setCurrentPickupData] =
-    useState<pickupDataProps | null>(null);
+  const mapRef = useRef<MapView>(null);
 
-  const pickupData: pickupDataProps[] = [
+  const [currentPickupData, setCurrentPickupData] =
+    useState<ActionSpecialDataProps | null>(null);
+  const [pickupData, setPickupData] = useState<ActionSpecialDataProps[]>([
     {
-      id: "1",
-      location: { lat: 6.5244, lng: 3.3792 },
-      userLocation: { lat: 6.5244, lng: 3.3792 },
-      status: "available",
-      size: 4,
-      units: "bags",
-      price: 2000,
-      distance: "2.5 km",
-      userData: {
-        image: require("@/assets/images/user-image.png"),
-        name: "John Doe",
-      },
+      actionType: "pickup",
+      size: 2,
+      units: "buckets",
       pickupType: "immediate",
-    },
-    {
-      id: "2",
-      location: { lat: 6.5244, lng: 3.3792 },
-      userLocation: { lat: 6.5244, lng: 3.3792 },
-      status: "available",
-      size: 4,
-      units: "bags",
-      price: 2000,
-      date: "2021-09-20",
-      time: "10:00",
-      userData: {
-        image: require("@/assets/images/user-image.png"),
-        name: "Jane Doe",
+      price: 1000,
+      userType: "agent",
+      status: "pending",
+      userProfileImage: require("@/assets/images/user-image.png"),
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
+      pickupId: "1",
+      username: "John Doe",
+      distance: "2.5 km",
+      location: {
+        agentLocation: {
+          latitude: 3.8712,
+          longitude: 11.5137,
+        },
+        pickupLocation: {
+          latitude: 3.9012,
+          longitude: 11.5737,
+        },
       },
-      pickupType: "scheduled",
     },
-  ];
+  ]);
 
   useEffect(() => {
-    const currentPickup = pickupData.find((pickup) => pickup.id === pickupId);
-    setCurrentPickupData(currentPickup!);
+    const handleWritePickupData = () => {
+      const currentPickup = pickupData.find(
+        (pickup: ActionSpecialDataProps) => pickup.pickupId === pickupId
+      );
+      setCurrentPickupData(currentPickup!);
+    };
+
+    handleWritePickupData();
   }, []);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.fitToCoordinates([
+        pickupData[0]?.location?.agentLocation!,
+        pickupData[0]?.location?.pickupLocation!,
+      ]);
+    }
+  }, [pickupData]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <AgentMap />
+      <AgentMap
+        agentLocation={pickupData[0]?.location?.agentLocation!}
+        pickupLocation={pickupData[0]?.location?.pickupLocation!}
+        mapRef={mapRef}
+      />
       <View style={styles.detailsModalStyles}>
         <ScrollView style={{ width: "100%" }}>
           <View
@@ -176,7 +198,7 @@ export default function componentName() {
             }}
           >
             <Image
-              source={currentPickupData?.userData.image}
+              source={currentPickupData?.userProfileImage}
               style={{
                 width: 48,
                 height: 48,
@@ -184,7 +206,7 @@ export default function componentName() {
               }}
             />
             <Text style={{ ...textFontStyles.bodyLargeRegular }}>
-              {currentPickupData?.userData.name}
+              {currentPickupData?.username}
             </Text>
           </View>
           <View style={{ width: "100%", marginTop: 30, paddingHorizontal: 16 }}>

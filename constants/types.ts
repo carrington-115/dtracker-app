@@ -1,5 +1,6 @@
 import React from "react";
 import { ImageSourcePropType } from "react-native";
+import MapView from "react-native-maps";
 
 // all the app types
 interface onboardingSliderType {
@@ -264,7 +265,7 @@ interface mapViewInputProps {
 }
 
 interface actionsElementProps {
-  userProfileImage?: any;
+  userProfileImage?: ImageSourcePropType;
   actionType: "pickup" | "marketplace";
   itemName?: string;
   size: number;
@@ -381,11 +382,32 @@ interface ActionSpecialDataProps {
   pickupType: "scheduled" | "immediate";
   date: string;
   time: string;
-  pickupId: number;
+  pickupId: string | number;
   distance?: string;
   username?: string;
+  location?: {
+    agentLocation: {
+      latitude: number;
+      longitude: number;
+    };
+    pickupLocation: {
+      latitude: number;
+      longitude: number;
+    };
+  };
 }
 
+interface AgentMapViewProps {
+  agentLocation: {
+    latitude: number;
+    longitude: number;
+  };
+  pickupLocation: {
+    latitude: number;
+    longitude: number;
+  };
+  mapRef: React.RefObject<MapView>;
+}
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -431,4 +453,5 @@ export type {
   CollectionsComponentProps,
   AddExchangeElementProps,
   ActionSpecialDataProps,
+  AgentMapViewProps,
 };

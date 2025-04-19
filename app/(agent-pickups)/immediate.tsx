@@ -16,7 +16,23 @@ export default function componentName() {
   );
 
   useEffect(() => {
-    setPickupsNumber([]);
+    setPickupsNumber([
+      {
+        actionType: "pickup",
+        size: 2,
+        units: "buckets",
+        pickupType: "immediate",
+        price: 10,
+        userType: "agent",
+        status: "pending",
+        userProfileImage: require("@/assets/images/user-image.png"),
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        pickupId: 1,
+        username: "John Doe",
+        distance: "2.5 km",
+      },
+    ]);
   }, []);
 
   if (pickupsNumber.length === 0) {
@@ -63,6 +79,7 @@ export default function componentName() {
                 params: { pickupId: "1" },
               })
             }
+            key={pickup.pickupId}
           />
         ))}
       </View>
