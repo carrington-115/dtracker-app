@@ -27,6 +27,7 @@ export default function componentName() {
           height: height,
           paddingHorizontal: 50,
           paddingTop: (2 * height) / 7,
+          backgroundColor: appColors.surfaceBright,
         }}
       >
         <NoElementOnPage

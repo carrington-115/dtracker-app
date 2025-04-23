@@ -76,11 +76,13 @@ export default function componentName() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <AgentMap
-        agentLocation={pickupData[0]?.location?.agentLocation!}
-        pickupLocation={pickupData[0]?.location?.pickupLocation!}
-        mapRef={mapRef}
-      />
+      <View style={{ width: "100%", paddingHorizontal: 16 }}>
+        <AgentMap
+          agentLocation={pickupData[0]?.location?.agentLocation!}
+          pickupLocation={pickupData[0]?.location?.pickupLocation!}
+          mapRef={mapRef}
+        />
+      </View>
       <View style={styles.detailsModalStyles}>
         <ScrollView style={{ width: "100%" }}>
           <View

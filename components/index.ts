@@ -52,6 +52,7 @@ import QrCamera from "./organisms/QrCamera";
 import MessagesComponent from "./molecules/MessagesComponent";
 import CollectionsComponent from "./organisms/CollectionsComponent";
 import AddExchangeElement from "./organisms/AddExchangeElement";
+import CustomMarker from "./atoms/CustomMarker";
 
 export {
   OnboardingSlider,
@@ -107,4 +108,5 @@ export {
   MessagesComponent,
   CollectionsComponent,
   AddExchangeElement,
+  CustomMarker,
 };

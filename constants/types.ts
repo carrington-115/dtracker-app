@@ -408,6 +408,15 @@ interface AgentMapViewProps {
   };
   mapRef: React.RefObject<MapView>;
 }
+
+interface CustomMarkerProps {
+  coordinate: {
+    latitude: number;
+    longitude: number;
+  };
+  image: ImageSourcePropType;
+}
+
 export type {
   onboardingSliderType,
   authButtonPropsType,
@@ -454,4 +463,5 @@ export type {
   AddExchangeElementProps,
   ActionSpecialDataProps,
   AgentMapViewProps,
+  CustomMarkerProps,
 };
