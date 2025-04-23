@@ -9,9 +9,10 @@ import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Dimensions, StyleSheet, ScrollView } from "react-native";
 import MapView from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 /*
   - The Google maps api required here
@@ -26,6 +27,13 @@ export default function componentName() {
 
   const [currentPickupData, setCurrentPickupData] =
     useState<ActionSpecialDataProps | null>(null);
+  const [estimatedDistance, setEstimatedDistance] = useState<number | null>(
+    null
+  );
+  const [estimatedDuration, setEstimatedDuration] = useState<number | null>(
+    null
+  );
+
   const [pickupData, setPickupData] = useState<ActionSpecialDataProps[]>([
     {
       actionType: "pickup",
@@ -37,10 +45,12 @@ export default function componentName() {
       status: "pending",
       userProfileImage: require("@/assets/images/user-image.png"),
       date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
       pickupId: "1",
       username: "John Doe",
-      distance: "2.5 km",
       location: {
         agentLocation: {
           latitude: 3.8712,
@@ -72,7 +82,22 @@ export default function componentName() {
         pickupData[0]?.location?.pickupLocation!,
       ]);
     }
-  }, [pickupData]);
+  }, [pickupData, estimatedDistance, estimatedDuration]);
+
+  // this function will calculate the time to collect the pickup
+  const calculateTimeToCollect = () => {
+    const pickupTime = new Date();
+    const pickupDuration = estimatedDuration!;
+    const pickupTimeToCollect = new Date(
+      pickupTime.getTime() + pickupDuration * 60000
+    );
+    const finalTime = pickupTimeToCollect.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    return finalTime;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,10 +106,26 @@ export default function componentName() {
           agentLocation={pickupData[0]?.location?.agentLocation!}
           pickupLocation={pickupData[0]?.location?.pickupLocation!}
           mapRef={mapRef}
+          mapDirectionElement={
+            <MapViewDirections
+              origin={pickupData[0]?.location?.agentLocation!}
+              destination={pickupData[0]?.location?.pickupLocation!}
+              apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY as string}
+              strokeWidth={2}
+              strokeColor={appColors.primaryColor}
+              onError={(error) => {
+                console.log(error);
+              }}
+              onReady={(result) => {
+                setEstimatedDistance(Math.round(result.distance));
+                setEstimatedDuration(Math.round(result.duration));
+              }}
+            />
+          }
         />
       </View>
       <View style={styles.detailsModalStyles}>
-        <ScrollView style={{ width: "100%" }}>
+        <View style={{ width: "100%" }}>
           <View
             style={{
               flexDirection: "column",
@@ -97,10 +138,11 @@ export default function componentName() {
             }}
           >
             <Text style={{ ...textFontStyles.titleLargeBold }}>
-              {currentPickupData?.distance} Away
+              {estimatedDistance ? estimatedDistance! : 0} km Away
             </Text>
             <Text style={{ ...textFontStyles.titleMediumRegular }}>
-              Rond-point Express, Biyem-Assi
+              You will collect arrive at{" "}
+              {currentPickupData?.time ? calculateTimeToCollect() : "00:00"}
             </Text>
           </View>
           <View
@@ -214,7 +256,7 @@ export default function componentName() {
           <View style={{ width: "100%", marginTop: 30, paddingHorizontal: 16 }}>
             <BottomButton name="Accept" onPressAction={() => {}} />
           </View>
-        </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -232,6 +274,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     position: "absolute",
+    height: height / 2,
     bottom: 0,
     right: 0,
     left: 0,

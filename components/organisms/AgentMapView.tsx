@@ -11,6 +11,7 @@ export default function AgentMapView({
   agentLocation,
   pickupLocation,
   mapRef,
+  mapDirectionElement,
 }: AgentMapViewProps) {
   interface LocationProps {
     latitude: number;
@@ -58,18 +59,9 @@ export default function AgentMapView({
           coordinate={pickupLocation}
           image={require("@/assets/icons/markers/pickup-marker.png")}
         />
-        {origin !== undefined && destination !== undefined ? (
-          <MapViewDirections
-            origin={origin}
-            destination={destination}
-            apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY as string}
-            strokeWidth={2}
-            strokeColor={appColors.primaryColor}
-            onError={(error) => {
-              console.log(error);
-            }}
-          />
-        ) : null}
+        {origin !== undefined && destination !== undefined
+          ? mapDirectionElement
+          : null}
       </MapView>
     </View>
   );

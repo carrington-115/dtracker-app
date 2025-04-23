@@ -1,6 +1,7 @@
 import React from "react";
 import { ImageSourcePropType } from "react-native";
 import MapView from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 
 // all the app types
 interface onboardingSliderType {
@@ -407,6 +408,7 @@ interface AgentMapViewProps {
     longitude: number;
   };
   mapRef: React.RefObject<MapView>;
+  mapDirectionElement?: any;
 }
 
 interface CustomMarkerProps {
