@@ -4,8 +4,11 @@ const initialState = {
   itemName: "",
   itemSize: "",
   trashType: "",
-  priceControl: "default",
-  priceAmount: 0,
+  location: {
+    latitude: null,
+    longtitude: null,
+  },
+  pricePerUnit: 0,
 };
 
 const storeSlice = createSlice({
@@ -22,10 +25,11 @@ const storeSlice = createSlice({
       state.trashType = action.payload;
     },
     setPriceControl: (state, action) => {
-      state.priceControl = action.payload;
+      state.pricePerUnit = action.payload;
     },
-    setPriceAmount: (state, action) => {
-      state.priceAmount = action.payload;
+    setLocation: (state, action) => {
+      state.location.latitude = action.payload?.latitude;
+      state.location.longtitude = action.payload?.longtitude;
     },
     resetState: (state) => {
       return { ...state, ...initialState };
@@ -37,7 +41,7 @@ export const {
   setItemName,
   setItemSize,
   setTrashType,
-  setPriceAmount,
+  setLocation,
   setPriceControl,
   resetState,
 } = storeSlice.actions;

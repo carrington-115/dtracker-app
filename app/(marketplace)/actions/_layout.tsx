@@ -1,12 +1,10 @@
+import appColors from "@/constants/colors";
 import { Stack, Tabs, usePathname, useSegments } from "expo-router";
 import React from "react";
 
 export default function componentName() {
   const segments = useSegments();
   const pathname = usePathname();
-
-  console.log("segments", segments);
-  console.log("pathname", pathname);
 
   return (
     <>
@@ -26,11 +24,13 @@ export default function componentName() {
                 ? "none"
                 : "flex",
             height:
-              (segments[segments.length - 1] === "[pickupId]" ||
-                segments[segments.length - 1] === "[storeId]") &&
+              segments[segments.length - 1] === "[pickupId]" &&
               pathname !== "/actions/undefined"
                 ? 0
                 : 62,
+            backgroundColor: appColors.surfaceContainerLow,
+            borderTopWidth: 1,
+            borderTopColor: appColors.onSurfaceVariant,
           },
           headerShown: false,
         }}

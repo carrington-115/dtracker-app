@@ -1,5 +1,6 @@
 import {
   ActionButton,
+  AddLocationElement,
   ExchangeElement,
   MapElementView,
   PickupButton,
@@ -25,7 +26,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import { Appbar } from "react-native-paper";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function componentName() {
   const router = useRouter();
@@ -95,7 +96,7 @@ export default function componentName() {
         <StatusBar
           barStyle="dark-content"
           translucent={true}
-          backgroundColor={appColors.surfaceContainerLowest}
+          backgroundColor={appColors.surfaceBright}
         />
         <Appbar.Header
           style={{
@@ -107,8 +108,14 @@ export default function componentName() {
             title="DTRACKER"
             titleStyle={{ ...textFontStyles.headlineSmallBold }}
           />
-          <Appbar.Action icon="store-plus-outline" onPress={() => {}} />
-          <Appbar.Action icon="cog-outline" onPress={() => {}} />
+          <Appbar.Action
+            icon={"recycle"}
+            onPress={() => router.navigate("/exchange")}
+          />
+          <Appbar.Action
+            icon="cog-outline"
+            onPress={() => router.push("/settings")}
+          />
         </Appbar.Header>
         <ScrollView style={styles.scrollContainerStyles}>
           <View style={styles.homeTitleStyle}>
@@ -127,26 +134,51 @@ export default function componentName() {
               ))}
             </View>
           </View>
+          <AddLocationElement />
 
-          <View
+          {/* <PopularStoreElement
+            location={{
+              latitude: 0,
+              longitude: 0,
+            }}
+            storeName="Store Name"
+            storeOwnerName="Store Owner Name"
+            photoUrl=""
+            action={() => {}}
+          /> */}
+          {/* <View
             style={{
-              marginTop: 20,
+              width: "100%",
+              gap: 10,
+              flexDirection: "column",
+              marginVertical: 20,
             }}
           >
-            <ActionButton
-              title="Add your location"
-              context="Turn on your device location and get access to all exchange points closest to you"
-              action={() => {}}
+            <Text
+              style={{
+                ...textFontStyles.bodyLargeRegular,
+                color: appColors.onSurface,
+                marginTop: 10,
+              }}
+            >
+              Recommended exchange points
+            </Text>
+            <MapElementView
+              mapsDetails={[
+                {
+                  location: {
+                    latitude: 0,
+                    longitude: 0,
+                  },
+                  user: {
+                    name: "User",
+                    photoUrl: "",
+                  },
+                  delay: "2 hours",
+                },
+              ]}
             />
-          </View>
-          <ExchangeElement
-            title="Plastic bottles"
-            wasteType="plastics"
-            size={5}
-            storeLocation={{ latitude: 0, longitude: 0 }}
-            owner={true}
-            price={200}
-          />
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </>

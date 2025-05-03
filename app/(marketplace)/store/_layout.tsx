@@ -1,13 +1,8 @@
-import { IconButton } from "@/components";
 import appColors from "@/constants/colors";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Stack, Tabs, usePathname, useRouter, useSegments } from "expo-router";
 import React from "react";
-import { StyleSheet, View } from "react-native";
 
 export default function componentName() {
-  const router = useRouter();
   const segments = useSegments();
   const pathname = usePathname();
 
@@ -21,48 +16,21 @@ export default function componentName() {
           tabBarStyle: {
             display:
               segments[segments.length - 1] === "[id]" &&
-              pathname !== "/store/undefined"
+              pathname === "/store/undefined"
+                ? "flex"
+                : segments[segments.length - 1] === "[id]" ||
+                  segments[segments.length - 1] === "agent-exchange" ||
+                  segments[segments.length - 1] === "messages" ||
+                  segments[segments.length - 1] === "collections" ||
+                  segments[segments.length - 1] === "create-exchange-offer"
                 ? "none"
                 : "flex",
-            height:
-              segments[segments.length - 1] === "[id]" &&
-              pathname !== "/store/undefined"
-                ? 0
-                : 62,
+            height: 62,
+            backgroundColor: appColors.surfaceContainerLow,
+            borderTopWidth: 1,
+            borderTopColor: appColors.onSurfaceVariant,
           },
           headerShown: false,
-          headerRight: () => (
-            <>
-              <View style={styles.headerIconStyles}>
-                <IconButton
-                  icon={
-                    <MaterialCommunityIcons
-                      name="store-plus-outline"
-                      size={24}
-                      color={appColors.onSurface}
-                    />
-                  }
-                  btnAction={() =>
-                    router.navigate("/(indirect)/marketplace/add-item")
-                  }
-                  bgColor="transparent"
-                  pressedColor={appColors.surfaceContainerLow}
-                />
-                <IconButton
-                  icon={
-                    <MaterialIcons
-                      name="settings"
-                      size={24}
-                      color={appColors.onSurface}
-                    />
-                  }
-                  btnAction={() => router.navigate("/settings")}
-                  bgColor={"transparent"}
-                  pressedColor={appColors.surfaceContainerLow}
-                />
-              </View>
-            </>
-          ),
         }}
       />
       <Stack screenOptions={{ headerShown: false }}>
@@ -78,16 +46,31 @@ export default function componentName() {
             headerShadowVisible: false,
           }}
         />
+        <Stack.Screen
+          name="agent-exchange"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="messages"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="collections"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="create-exchange-offer"
+          options={{
+            headerShadowVisible: false,
+          }}
+        />
       </Stack>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  headerIconStyles: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginRight: 16,
-  },
-});

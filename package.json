@@ -46,7 +46,10 @@
     "react-dom": "18.3.1",
     "react-native": "0.76.6",
     "react-native-appwrite": "^0.7.0",
+    "react-native-geocoding": "^0.5.0",
     "react-native-gesture-handler": "~2.20.2",
+    "react-native-maps": "1.18.0",
+    "react-native-maps-directions": "^1.9.0",
     "react-native-otp-entry": "1.4.0",
     "react-native-pager-view": "6.5.1",
     "react-native-paper": "^5.13.1",
@@ -58,8 +61,7 @@
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
     "swiper": "^11.2.1",
-    "undefined": "expo-auth-session/providers/google",
-    "react-native-maps": "1.18.0"
+    "undefined": "expo-auth-session/providers/google"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -1,4 +1,7 @@
 import React from "react";
+import { ImageSourcePropType } from "react-native";
+import MapView from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 
 // all the app types
 interface onboardingSliderType {
@@ -75,6 +78,7 @@ interface dropDownElementProps {
   dropDownItems: { label: string; value: string }[];
   dropDownValue: string;
   onValueChange: (itemValue: string) => void;
+  bgColor?: string;
 }
 
 interface bottomSheetPropsType {
@@ -262,7 +266,7 @@ interface mapViewInputProps {
 }
 
 interface actionsElementProps {
-  userProfileImage?: any;
+  userProfileImage?: ImageSourcePropType;
   actionType: "pickup" | "marketplace";
   itemName?: string;
   size: number;
@@ -306,6 +310,7 @@ interface popularStoresElementProps {
 }
 
 interface exchangeElementProps {
+  id?: string | number;
   title: string;
   wasteType: "plastics" | "metals" | "papers" | "glass" | "others";
   size: number;
@@ -315,6 +320,103 @@ interface exchangeElementProps {
     latitude: number;
     longitude: number;
   };
+  action?: () => void;
+}
+
+interface pinCodeVerificationBoxProps {
+  buttonAction: () => void;
+  cameraAction: () => void;
+  setOtp: (otp: string) => void;
+  otp: string;
+}
+
+interface QrCameraProps {
+  onScannedAction: () => void;
+  onBackButtonAction: () => void;
+  setShowCamera: (show: boolean) => void;
+}
+
+interface MessagesComponentProps {
+  image: ImageSourcePropType;
+  name: string;
+  time: string;
+  unread: number;
+  onPress: () => void;
+}
+
+interface CollectionsComponentProps {
+  image: ImageSourcePropType;
+  name: string;
+  time: string;
+  wasteType: string;
+  size: number;
+  payUnits: number;
+  onPress: () => void;
+}
+
+interface AddExchangeElementProps {
+  action: () => void;
+  trashType: string;
+  setTrashType: (value: string) => void;
+  trashSize: number;
+  setTrashSize: (value: number) => void;
+  price: number;
+  setPrice: (value: number) => void;
+  location: {
+    latitude: number;
+    longtitude: number;
+  } | null;
+  locationSwitchState: boolean;
+  deviceLocationState: boolean;
+  isBusinessLocationAvailable: boolean;
+  handleGetDeviceLocation: () => void;
+}
+
+interface ActionSpecialDataProps {
+  userProfileImage: any;
+  actionType: "pickup" | "marketplace";
+  size: number;
+  units: string;
+  price: number;
+  userType: "user" | "agent";
+  status: "pending" | "active" | "available";
+  pickupType: "scheduled" | "immediate";
+  date: string;
+  time: string;
+  pickupId: string | number;
+  distance?: string;
+  username?: string;
+  location?: {
+    agentLocation: {
+      latitude: number;
+      longitude: number;
+    };
+    pickupLocation: {
+      latitude: number;
+      longitude: number;
+    };
+  };
+}
+
+interface AgentMapViewProps {
+  agentLocation: {
+    latitude: number;
+    longitude: number;
+  };
+  pickupLocation: {
+    latitude: number;
+    longitude: number;
+  };
+  mapRef: React.RefObject<MapView>;
+  mapDirectionElement?: any;
+}
+
+interface CustomMarkerProps {
+  coordinate: {
+    latitude: number;
+    longitude: number;
+  };
+  image: ImageSourcePropType;
 }
 
 export type {
@@ -356,4 +458,12 @@ export type {
   mapActivityElementProps,
   popularStoresElementProps,
   exchangeElementProps,
+  pinCodeVerificationBoxProps,
+  QrCameraProps,
+  MessagesComponentProps,
+  CollectionsComponentProps,
+  AddExchangeElementProps,
+  ActionSpecialDataProps,
+  AgentMapViewProps,
+  CustomMarkerProps,
 };

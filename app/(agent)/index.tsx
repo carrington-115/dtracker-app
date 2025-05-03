@@ -1,7 +1,13 @@
-import { ActiveButton, GoalCard, PickupButton } from "@/components";
+import {
+  ActiveButton,
+  AddLocationElement,
+  GoalCard,
+  PickupButton,
+} from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
 import { pickupButtonProps } from "@/constants/types";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
@@ -52,6 +58,17 @@ export default function componentName() {
       name: "Scheduled pickups",
       onPress: () => router.navigate("/(agent-pickups)/scheduled"),
     },
+    {
+      icon: (
+        <FontAwesome
+          name="recycle"
+          size={48}
+          color={appColors.onPrimaryContainerColor}
+        />
+      ),
+      name: "Request exchange",
+      onPress: () => router.navigate("/exchange"),
+    },
   ];
 
   useEffect(() => {
@@ -69,7 +86,7 @@ export default function componentName() {
     <SafeAreaView style={styles.container}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={appColors.surfaceContainerLow}
+        backgroundColor={appColors.surfaceBright}
       />
       <Header />
       <ScrollView style={{ width: "100%" }}>
@@ -97,6 +114,7 @@ export default function componentName() {
               <PickupButton key={index} {...option} />
             ))}
           </View>
+
           <GoalCard
             month={cardCalendar.month}
             year={cardCalendar.year}
@@ -147,29 +165,46 @@ export default function componentName() {
             outlined
           />
         </View>
+        <View
+          style={{
+            paddingHorizontal: 16,
+          }}
+        >
+          <AddLocationElement />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const Header = () => {
+  const router = useRouter();
   return (
     <>
       <Appbar.Header
         statusBarHeight={0}
         style={{
-          backgroundColor: appColors.surfaceContainerLow,
-          borderBottomWidth: 0.5,
-          borderBottomColor: appColors.outline,
+          backgroundColor: appColors.surfaceBright,
         }}
       >
         <Appbar.Content
           title="DTRACKER"
           titleStyle={{ ...textFontStyles.headlineSmallBold }}
         />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
-        <Appbar.Action icon="bell-outline" onPress={() => {}} />
-        <Appbar.Action icon="cog-outline" onPress={() => {}} />
+        <Appbar.Action
+          icon={"recycle"}
+          onPress={() => router.navigate("/exchange")}
+        />
+        <Appbar.Action
+          icon="bell-outline"
+          onPress={() =>
+            router.navigate("/(indirect)/marketplace/agent-notification")
+          }
+        />
+        <Appbar.Action
+          icon="cog-outline"
+          onPress={() => router.navigate("/settings")}
+        />
       </Appbar.Header>
     </>
   );

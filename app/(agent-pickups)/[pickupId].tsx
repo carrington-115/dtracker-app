@@ -1,66 +1,131 @@
 import { AgentMap, AmountElement, BottomButton } from "@/components";
 import appColors from "@/constants/colors";
 import { textFontStyles } from "@/constants/fonts";
-import { pickupDataProps } from "@/constants/types";
+import { ActionSpecialDataProps } from "@/constants/types";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Dimensions, StyleSheet, ScrollView } from "react-native";
+import MapView from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
+
+/*
+  - The Google maps api required here
+  - The routes api
+  - the geocoding api
+
+*/
 
 export default function componentName() {
   const { pickupId } = useLocalSearchParams();
-  const [currentPickupData, setCurrentPickupData] =
-    useState<pickupDataProps | null>(null);
+  const mapRef = useRef<MapView>(null);
 
-  const pickupData: pickupDataProps[] = [
+  const [currentPickupData, setCurrentPickupData] =
+    useState<ActionSpecialDataProps | null>(null);
+  const [estimatedDistance, setEstimatedDistance] = useState<number | null>(
+    null
+  );
+  const [estimatedDuration, setEstimatedDuration] = useState<number | null>(
+    null
+  );
+
+  const [pickupData, setPickupData] = useState<ActionSpecialDataProps[]>([
     {
-      id: "1",
-      location: { lat: 6.5244, lng: 3.3792 },
-      userLocation: { lat: 6.5244, lng: 3.3792 },
-      status: "available",
-      size: 4,
-      units: "bags",
-      price: 2000,
-      distance: "2.5 km",
-      userData: {
-        image: require("@/assets/images/user-image.png"),
-        name: "John Doe",
-      },
+      actionType: "pickup",
+      size: 2,
+      units: "buckets",
       pickupType: "immediate",
-    },
-    {
-      id: "2",
-      location: { lat: 6.5244, lng: 3.3792 },
-      userLocation: { lat: 6.5244, lng: 3.3792 },
-      status: "available",
-      size: 4,
-      units: "bags",
-      price: 2000,
-      date: "2021-09-20",
-      time: "10:00",
-      userData: {
-        image: require("@/assets/images/user-image.png"),
-        name: "Jane Doe",
+      price: 1000,
+      userType: "agent",
+      status: "pending",
+      userProfileImage: require("@/assets/images/user-image.png"),
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      pickupId: "1",
+      username: "John Doe",
+      location: {
+        agentLocation: {
+          latitude: 3.8712,
+          longitude: 11.5137,
+        },
+        pickupLocation: {
+          latitude: 3.9012,
+          longitude: 11.5737,
+        },
       },
-      pickupType: "scheduled",
     },
-  ];
+  ]);
 
   useEffect(() => {
-    const currentPickup = pickupData.find((pickup) => pickup.id === pickupId);
-    setCurrentPickupData(currentPickup!);
+    const handleWritePickupData = () => {
+      const currentPickup = pickupData.find(
+        (pickup: ActionSpecialDataProps) => pickup.pickupId === pickupId
+      );
+      setCurrentPickupData(currentPickup!);
+    };
+
+    handleWritePickupData();
   }, []);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.fitToCoordinates([
+        pickupData[0]?.location?.agentLocation!,
+        pickupData[0]?.location?.pickupLocation!,
+      ]);
+    }
+  }, [pickupData, estimatedDistance, estimatedDuration]);
+
+  // this function will calculate the time to collect the pickup
+  const calculateTimeToCollect = () => {
+    const pickupTime = new Date();
+    const pickupDuration = estimatedDuration!;
+    const pickupTimeToCollect = new Date(
+      pickupTime.getTime() + pickupDuration * 60000
+    );
+    const finalTime = pickupTimeToCollect.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    return finalTime;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <AgentMap />
+      <View style={{ width: "100%", paddingHorizontal: 16 }}>
+        <AgentMap
+          agentLocation={pickupData[0]?.location?.agentLocation!}
+          pickupLocation={pickupData[0]?.location?.pickupLocation!}
+          mapRef={mapRef}
+          mapDirectionElement={
+            <MapViewDirections
+              origin={pickupData[0]?.location?.agentLocation!}
+              destination={pickupData[0]?.location?.pickupLocation!}
+              apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY as string}
+              strokeWidth={2}
+              strokeColor={appColors.primaryColor}
+              onError={(error) => {
+                console.log(error);
+              }}
+              onReady={(result) => {
+                setEstimatedDistance(Math.round(result.distance));
+                setEstimatedDuration(Math.round(result.duration));
+              }}
+            />
+          }
+        />
+      </View>
       <View style={styles.detailsModalStyles}>
-        <ScrollView style={{ width: "100%" }}>
+        <View style={{ width: "100%" }}>
           <View
             style={{
               flexDirection: "column",
@@ -73,10 +138,11 @@ export default function componentName() {
             }}
           >
             <Text style={{ ...textFontStyles.titleLargeBold }}>
-              {currentPickupData?.distance} Away
+              {estimatedDistance ? estimatedDistance! : 0} km Away
             </Text>
             <Text style={{ ...textFontStyles.titleMediumRegular }}>
-              Rond-point Express, Biyem-Assi
+              You will collect arrive at{" "}
+              {currentPickupData?.time ? calculateTimeToCollect() : "00:00"}
             </Text>
           </View>
           <View
@@ -176,7 +242,7 @@ export default function componentName() {
             }}
           >
             <Image
-              source={currentPickupData?.userData.image}
+              source={currentPickupData?.userProfileImage}
               style={{
                 width: 48,
                 height: 48,
@@ -184,13 +250,13 @@ export default function componentName() {
               }}
             />
             <Text style={{ ...textFontStyles.bodyLargeRegular }}>
-              {currentPickupData?.userData.name}
+              {currentPickupData?.username}
             </Text>
           </View>
           <View style={{ width: "100%", marginTop: 30, paddingHorizontal: 16 }}>
             <BottomButton name="Accept" onPressAction={() => {}} />
           </View>
-        </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -208,6 +274,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     position: "absolute",
+    height: height / 2,
     bottom: 0,
     right: 0,
     left: 0,

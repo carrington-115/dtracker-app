@@ -46,6 +46,13 @@ import MapActivityElement from "./molecules/MapActivityElement";
 import MapElementView from "./organisms/MapElementView";
 import PopularStoreElement from "./molecules/PopularStores";
 import ExchangeElement from "./molecules/ExchangeElement";
+import AddLocationElement from "./organisms/AddLocationElement";
+import PinCodeVerificationBox from "./organisms/PinCodeVerificationBox";
+import QrCamera from "./organisms/QrCamera";
+import MessagesComponent from "./molecules/MessagesComponent";
+import CollectionsComponent from "./organisms/CollectionsComponent";
+import AddExchangeElement from "./organisms/AddExchangeElement";
+import CustomMarker from "./atoms/CustomMarker";
 
 export {
   OnboardingSlider,
@@ -95,4 +102,11 @@ export {
   MapElementView,
   PopularStoreElement,
   ExchangeElement,
+  AddLocationElement,
+  PinCodeVerificationBox,
+  QrCamera,
+  MessagesComponent,
+  CollectionsComponent,
+  AddExchangeElement,
+  CustomMarker,
 };

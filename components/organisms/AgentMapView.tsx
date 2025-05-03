@@ -1,14 +1,68 @@
-import { Image } from "expo-image";
-import React from "react";
-import { View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet } from "react-native";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
+import { AgentMapViewProps } from "@/constants/types";
+import mapStyle from "@/constants/map_styles";
+import appColors from "@/constants/colors";
+import CustomMarker from "../atoms/CustomMarker";
 
-export default function componentName() {
+export default function AgentMapView({
+  agentLocation,
+  pickupLocation,
+  mapRef,
+  mapDirectionElement,
+}: AgentMapViewProps) {
+  interface LocationProps {
+    latitude: number;
+    longitude: number;
+  }
+
+  const [origin, setOrigin] = useState<LocationProps | undefined>(undefined);
+  const [destination, setDestination] = useState<LocationProps | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setOrigin(agentLocation);
+      setDestination(pickupLocation);
+    }, 500);
+  }, [agentLocation, pickupLocation]);
+
   return (
-    <View style={{ width: "100%", paddingHorizontal: 16 }}>
-      <Image
-        source={require("@/assets/images/test-agent-map.png")}
-        style={{ width: "100%", height: 300, objectFit: "contain" }}
-      />
+    <View
+      style={{
+        width: "100%",
+        height: 300,
+        borderRadius: 20,
+        overflow: "hidden",
+      }}
+    >
+      <MapView
+        style={{ ...StyleSheet.absoluteFillObject }}
+        initialRegion={{
+          latitude: (agentLocation.latitude + pickupLocation.latitude) / 2,
+          longitude: (agentLocation.longitude + pickupLocation.longitude) / 2,
+          latitudeDelta: 1.5,
+          longitudeDelta: 1.5,
+        }}
+        provider={PROVIDER_GOOGLE}
+        customMapStyle={mapStyle}
+        ref={mapRef}
+      >
+        <CustomMarker
+          coordinate={agentLocation}
+          image={require("@/assets/icons/markers/agent-marker.png")}
+        />
+        <CustomMarker
+          coordinate={pickupLocation}
+          image={require("@/assets/icons/markers/pickup-marker.png")}
+        />
+        {origin !== undefined && destination !== undefined
+          ? mapDirectionElement
+          : null}
+      </MapView>
     </View>
   );
 }
