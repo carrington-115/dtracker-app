@@ -1,5 +1,4 @@
 import { NavigationHeader } from "@/components";
-
 import { Stack, usePathname } from "expo-router";
 import React from "react";
 import { View, Dimensions, StyleSheet, StatusBar } from "react-native";
