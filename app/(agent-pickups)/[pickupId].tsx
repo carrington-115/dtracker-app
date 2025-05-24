@@ -5,7 +5,7 @@ import { ActionSpecialDataProps } from "@/constants/types";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Dimensions, StyleSheet, ScrollView } from "react-native";
 import MapView from "react-native-maps";
@@ -24,6 +24,7 @@ const { width, height } = Dimensions.get("window");
 export default function componentName() {
   const { pickupId } = useLocalSearchParams();
   const mapRef = useRef<MapView>(null);
+  const router = useRouter();
 
   const [currentPickupData, setCurrentPickupData] =
     useState<ActionSpecialDataProps | null>(null);
@@ -99,6 +100,11 @@ export default function componentName() {
     });
 
     return finalTime;
+  };
+
+  const handleStartJourney = () => {
+    setButtonName("Start Journey");
+    router.push("/");
   };
 
   return (
