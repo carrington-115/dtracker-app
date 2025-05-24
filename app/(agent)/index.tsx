@@ -170,7 +170,9 @@ export default function componentName() {
             paddingHorizontal: 16,
           }}
         >
-          <AddLocationElement />
+          <AddLocationElement
+            action={() => router.navigate("/navigation/add-location")}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

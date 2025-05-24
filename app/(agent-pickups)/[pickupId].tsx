@@ -34,6 +34,8 @@ export default function componentName() {
     null
   );
 
+  const [buttonName, setButtonName] = useState<string>("Accept");
+
   const [pickupData, setPickupData] = useState<ActionSpecialDataProps[]>([
     {
       actionType: "pickup",
@@ -254,7 +256,10 @@ export default function componentName() {
             </Text>
           </View>
           <View style={{ width: "100%", marginTop: 30, paddingHorizontal: 16 }}>
-            <BottomButton name="Accept" onPressAction={() => {}} />
+            <BottomButton
+              name={buttonName}
+              onPressAction={() => setButtonName("Start Journey")}
+            />
           </View>
         </View>
       </View>

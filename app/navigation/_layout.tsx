@@ -1,10 +1,8 @@
-import { IconButton, NavigationHeader } from "@/components";
-import appColors from "@/constants/colors";
-import { textFontStyles } from "@/constants/fonts";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { NavigationHeader } from "@/components";
+
 import { Stack, usePathname } from "expo-router";
 import React from "react";
-import { View, Text, Dimensions, StyleSheet, StatusBar } from "react-native";
+import { View, Dimensions, StyleSheet, StatusBar } from "react-native";
 
 const { width } = Dimensions.get("window");
 
@@ -14,10 +12,7 @@ export default function componentName() {
   return (
     <View style={styles.container}>
       <>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={"rgba(248, 248, 248, 1)"}
-        />
+        <StatusBar barStyle="dark-content" />
         {pathname === "/" && (
           <NavigationHeader name="John Doe" ETA="10 mins" distance="2.5 km" />
         )}
