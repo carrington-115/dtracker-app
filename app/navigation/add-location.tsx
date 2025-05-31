@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions, Text, StatusBar } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, StyleSheet, Dimensions, StatusBar } from "react-native";
 import appColors from "@/constants/colors";
 import MapView from "react-native-maps";
 import mapStyle from "@/constants/map_styles";
-import { BottomButton, CustomMarker, IconButton } from "@/components";
+import {
+  BottomButton,
+  CustomMarker,
+  IconButton,
+  LocatorSection,
+} from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Location from "expo-location";
 
 const { width, height } = Dimensions.get("window");
 
@@ -17,8 +23,30 @@ interface LocationProps {
 
 export default function componentName() {
   const [location, setLocation] = useState<LocationProps | null>(null);
+  const mapRef = useRef<MapView>(null);
+  const [isMapReady, setIsMapReady] = useState<boolean>(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (isMapReady && mapRef.current && location) {
+      mapRef.current.animateToRegion(
+        { ...location, latitudeDelta: 0.06522, longitudeDelta: 0.00921 },
+        1000
+      );
+    }
+  }, [location, isMapReady]);
+
+  const handleMapReady = () => {
+    setIsMapReady(true);
+    if (mapRef.current && location) {
+      const { latitude, longitude } = location;
+      mapRef.current.animateToRegion(
+        { latitude, longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
+        1000
+      );
+    }
+  };
 
   return (
     <SafeAreaView style={[styles.container]}>
@@ -26,7 +54,7 @@ export default function componentName() {
       <View
         style={{
           position: "absolute",
-          top: 10,
+          top: 30,
           left: 10,
           zIndex: 1000,
         }}
@@ -57,29 +85,59 @@ export default function componentName() {
           longitudeDelta: 0.0421,
         }}
         customMapStyle={mapStyle}
+        onMapReady={handleMapReady}
+        ref={mapRef}
       >
-        {location !== null &&
-          location?.latitude !== 0 &&
-          location?.longitude !== 0 && (
-            <CustomMarker
-              coordinate={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-              image={require("@/assets/icons/markers/pickup-marker.png")}
-            />
-          )}
+        {location && (
+          <CustomMarker
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            image={require("@/assets/icons/markers/pickup-marker.png")}
+          />
+        )}
       </MapView>
-      <DetailsComponent />
+      <DetailsComponent setDeviceLocation={setLocation} />
     </SafeAreaView>
   );
 }
 
-const DetailsComponent = () => {
+const DetailsComponent = ({
+  setDeviceLocation,
+}: {
+  setDeviceLocation: (location: any) => void;
+}) => {
+  const [locationSwitchState, setLocationSwitchState] =
+    useState<boolean>(false);
+
+  const handleGetDeviceLocation = async () => {
+    setLocationSwitchState((previous) => !previous);
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.error("Permission to access location was denied");
+      return;
+    }
+    const location = await Location.getCurrentPositionAsync({});
+    setDeviceLocation({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    });
+  };
   return (
     <View style={styles.detailsContainer}>
-      <View>
-        <Text>Fill this soon</Text>
+      <View
+        style={{
+          width: "100%",
+          borderBottomWidth: 0.5,
+          borderColor: appColors.outlineVariant,
+        }}
+      >
+        <LocatorSection
+          switchPosition={locationSwitchState}
+          handleGetDeviceLocation={handleGetDeviceLocation}
+          locationTitle={"Add new location"}
+        />
       </View>
       <View></View>
       <BottomButton name="Save location" onPressAction={() => {}} />

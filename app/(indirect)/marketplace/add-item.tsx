@@ -31,7 +31,7 @@ import {
 } from "@/redux/features/trashImageSlice";
 import {
   setItemName as addItemName,
-  setPriceAmount as addPriceAmount,
+  // setPriceAmount as addPriceAmount,
   setTrashType as addTrashType,
   setPriceControl as addPricecontrol,
   setItemSize as addItemWeight,
@@ -92,9 +92,9 @@ export default function componentName() {
           alert("Please set a price amount");
           return;
         }
-        dispatch(addPriceAmount(priceAmount));
+        // dispatch(addPriceAmount(priceAmount));
       } else {
-        dispatch(addPriceAmount(0));
+        // dispatch(addPriceAmount(0));
       }
       router.navigate("./view-item");
     } catch (e) {

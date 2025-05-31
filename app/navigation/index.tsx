@@ -78,7 +78,7 @@ export default function componentName() {
   }, [ETAParams]);
 
   const handleMapReady = () => {
-    if (mapRef.current && location?.agentLocation && location?.pickupLocation) {
+    if (mapRef.current && location) {
       mapRef.current.fitToCoordinates(
         [location.agentLocation, location.pickupLocation],
         {
