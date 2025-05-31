@@ -30,9 +30,11 @@ export default function componentName() {
   const [cardCalendar, setCardCalendar] = useState<{
     month: string;
     year: string;
+    cardState: "inactive" | "active" | "goal";
   }>({
     month: "",
     year: "",
+    cardState: "inactive",
   });
 
   const pickupOptions: pickupButtonProps[] = [
@@ -118,53 +120,55 @@ export default function componentName() {
           <GoalCard
             month={cardCalendar.month}
             year={cardCalendar.year}
-            type="inactive"
-            inactiveCardAction={() => router.navigate("/earnings")}
+            type={cardCalendar.cardState}
+            inactiveCardAction={() => router.navigate("/earnings/set-goal")}
           />
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            paddingHorizontal: 30,
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: 20,
-          }}
-        >
-          <ActiveButton
-            icon={
-              <>
-                <MaterialIcons
-                  name="add"
-                  color={appColors.onSecondaryContainerColor}
-                  size={24}
-                />
-              </>
-            }
-            name="New goal"
-            focusedColor=""
-            onPressAction={() => {}}
-            bgColor={appColors.secondaryContainerColor}
-            color={appColors.onSecondaryContainerColor}
-          />
-          <ActiveButton
-            icon={
-              <>
-                <MaterialIcons
-                  name="description"
-                  color={appColors.secondaryColor}
-                  size={24}
-                />
-              </>
-            }
-            name="All goals"
-            focusedColor={appColors.secondaryContainerColor}
-            onPressAction={() => {}}
-            bgColor={"transparent"}
-            color={appColors.secondaryColor}
-            outlined
-          />
-        </View>
+        {cardCalendar.cardState !== "inactive" && (
+          <View
+            style={{
+              flexDirection: "row",
+              paddingHorizontal: 30,
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: 20,
+            }}
+          >
+            <ActiveButton
+              icon={
+                <>
+                  <MaterialIcons
+                    name="add"
+                    color={appColors.onSecondaryContainerColor}
+                    size={24}
+                  />
+                </>
+              }
+              name="New goal"
+              focusedColor=""
+              onPressAction={() => router.push("./earnings/set-goal")}
+              bgColor={appColors.secondaryContainerColor}
+              color={appColors.onSecondaryContainerColor}
+            />
+            <ActiveButton
+              icon={
+                <>
+                  <MaterialIcons
+                    name="description"
+                    color={appColors.secondaryColor}
+                    size={24}
+                  />
+                </>
+              }
+              name="All goals"
+              focusedColor={appColors.secondaryContainerColor}
+              onPressAction={() => router.push("./earnings/monthly-earnings")}
+              bgColor={"transparent"}
+              color={appColors.secondaryColor}
+              outlined
+            />
+          </View>
+        )}
         <View
           style={{
             paddingHorizontal: 16,
