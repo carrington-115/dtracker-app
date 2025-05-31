@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
 import { AgentMapViewProps } from "@/constants/types";
 import mapStyle from "@/constants/map_styles";
-import appColors from "@/constants/colors";
 import CustomMarker from "../atoms/CustomMarker";
 
 export default function AgentMapView({
@@ -12,6 +10,7 @@ export default function AgentMapView({
   pickupLocation,
   mapRef,
   mapDirectionElement,
+  handleMapReady,
 }: AgentMapViewProps) {
   interface LocationProps {
     latitude: number;
@@ -50,6 +49,7 @@ export default function AgentMapView({
         provider={PROVIDER_GOOGLE}
         customMapStyle={mapStyle}
         ref={mapRef}
+        onMapReady={handleMapReady}
       >
         <CustomMarker
           coordinate={agentLocation}

@@ -53,6 +53,7 @@ import MessagesComponent from "./molecules/MessagesComponent";
 import CollectionsComponent from "./organisms/CollectionsComponent";
 import AddExchangeElement from "./organisms/AddExchangeElement";
 import CustomMarker from "./atoms/CustomMarker";
+import NavigationMap from "./organisms/NavigationMap";
 
 export {
   OnboardingSlider,
@@ -109,4 +110,5 @@ export {
   CollectionsComponent,
   AddExchangeElement,
   CustomMarker,
+  NavigationMap,
 };

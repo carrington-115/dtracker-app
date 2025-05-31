@@ -409,6 +409,7 @@ interface AgentMapViewProps {
   };
   mapRef: React.RefObject<MapView>;
   mapDirectionElement?: any;
+  handleMapReady?: () => void;
 }
 
 interface CustomMarkerProps {
@@ -417,6 +418,16 @@ interface CustomMarkerProps {
     longitude: number;
   };
   image: ImageSourcePropType;
+}
+interface navigationSliceProps {
+  agentLocation: null | {
+    latitude: null;
+    longitude: null;
+  };
+  userLocation: null | {
+    latitude: null;
+    longitude: null;
+  };
 }
 
 export type {
@@ -466,4 +477,5 @@ export type {
   ActionSpecialDataProps,
   AgentMapViewProps,
   CustomMarkerProps,
+  navigationSliceProps,
 };

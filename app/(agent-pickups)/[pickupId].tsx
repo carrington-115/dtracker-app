@@ -7,7 +7,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, Dimensions, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Dimensions, StyleSheet } from "react-native";
 import MapView from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -78,15 +78,6 @@ export default function componentName() {
     handleWritePickupData();
   }, []);
 
-  useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.fitToCoordinates([
-        pickupData[0]?.location?.agentLocation!,
-        pickupData[0]?.location?.pickupLocation!,
-      ]);
-    }
-  }, [pickupData, estimatedDistance, estimatedDuration]);
-
   // this function will calculate the time to collect the pickup
   const calculateTimeToCollect = () => {
     const pickupTime = new Date();
@@ -104,7 +95,26 @@ export default function componentName() {
 
   const handleStartJourney = () => {
     setButtonName("Start Journey");
-    router.push("/");
+    router.push("/navigation/");
+  };
+
+  const handleMapReady = () => {
+    if (
+      mapRef.current &&
+      currentPickupData?.location?.agentLocation &&
+      currentPickupData?.location?.pickupLocation
+    ) {
+      mapRef.current.fitToCoordinates(
+        [
+          currentPickupData?.location?.agentLocation,
+          currentPickupData?.location?.pickupLocation,
+        ],
+        {
+          edgePadding: { top: 10, right: 10, bottom: 10, left: 10 },
+          animated: true,
+        }
+      );
+    }
   };
 
   return (
@@ -114,6 +124,7 @@ export default function componentName() {
           agentLocation={pickupData[0]?.location?.agentLocation!}
           pickupLocation={pickupData[0]?.location?.pickupLocation!}
           mapRef={mapRef}
+          handleMapReady={handleMapReady}
           mapDirectionElement={
             <MapViewDirections
               origin={pickupData[0]?.location?.agentLocation!}
@@ -264,7 +275,11 @@ export default function componentName() {
           <View style={{ width: "100%", marginTop: 30, paddingHorizontal: 16 }}>
             <BottomButton
               name={buttonName}
-              onPressAction={() => setButtonName("Start Journey")}
+              onPressAction={
+                buttonName === "Start Journey"
+                  ? handleStartJourney
+                  : () => setButtonName("Start Journey")
+              }
             />
           </View>
         </View>

@@ -120,6 +120,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     position: "absolute",
     bottom: 35,
+    zIndex: 100,
+    elevation: 5,
   },
   innerContainer: {
     width: "100%",
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: "center",
     padding: 20,
-    backgroundColor: appColors.surfaceContainerLow,
+    backgroundColor: appColors.surfaceContainer,
     borderRadius: 10,
   },
 });
