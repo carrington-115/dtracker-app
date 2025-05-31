@@ -11,6 +11,7 @@ import MapView from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MapViewDirections from "react-native-maps-directions";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
@@ -43,6 +44,8 @@ export default function componentName() {
     duration: 0,
     distance: 0,
   });
+
+  const router = useRouter();
 
   const timeConverter = (time: number): string => {
     if (time > 59) {
@@ -127,7 +130,7 @@ export default function componentName() {
         visible={visible}
         pinCode={pinCode!}
         userType="agent"
-        submitCodeAction={() => console.log("Submit code")}
+        submitCodeAction={() => router.navigate("/navigation/completed")}
         scanCodeAction={() => console.log("Scan code")}
         inputError={false}
         setPinCode={setPinCode}

@@ -24,6 +24,18 @@ export default function componentName() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="add-location"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="completed"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </View>
   );
