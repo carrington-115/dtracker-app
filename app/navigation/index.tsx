@@ -10,6 +10,7 @@ import { StyleSheet, Dimensions, StatusBar } from "react-native";
 import MapView from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MapViewDirections from "react-native-maps-directions";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");
 
@@ -163,6 +164,23 @@ export default function componentName() {
             />
           )
         }
+      />
+
+      <LinearGradient
+        colors={[
+          "rgba(255, 255, 255, 1)",
+          "rgba(255, 255, 255, .9)",
+          "rgba(255, 255, 255, .1)",
+        ]}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
+        style={{
+          width: "100%",
+          height: 150,
+          position: "absolute",
+          zIndex: 50,
+          bottom: 170,
+        }}
       />
     </SafeAreaView>
   );
