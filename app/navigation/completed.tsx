@@ -114,6 +114,7 @@ export default function componentName() {
 
     // content
     Animated.sequence([
+      Animated.delay(250),
       rectangleAnimation,
       Animated.delay(250),
       boxRatingsAnimation,
