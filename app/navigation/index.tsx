@@ -3,6 +3,7 @@ import {
   PickupNavigationElement,
   NavigationHeader,
   NavigationMap,
+  QrCamera,
 } from "@/components";
 import appColors from "@/constants/colors";
 import React, { useEffect, useRef, useState } from "react";
@@ -44,6 +45,7 @@ export default function componentName() {
     duration: 0,
     distance: 0,
   });
+  const [showCamera, setShowCamera] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -93,6 +95,11 @@ export default function componentName() {
     }
   };
 
+  const handleOpenCodeCamera = () => {
+    setShowCamera(true);
+    setVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -131,7 +138,7 @@ export default function componentName() {
         pinCode={pinCode!}
         userType="agent"
         submitCodeAction={() => router.navigate("/navigation/completed")}
-        scanCodeAction={() => console.log("Scan code")}
+        scanCodeAction={handleOpenCodeCamera}
         inputError={false}
         setPinCode={setPinCode}
         closeModalAction={() => setVisible(false)}
@@ -185,6 +192,16 @@ export default function componentName() {
           bottom: 170,
         }}
       />
+      {showCamera && (
+        <QrCamera
+          onScannedAction={() => {}}
+          onBackButtonAction={() => {
+            setVisible(true);
+            setShowCamera(false);
+          }}
+          setShowCamera={setShowCamera}
+        />
+      )}
     </SafeAreaView>
   );
 }

@@ -43,7 +43,7 @@ const NavigationHeader = ({
             }
             pressedColor={appColors.surfaceContainerLow}
             bgColor="transparent"
-            btnAction={() => router.back()}
+            btnAction={() => router.push("/")}
           />
           <Text
             style={{
