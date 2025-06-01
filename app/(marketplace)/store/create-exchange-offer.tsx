@@ -95,8 +95,8 @@ export default function componentName() {
             initialRegion={{
               latitude: location?.latitude || 0,
               longitude: location?.longtitude || 0,
-              latitudeDelta: 3,
-              longitudeDelta: 1.5,
+              latitudeDelta: 0.141,
+              longitudeDelta: 0.0752,
             }}
             customMapStyle={mapStyle}
             provider={PROVIDER_GOOGLE}
